@@ -23,7 +23,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +48,11 @@ import app.wortschatz.StudyCard
 import app.wortschatz.StudyViewModel
 import app.wortschatz.UiState
 import app.wortschatz.core.CardType
+import app.wortschatz.core.Command
+import app.wortschatz.core.Gesture
+import app.wortschatz.core.GestureAction
+import app.wortschatz.core.GestureScheme
+import app.wortschatz.core.resolve
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
 import app.wortschatz.core.PartOfSpeech
@@ -69,11 +76,12 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 TextButton(onClick = vm::undo, enabled = state.canUndo) { Text("↶ 撤销") }
             }
 
-            SwipeCard(
+            val answered = if (type == CardType.ARTICLE) state.articleChoice != null else state.revealed
+            GestureCard(
                 key = current.card.id + current.card.memory.reps,
-                enabled = type != CardType.ARTICLE,
-                onSwipe = vm::rate,
-                onTap = vm::reveal,
+                scheme = state.scheme,
+                commandFor = { g -> resolve(state.scheme.actionFor(g), type, answered) },
+                onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
             ) {
                 CardFace(current, state.revealed, state.articleChoice, onSpeak = vm::speakCurrent)
@@ -90,35 +98,74 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
     }
 }
 
-private enum class Swipe(val rating: Rating, val label: String, val color: Color) {
-    LEFT(Rating.AGAIN, "不认识", Color(0xFFE5484D)),
-    RIGHT(Rating.GOOD, "认识", Color(0xFF30A46C)),
-    UP(Rating.EASY, "太简单", Color(0xFF3B82F6)),
+private val swipeGestures = setOf(Gesture.SWIPE_LEFT, Gesture.SWIPE_RIGHT, Gesture.SWIPE_UP, Gesture.SWIPE_DOWN)
+
+private fun Command.color(): Color = when (this) {
+    is Command.Rate -> when (rating) {
+        Rating.AGAIN -> Color(0xFFE5484D)
+        Rating.HARD -> Color(0xFFE09B2D)
+        Rating.GOOD -> Color(0xFF30A46C)
+        Rating.EASY -> Color(0xFF3B82F6)
+    }
+    else -> Color(0xFF8B8D98)
 }
 
-/** Tap to flip; drag left / right / up past the threshold to answer. */
+private fun Command.label(): String = when (this) {
+    is Command.Rate -> when (rating) {
+        Rating.AGAIN -> "不认识"
+        Rating.HARD -> "模糊"
+        Rating.GOOD -> "认识"
+        Rating.EASY -> "太简单"
+    }
+    Command.Reveal -> "显示答案"
+    Command.Undo -> "撤销"
+    Command.Speak -> "发音"
+    Command.Nothing -> ""
+}
+
+/**
+ * The card surface. Taps are split into left / centre / right thirds; double tap, long press
+ * and the four swipe directions are only listened for when the scheme gives them an action,
+ * so an unused double tap never delays a single tap.
+ */
 @Composable
-private fun SwipeCard(
+private fun GestureCard(
     key: Any,
-    enabled: Boolean,
-    onSwipe: (Rating) -> Unit,
-    onTap: () -> Unit,
+    scheme: GestureScheme,
+    commandFor: (Gesture) -> Command,
+    onGesture: (Gesture) -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
     val x = remember(key) { Animatable(0f) }
     val y = remember(key) { Animatable(0f) }
+    // The pointer handlers outlive recompositions, so they must read the latest callbacks.
+    val latestCommandFor by rememberUpdatedState(commandFor)
+    val latestOnGesture by rememberUpdatedState(onGesture)
     val scope = rememberCoroutineScope()
     val haptic = LocalHapticFeedback.current
     val density = LocalDensity.current
     val threshold = with(density) { 110.dp.toPx() }
     val flyOut = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
+    val mapped = Gesture.entries.filter { scheme.actionFor(it) != GestureAction.NONE }.toSet()
+    val swipeEnabled = mapped.any { it in swipeGestures }
 
-    fun direction(): Swipe? = when {
-        x.value > threshold && abs(x.value) > abs(y.value) -> Swipe.RIGHT
-        x.value < -threshold && abs(x.value) > abs(y.value) -> Swipe.LEFT
-        y.value < -threshold -> Swipe.UP
-        else -> null
+    fun dragDirection(): Gesture? {
+        val horizontal = abs(x.value) >= abs(y.value)
+        return when {
+            horizontal && x.value > threshold -> Gesture.SWIPE_RIGHT
+            horizontal && x.value < -threshold -> Gesture.SWIPE_LEFT
+            !horizontal && y.value < -threshold -> Gesture.SWIPE_UP
+            !horizontal && y.value > threshold -> Gesture.SWIPE_DOWN
+            else -> null
+        }
+    }
+
+    fun settle() {
+        scope.launch {
+            launch { x.animateTo(0f) }
+            y.animateTo(0f)
+        }
     }
 
     Box(
@@ -129,58 +176,79 @@ private fun SwipeCard(
                 translationY = y.value
                 rotationZ = x.value / 40f
             }
-            .pointerInput(key) { detectTapGestures(onTap = { onTap() }) }
-            .pointerInput(key, enabled) {
-                if (!enabled) return@pointerInput
+            .pointerInput(key, scheme) {
+                detectTapGestures(
+                    onTap = { offset ->
+                        val third = size.width / 3f
+                        latestOnGesture(
+                            when {
+                                offset.x < third -> Gesture.TAP_LEFT
+                                offset.x > 2 * third -> Gesture.TAP_RIGHT
+                                else -> Gesture.TAP_CENTER
+                            }
+                        )
+                    },
+                    onDoubleTap = if (Gesture.DOUBLE_TAP in mapped) ({ latestOnGesture(Gesture.DOUBLE_TAP) }) else null,
+                    onLongPress = if (Gesture.LONG_PRESS in mapped) ({
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        latestOnGesture(Gesture.LONG_PRESS)
+                    }) else null,
+                )
+            }
+            .pointerInput(key, scheme) {
+                if (!swipeEnabled) return@pointerInput
                 detectDragGestures(
                     onDragEnd = {
-                        val dir = direction()
-                        scope.launch {
-                            if (dir == null) {
-                                launch { x.animateTo(0f) }
-                                y.animateTo(0f)
-                            } else {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                when (dir) {
-                                    Swipe.RIGHT -> x.animateTo(flyOut, tween(150))
-                                    Swipe.LEFT -> x.animateTo(-flyOut, tween(150))
-                                    Swipe.UP -> y.animateTo(-flyOut * 2, tween(150))
+                        val gesture = dragDirection()
+                        val command = gesture?.let(latestCommandFor) ?: Command.Nothing
+                        if (gesture == null || command == Command.Nothing) {
+                            settle()
+                        } else if (command is Command.Rate) {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            scope.launch {
+                                when (gesture) {
+                                    Gesture.SWIPE_RIGHT -> x.animateTo(flyOut, tween(150))
+                                    Gesture.SWIPE_LEFT -> x.animateTo(-flyOut, tween(150))
+                                    Gesture.SWIPE_UP -> y.animateTo(-flyOut * 2, tween(150))
+                                    else -> y.animateTo(flyOut * 2, tween(150))
                                 }
-                                onSwipe(dir.rating)
+                                latestOnGesture(gesture)
                             }
+                        } else {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            settle()
+                            latestOnGesture(gesture)
                         }
                     },
-                    onDragCancel = {
-                        scope.launch {
-                            launch { x.animateTo(0f) }
-                            y.animateTo(0f)
-                        }
-                    },
+                    onDragCancel = { settle() },
                     onDrag = { change, drag ->
                         change.consume()
                         scope.launch {
                             x.snapTo(x.value + drag.x)
-                            y.snapTo((y.value + drag.y).coerceAtMost(0f))
+                            y.snapTo(y.value + drag.y)
                         }
                     },
                 )
             },
     ) {
         ElevatedCard(Modifier.fillMaxSize(), shape = RoundedCornerShape(24.dp)) { content() }
-        val dir = direction()
-        val progress = maxOf(abs(x.value), -y.value) / threshold
-        if (progress > 0.2f) {
-            val shown = dir ?: when {
-                abs(x.value) >= -y.value -> if (x.value > 0) Swipe.RIGHT else Swipe.LEFT
-                else -> Swipe.UP
+        val progress = maxOf(abs(x.value), abs(y.value)) / threshold
+        if (swipeEnabled && progress > 0.2f) {
+            val horizontal = abs(x.value) >= abs(y.value)
+            val gesture = when {
+                horizontal -> if (x.value > 0) Gesture.SWIPE_RIGHT else Gesture.SWIPE_LEFT
+                else -> if (y.value < 0) Gesture.SWIPE_UP else Gesture.SWIPE_DOWN
             }
-            Text(
-                shown.label,
-                color = shown.color,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.TopCenter).padding(24.dp).alpha(progress.coerceAtMost(1f)),
-            )
+            val command = commandFor(gesture)
+            if (command != Command.Nothing) {
+                Text(
+                    command.label(),
+                    color = command.color(),
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.TopCenter).padding(24.dp).alpha(progress.coerceAtMost(1f)),
+                )
+            }
         }
     }
 }

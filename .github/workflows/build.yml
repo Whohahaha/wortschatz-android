@@ -30,7 +30,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: wortschatz-debug-apk
+          name: wortschatz-arm64-v8a-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
       # Keeps a "latest" pre-release with the newest APK, so it can be downloaded straight to a phone.
@@ -39,7 +39,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk wortschatz-debug.apk
+          cp app/build/outputs/apk/debug/app-debug.apk wortschatz-arm64-v8a-debug.apk
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest wortschatz-debug.apk --prerelease --target "$GITHUB_SHA" \
-            --title "最新测试版" --notes "main 分支最新提交自动编译的调试版 APK。"
+          gh release create latest wortschatz-arm64-v8a-debug.apk --prerelease --target "$GITHUB_SHA" \
+            --title "最新测试版" --notes "main 分支最新提交自动编译的调试版 APK（仅 arm64-v8a）。"

@@ -32,9 +32,10 @@ import androidx.compose.ui.unit.sp
 import app.wortschatz.HomeState
 import app.wortschatz.StudyViewModel
 import app.wortschatz.UiState
+import app.wortschatz.core.GestureScheme
 
 @Composable
-fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
+fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -83,11 +84,19 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
                 }
             }
 
-            Text(
-                "手势：点卡片看答案，右滑认识，左滑不认识，上滑太简单。冠词卡直接点 der / die / das。",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            Card(Modifier.fillMaxWidth()) {
+                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text("手势：${scheme.name}")
+                        Text(
+                            scheme.description,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    OutlinedButton(onClick = vm::openGestureSettings) { Text("设置") }
+                }
+            }
         }
     }
 }

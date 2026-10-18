@@ -6,6 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import app.wortschatz.core.Card
 import app.wortschatz.core.CardType
+import app.wortschatz.core.Command
+import app.wortschatz.core.Gesture
+import app.wortschatz.core.GestureAction
+import app.wortschatz.core.GestureScheme
+import app.wortschatz.core.GestureSchemes
+import app.wortschatz.core.resolve
 import app.wortschatz.core.Counts
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
@@ -22,7 +28,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { HOME, STUDY, DONE }
+enum class Screen { HOME, STUDY, DONE, GESTURES }
 
 data class HomeState(
     val wordBookTitle: String,
@@ -45,6 +51,7 @@ data class UiState(
     val articleChoice: Gender? = null,
     val counts: Counts = Counts(0, 0, 0),
     val canUndo: Boolean = false,
+    val scheme: GestureScheme = GestureSchemes.DEFAULT,
 )
 
 class StudyViewModel(application: Application) : AndroidViewModel(application) {
@@ -62,6 +69,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     val state: StateFlow<UiState> = _state.asStateFlow()
 
     init {
+        _state.update { it.copy(scheme = loadScheme()) }
         onSession { s -> _state.update { it.copy(home = homeState(s)) } }
     }
 
@@ -102,8 +110,50 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         show(s, card)
     }
 
+    /** Runs whatever the active gesture scheme assigns to [gesture] on the current card. */
+    fun onGesture(gesture: Gesture) {
+        val s = _state.value
+        val current = s.current ?: return
+        val answered = if (current.card.type == CardType.ARTICLE) s.articleChoice != null else s.revealed
+        when (val command = resolve(s.scheme.actionFor(gesture), current.card.type, answered)) {
+            Command.Nothing -> Unit
+            Command.Reveal -> reveal()
+            is Command.Rate -> rate(command.rating)
+            Command.Undo -> undo()
+            Command.Speak -> speakCurrent()
+        }
+    }
+
+    /** Volume keys are only taken over while studying, and only if the scheme uses them. */
+    fun handlesKey(gesture: Gesture): Boolean =
+        _state.value.screen == Screen.STUDY && _state.value.scheme.actionFor(gesture) != GestureAction.NONE
+
+    fun openGestureSettings() = _state.update { it.copy(screen = Screen.GESTURES) }
+
+    fun selectGestureScheme(id: String) {
+        prefs.edit().putString(KEY_SCHEME, id).apply()
+        _state.update { it.copy(scheme = loadScheme()) }
+    }
+
+    /** Editing any gesture switches to the custom scheme, starting from whatever was active. */
+    fun setGestureAction(gesture: Gesture, action: GestureAction) {
+        val custom = _state.value.scheme.with(gesture, action)
+        prefs.edit().putString(KEY_SCHEME, GestureSchemes.CUSTOM_ID).putString(KEY_CUSTOM, custom.encode()).apply()
+        _state.update { it.copy(scheme = loadScheme()) }
+    }
+
+    private fun loadScheme(): GestureScheme {
+        val id = prefs.getString(KEY_SCHEME, null)
+        return if (id == GestureSchemes.CUSTOM_ID) GestureSchemes.custom(prefs.getString(KEY_CUSTOM, null))
+        else GestureSchemes.preset(id.orEmpty()) ?: GestureSchemes.DEFAULT
+    }
+
     fun speakCurrent() {
-        _state.value.current?.let { speaker.speak(it.entry.spoken) }
+        val s = _state.value
+        val current = s.current ?: return
+        // Hearing "der Tisch" would give away an article card that has not been answered yet.
+        if (current.card.type == CardType.ARTICLE && s.articleChoice == null) return
+        speaker.speak(current.entry.spoken)
     }
 
     fun setNewWordsPerDay(value: Int) {
@@ -169,5 +219,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     private companion object {
         const val KEY_NEW_PER_DAY = "new_words_per_day"
+        const val KEY_SCHEME = "gesture_scheme"
+        const val KEY_CUSTOM = "gesture_custom"
     }
 }
