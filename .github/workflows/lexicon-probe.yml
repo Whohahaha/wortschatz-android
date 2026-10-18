@@ -1,0 +1,37 @@
+name: Lexicon probe
+
+# Fetches a few sample entries from the kaikki.org Wiktionary extract so the lexicon
+# builder can be written against the real data format.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/lexicon-probe.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sample entries
+        run: |
+          set -x
+          for u in \
+            https://kaikki.org/dictionary/German/kaikki.org-dictionary-German.jsonl \
+            https://kaikki.org/dictionary/German/kaikki.org-dictionary-German.jsonl.gz \
+            https://kaikki.org/dictionary/raw-wiktextract-data.jsonl.gz ; do
+            curl -sSIL "$u" | grep -iE '^(HTTP|content-length|content-type)' || true
+          done
+          curl -sSL https://kaikki.org/dictionary/German/kaikki.org-dictionary-German.jsonl \
+            | grep -E '"word": "(Tisch|fahren|anrufen|Milch|Mädchen|Lehrer|Haus|gehen|Zeitung|Kaffee)"' \
+            | head -n 40 > probe.jsonl || true
+          wc -c probe.jsonl
+          ls -la
+      - name: Publish probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete lexicon-probe --yes --cleanup-tag -R "$GITHUB_REPOSITORY" || true
+          gh release create lexicon-probe probe.jsonl --prerelease -R "$GITHUB_REPOSITORY" --title "lexicon probe" --notes "Sample of the kaikki.org German extract."
