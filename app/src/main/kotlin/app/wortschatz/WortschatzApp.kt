@@ -17,11 +17,17 @@ class WortschatzApp : Application() {
 
     /** German grammar data (articles, plurals, verb forms) used to complete imported lists. */
     val lexicon: Lexicon by lazy {
-        try {
-            GZIPInputStream(assets.open("lexicon/de.tsv.gz")).bufferedReader().useLines { Lexicon.parse(it) }
+        // The build tools unpack .gz assets into the APK as plain files, so de.tsv.gz arrives as de.tsv.
+        val stream = try {
+            assets.open("lexicon/de.tsv")
         } catch (e: IOException) {
-            Lexicon.EMPTY
+            try {
+                GZIPInputStream(assets.open("lexicon/de.tsv.gz"))
+            } catch (e: IOException) {
+                null
+            }
         }
+        stream?.bufferedReader()?.useLines { Lexicon.parse(it) } ?: Lexicon.EMPTY
     }
 
     var activeBookId: String
