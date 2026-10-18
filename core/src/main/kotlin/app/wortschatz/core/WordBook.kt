@@ -59,4 +59,28 @@ object WordBook {
             )
         }
     }
+
+    private val columns = listOf(
+        "id", "level", "pos", "lemma", "gender", "plural", "meaning",
+        "present3", "preterite", "participle", "aux", "example", "example_zh",
+    )
+
+    /** Inverse of [parse]; [title] goes into a leading comment line. */
+    fun write(entries: List<Entry>, title: String): String = buildString {
+        append("# title: ").append(title.replace('\n', ' ')).append('\n')
+        append(columns.joinToString("\t")).append('\n')
+        for (e in entries) {
+            val lemma = e.separablePrefix?.let { "$it|${e.lemma.removePrefix(it)}" } ?: e.lemma
+            val cells = listOf(
+                e.id, e.level, e.pos.code, lemma, e.gender?.article.orEmpty(), e.plural.orEmpty(), e.meaning,
+                e.verbForms?.present3.orEmpty(), e.verbForms?.preterite.orEmpty(), e.verbForms?.participle.orEmpty(),
+                e.verbForms?.auxiliary.orEmpty(), e.example, e.exampleZh,
+            )
+            append(cells.joinToString("\t") { it.replace('\t', ' ').replace('\n', ' ') }).append('\n')
+        }
+    }
+
+    /** The "# title: …" comment of a written word book, if any. */
+    fun title(text: String): String? =
+        text.lineSequence().firstOrNull()?.takeIf { it.startsWith("# title: ") }?.removePrefix("# title: ")?.trim()
 }

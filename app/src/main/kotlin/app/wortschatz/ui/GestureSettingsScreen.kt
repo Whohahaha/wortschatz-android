@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
@@ -37,7 +38,7 @@ import app.wortschatz.core.GestureScheme
 import app.wortschatz.core.GestureSchemes
 
 @Composable
-fun GestureSettingsScreen(scheme: GestureScheme, vm: StudyViewModel) {
+fun GestureSettingsScreen(scheme: GestureScheme, sensitivity: SwipeSensitivity, vm: StudyViewModel) {
     Scaffold { padding ->
         Column(
             Modifier
@@ -51,6 +52,22 @@ fun GestureSettingsScreen(scheme: GestureScheme, vm: StudyViewModel) {
                 TextButton(onClick = vm::goHome) { Text("‹ 返回") }
                 Text("手势设置", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             }
+
+            Text("滑动灵敏度", style = MaterialTheme.typography.titleMedium)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                SwipeSensitivity.entries.forEach { option ->
+                    FilterChip(
+                        selected = option == sensitivity,
+                        onClick = { vm.setSwipeSensitivity(option) },
+                        label = { Text(option.label) },
+                    )
+                }
+            }
+            Text(
+                "滑动多远才算数：灵敏 ${SwipeSensitivity.HIGH.distance.value.toInt()}dp、适中 ${SwipeSensitivity.MEDIUM.distance.value.toInt()}dp、稳重 ${SwipeSensitivity.LOW.distance.value.toInt()}dp。快速一甩不受这个限制。",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
 
             Text("预设", style = MaterialTheme.typography.titleMedium)
             GestureSchemes.presets.forEach { preset ->

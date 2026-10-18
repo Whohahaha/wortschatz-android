@@ -12,14 +12,15 @@ import java.io.IOException
 import java.util.Locale
 
 /**
- * Plays the bundled recording for a text when there is one, and falls back to the system
- * text-to-speech engine otherwise. Many phones ship without a German TTS voice, so the first
+ * Plays the bundled recording for a text when there is one, then audio prepared on the phone
+ * ahead of time (see [AudioPrepJob]), and falls back to live system text-to-speech otherwise. Many phones ship without a German TTS voice, so the first
  * time the fallback cannot speak German the user is told once where to get one.
  */
 class Speaker(context: Context) {
     private val appContext = context.applicationContext
     private val main = Handler(Looper.getMainLooper())
     private var player: MediaPlayer? = null
+    private val files = AudioFiles(appContext)
 
     @Volatile
     private var ttsInitDone = false
@@ -38,13 +39,16 @@ class Speaker(context: Context) {
         }
     }
 
+    /** Whether the phone has a German voice; null until the engine has started. */
+    val hasGermanVoice: Boolean? get() = if (ttsInitDone) ttsReady && ttsHasGerman else null
+
     /** Safe to call from any thread; playback and toasts run on the main thread. */
     fun speak(text: String) {
         main.post { speakNow(text) }
     }
 
     private fun speakNow(text: String) {
-        if (playBundled(text)) return
+        if (playRecorded(text)) return
         if (ttsReady && ttsHasGerman) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text)
         } else if (ttsInitDone && !warned) {
@@ -53,12 +57,13 @@ class Speaker(context: Context) {
         }
     }
 
-    private fun playBundled(text: String): Boolean {
+    private fun playRecorded(text: String): Boolean {
         val afd = try {
-            appContext.assets.openFd(Audio.assetPath(text))
+            if (files.isBundled(text)) appContext.assets.openFd(Audio.assetPath(text)) else null
         } catch (e: IOException) {
-            return false
+            null
         }
+        val prepared = if (afd == null) files.prepared(text) ?: return false else null
         tts.stop()
         player?.release()
         player = MediaPlayer().apply {
@@ -68,7 +73,8 @@ class Speaker(context: Context) {
                     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                     .build()
             )
-            afd.use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
+            if (afd != null) afd.use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
+            else setDataSource(prepared!!.path)
             setOnPreparedListener { it.start() }
             setOnErrorListener { _, _, _ -> true }
             prepareAsync()

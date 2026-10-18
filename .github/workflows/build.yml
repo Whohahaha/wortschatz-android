@@ -31,6 +31,21 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Grammar data (articles, plurals, verb forms) for completing imported word lists,
+      # built from the kaikki.org extract of Wiktionary. Rebuilt only when the script changes.
+      - name: Restore lexicon
+        id: lexicon
+        uses: actions/cache@v4
+        with:
+          path: app/src/main/assets/lexicon
+          key: lexicon-${{ hashFiles('tools/lexicon/build_lexicon.py') }}
+
+      - name: Build lexicon
+        if: steps.lexicon.outputs.cache-hit != 'true'
+        # The app works without it (no auto-completion), so a failure here must not block the APK.
+        continue-on-error: true
+        run: python tools/lexicon/build_lexicon.py app/src/main/assets/lexicon/de.tsv.gz || (rm -rf app/src/main/assets/lexicon; exit 1)
+
       - name: Restore generated audio
         uses: actions/cache@v4
         with:

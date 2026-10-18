@@ -114,6 +114,16 @@ class StudySessionTest {
     }
 
     @Test
+    fun upcomingEntriesCoverDueCardsAndTomorrowsNewWords() {
+        val s = session()
+        assertEquals(listOf("tisch", "lampe"), s.upcomingEntries(days = 0).map { it.id })
+        assertEquals(listOf("tisch", "lampe", "anrufen"), s.upcomingEntries(days = 1).map { it.id })
+        // A word answered "again" stays in learning and is still upcoming.
+        s.answer(s.nextCard()!!, Rating.AGAIN, 1000)
+        assertEquals("tisch", s.upcomingEntries(days = 0).first().id)
+    }
+
+    @Test
     fun forecastCountsUpcomingReviews() {
         val s = session()
         while (true) s.answer(s.nextCard() ?: break, Rating.EASY, 1000)

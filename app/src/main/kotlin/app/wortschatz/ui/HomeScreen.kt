@@ -50,7 +50,10 @@ fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text("德语单词", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-            Text(home.wordBookTitle, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(home.wordBookTitle, Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedButton(onClick = vm::openBooks) { Text("词书") }
+            }
 
             Card(Modifier.fillMaxWidth()) {
                 Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceEvenly) {

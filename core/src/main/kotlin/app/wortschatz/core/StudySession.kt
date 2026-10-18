@@ -133,6 +133,24 @@ class StudySession(
         return Counts(learning, review, newCandidates(active, ::buried).size)
     }
 
+    /**
+     * Words likely to come up between now and the end of the study day [days] days ahead:
+     * cards falling due by then, plus the new words the daily limit will introduce.
+     * Used to prepare audio in the background so studying never waits for it.
+     */
+    fun upcomingEntries(days: Int = 1): List<Entry> {
+        refreshDay(clock())
+        val horizon = todayEnd() + days * Fsrs.DAY
+        val active = cards.values.filter { it.entryId in entryById }
+        val due = active.filter { it.memory.phase != Phase.NEW && it.memory.due < horizon }.map { it.entryId }
+        val fresh = active.filter { it.type == CardType.MEANING && it.memory.phase == Phase.NEW }
+            .sortedBy { order.getValue(it.entryId) }
+            .take(settings.newWordsPerDay * (days + 1))
+            .map { it.entryId }
+        // Grammar cards unlocking soon belong to words already counted above.
+        return (due + fresh).distinct().map(entryById::getValue)
+    }
+
     /** Words whose meaning card has been seen at least once. */
     fun learnedWords(): Int =
         cards.values.count { it.type == CardType.MEANING && it.entryId in entryById && it.memory.phase != Phase.NEW }

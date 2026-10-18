@@ -14,8 +14,8 @@ android {
         applicationId = "app.wortschatz"
         minSdk = 26
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
 
         // Only 64-bit ARM phones are targeted; native libraries added later ship for arm64 alone.
         ndk {
@@ -47,6 +47,8 @@ kotlin {
 
 dependencies {
     implementation(project(":core"))
+    // Anki 2.1.50+ packages are zstd-compressed.
+    implementation("com.github.luben:zstd-jni:1.5.6-9@aar")
 
     implementation(platform("androidx.compose:compose-bom:2025.06.00"))
     implementation("androidx.compose.ui:ui")

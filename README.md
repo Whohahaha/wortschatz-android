@@ -21,6 +21,12 @@
 - **首页**：显示今天的新词、学习中和待复习数量，未来 7 天的复习预测，可以调整每天新词数。
 - **示例词书**：88 个 A1 常用词，词条和例句都是自己编写的，文件在 `app/src/main/assets/wordbooks/goethe_a1_sample.tsv`。这是制表符分隔的文本，可以直接用表格软件编辑。
 
+## 0.3.0 新增
+
+- **滑动手感**：滑动距离缩短到 64dp（可在手势设置里调成灵敏 44dp 或稳重 110dp），轻快一甩也能触发；方向在起手时就锁定，没设动作的方向会有阻力；跨过阈值时有轻微震动。
+- **词书管理和导入**：首页右上角“词书”可以切换和删除词书，也可以导入 Anki 卡组（.apkg，新旧格式都支持）、CSV / 制表符文本（UTF-8 或 GBK）、Quizlet 导出和本 App 自己的词书格式，还能从别的 App 直接分享文件或一段单词表过来。导入时会自动识别各列是什么，可以手动改；能读懂 `der Tisch, -e`、`Tisch, der`、`r Tisch`、`der Stuhl, ¨-e`、`an|rufen`、`fahren (fährt, fuhr, ist gefahren)` 等常见写法。词表缺的冠词、复数和动词变位会用补全词典自动补上（数据来自 Wiktionary，经 kaikki.org 整理，CC BY-SA 4.0，由 `tools/lexicon/build_lexicon.py` 在编译时生成）。
+- **离线发音**：导入的词书没有内置录音，App 会在后台（每天一次、导入或切换词书后立即一次）用手机自带的德语语音，把今天和明天要学的词的发音提前生成到本地，学习时不需要联网。发音来源依次是：内置录音，然后是提前生成的文件，最后才是现场合成。
+
 ## 代码结构
 
 ```
@@ -30,8 +36,11 @@ core/   纯 Kotlin，不依赖安卓，可以在任何 JVM 上跑单元测试
   Model.kt             词条、卡片类型、复习记录
   WordBook.kt          词书（TSV）解析
   StudySession.kt      选下一张卡、记录作答、撤销、统计
+  imports/             导入：表格解析、德语词头写法识别、列识别和补全、Anki 卡组读取
 app/    安卓应用
   data/SqliteStudyStore.kt   SQLite 存储：card 表保存当前状态，review_log 只追加，以后做同步时交换的就是这张表
+  data/BookRepository.kt     内置词书和导入的词书（保存在 files/books/，用本 App 的格式）
+  AudioPrepJob.kt            后台提前生成发音
   StudyViewModel.kt          界面状态
   ui/                        Compose 界面
 ```
@@ -40,7 +49,7 @@ app/    安卓应用
 
 ## 已验证和未验证的部分
 
-- `core` 模块的 23 个单元测试已经全部通过，覆盖调度算法、拆卡、解锁、撤销、数据重新加载，示例词书的解析，手势预设，以及发音文件的命名。
+- `core` 模块的 32 个单元测试已经全部通过，覆盖调度算法、拆卡、解锁、撤销、数据重新加载，示例词书的解析，手势预设，发音文件的命名，以及导入（用真实生成的新旧两种 Anki 卡组测试）。
 - 界面代码用 Compose Desktop 1.8 做过编译检查，SQLite 存储和发音代码用 Android 16 的 API 做过编译检查。
 - 每次推送到 main 分支，GitHub Actions 都会自动跑测试并编译 APK，最新的调试版 APK 发布在仓库的 Releases 页面（标签 `latest`）。
 - 还没有在真机上跑过，使用中遇到问题直接告诉我。

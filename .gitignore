@@ -9,3 +9,4 @@ captures/
 app/src/main/assets/audio/
 .audio-cache/
 .voices/
+app/src/main/assets/lexicon/

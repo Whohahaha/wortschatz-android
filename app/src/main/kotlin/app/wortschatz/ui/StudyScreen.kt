@@ -1,6 +1,7 @@
 package app.wortschatz.ui
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.wortschatz.StudyCard
@@ -60,6 +63,7 @@ import app.wortschatz.core.PartOfSpeech
 import app.wortschatz.core.fsrs.Rating
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.sign
 
 @Composable
 fun StudyScreen(state: UiState, vm: StudyViewModel) {
@@ -81,6 +85,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
             GestureCard(
                 key = current.card.id + current.card.memory.reps,
                 scheme = state.scheme,
+                sensitivity = state.swipeSensitivity,
                 commandFor = { g -> resolve(state.scheme.actionFor(g), type, answered) },
                 onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
@@ -133,6 +138,7 @@ private fun Command.label(): String = when (this) {
 private fun GestureCard(
     key: Any,
     scheme: GestureScheme,
+    sensitivity: SwipeSensitivity,
     commandFor: (Gesture) -> Command,
     onGesture: (Gesture) -> Unit,
     modifier: Modifier = Modifier,
@@ -146,26 +152,22 @@ private fun GestureCard(
     val scope = rememberCoroutineScope()
     val haptic = LocalHapticFeedback.current
     val density = LocalDensity.current
-    val threshold = with(density) { 110.dp.toPx() }
+    val threshold = with(density) { sensitivity.distance.toPx() }
+    // A quick flick commits after a short distance, the way Tinder-style cards feel.
+    val flickDistance = with(density) { 20.dp.toPx() }
+    val flickSpeed = with(density) { 500.dp.toPx() }
     val flyOut = with(density) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
     val mapped = Gesture.entries.filter { scheme.actionFor(it) != GestureAction.NONE }.toSet()
     val swipeEnabled = mapped.any { it in swipeGestures }
 
-    fun dragDirection(): Gesture? {
-        val horizontal = abs(x.value) >= abs(y.value)
-        return when {
-            horizontal && x.value > threshold -> Gesture.SWIPE_RIGHT
-            horizontal && x.value < -threshold -> Gesture.SWIPE_LEFT
-            !horizontal && y.value < -threshold -> Gesture.SWIPE_UP
-            !horizontal && y.value > threshold -> Gesture.SWIPE_DOWN
-            else -> null
-        }
-    }
+    fun gestureFor(horizontal: Boolean, d: Float): Gesture =
+        if (horizontal) (if (d > 0) Gesture.SWIPE_RIGHT else Gesture.SWIPE_LEFT)
+        else (if (d < 0) Gesture.SWIPE_UP else Gesture.SWIPE_DOWN)
 
     fun settle() {
         scope.launch {
-            launch { x.animateTo(0f) }
-            y.animateTo(0f)
+            launch { x.animateTo(0f, spring(dampingRatio = 0.6f, stiffness = 600f)) }
+            y.animateTo(0f, spring(dampingRatio = 0.6f, stiffness = 600f))
         }
     }
 
@@ -196,62 +198,93 @@ private fun GestureCard(
                     }) else null,
                 )
             }
-            .pointerInput(key, scheme) {
+            .pointerInput(key, scheme, sensitivity) {
                 if (!swipeEnabled) return@pointerInput
+                val tracker = VelocityTracker()
+                // Locked to one axis as soon as the drag starts, so the card never wobbles diagonally.
+                var horizontal = true
+                var armed = false
                 detectDragGestures(
+                    onDragStart = {
+                        tracker.resetTracking()
+                        armed = false
+                    },
                     onDragEnd = {
-                        val gesture = dragDirection()
-                        val command = gesture?.let(latestCommandFor) ?: Command.Nothing
-                        if (gesture == null || command == Command.Nothing) {
-                            settle()
-                        } else if (command is Command.Rate) {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            scope.launch {
-                                when (gesture) {
-                                    Gesture.SWIPE_RIGHT -> x.animateTo(flyOut, tween(150))
-                                    Gesture.SWIPE_LEFT -> x.animateTo(-flyOut, tween(150))
-                                    Gesture.SWIPE_UP -> y.animateTo(-flyOut * 2, tween(150))
-                                    else -> y.animateTo(flyOut * 2, tween(150))
+                        val v = tracker.calculateVelocity()
+                        val d = if (horizontal) x.value else y.value
+                        val speed = if (horizontal) v.x else v.y
+                        val committed = abs(d) >= threshold ||
+                            (abs(d) >= flickDistance && abs(speed) >= flickSpeed && sign(speed) == sign(d))
+                        val gesture = gestureFor(horizontal, d)
+                        val command = if (committed) latestCommandFor(gesture) else Command.Nothing
+                        when (command) {
+                            Command.Nothing -> settle()
+                            is Command.Rate -> {
+                                if (!armed) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                scope.launch {
+                                    when (gesture) {
+                                        Gesture.SWIPE_RIGHT -> x.animateTo(flyOut, tween(120))
+                                        Gesture.SWIPE_LEFT -> x.animateTo(-flyOut, tween(120))
+                                        Gesture.SWIPE_UP -> y.animateTo(-flyOut * 2, tween(120))
+                                        else -> y.animateTo(flyOut * 2, tween(120))
+                                    }
+                                    latestOnGesture(gesture)
                                 }
+                            }
+                            else -> {
+                                if (!armed) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                settle()
                                 latestOnGesture(gesture)
                             }
-                        } else {
-                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                            settle()
-                            latestOnGesture(gesture)
                         }
                     },
                     onDragCancel = { settle() },
                     onDrag = { change, drag ->
                         change.consume()
+                        tracker.addPosition(change.uptimeMillis, change.position)
+                        if (x.value == 0f && y.value == 0f) horizontal = abs(drag.x) >= abs(drag.y)
+                        val along = if (horizontal) x.value + drag.x else y.value + drag.y
+                        // Directions without an action resist, so the card shows it will not go there.
+                        val resist = latestCommandFor(gestureFor(horizontal, along)) == Command.Nothing
+                        val step = (if (horizontal) drag.x else drag.y) * (if (resist) 0.25f else 1f)
                         scope.launch {
-                            x.snapTo(x.value + drag.x)
-                            y.snapTo(y.value + drag.y)
+                            if (horizontal) x.snapTo(x.value + step) else y.snapTo(y.value + step)
                         }
+                        val nowArmed = !resist && abs(along) >= threshold
+                        if (nowArmed && !armed) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        armed = nowArmed
                     },
                 )
             },
     ) {
         ElevatedCard(Modifier.fillMaxSize(), shape = RoundedCornerShape(24.dp)) { content() }
-        val progress = maxOf(abs(x.value), abs(y.value)) / threshold
-        if (swipeEnabled && progress > 0.2f) {
-            val horizontal = abs(x.value) >= abs(y.value)
-            val gesture = when {
-                horizontal -> if (x.value > 0) Gesture.SWIPE_RIGHT else Gesture.SWIPE_LEFT
-                else -> if (y.value < 0) Gesture.SWIPE_UP else Gesture.SWIPE_DOWN
-            }
-            val command = commandFor(gesture)
+        val horizontal = abs(x.value) >= abs(y.value)
+        val d = if (horizontal) x.value else y.value
+        val progress = abs(d) / threshold
+        if (swipeEnabled && progress > 0.1f) {
+            val command = commandFor(gestureFor(horizontal, d))
             if (command != Command.Nothing) {
+                val ready = progress >= 1f
                 Text(
                     command.label(),
                     color = command.color(),
-                    fontSize = 28.sp,
+                    fontSize = if (ready) 32.sp else 26.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.TopCenter).padding(24.dp).alpha(progress.coerceAtMost(1f)),
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(24.dp)
+                        .alpha((progress * 1.5f).coerceAtMost(1f)),
                 )
             }
         }
     }
+}
+
+/** How far a swipe must travel before it counts; a quick flick always counts after 20 dp. */
+enum class SwipeSensitivity(val label: String, val distance: Dp) {
+    HIGH("灵敏", 44.dp),
+    MEDIUM("适中", 64.dp),
+    LOW("稳重（第一版）", 110.dp),
 }
 
 @Composable
