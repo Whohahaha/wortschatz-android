@@ -201,17 +201,24 @@ private fun GestureCard(
             .pointerInput(key, scheme, sensitivity) {
                 if (!swipeEnabled) return@pointerInput
                 val tracker = VelocityTracker()
-                // Locked to one axis as soon as the drag starts, so the card never wobbles diagonally.
+                // Direction is judged from this drag's own movement, never from where the card
+                // still is after the last swipe sprang back, and it is re-judged on every move:
+                // a drag that starts slightly off still goes where the finger ends up.
+                var totalX = 0f
+                var totalY = 0f
                 var horizontal = true
                 var armed = false
                 detectDragGestures(
                     onDragStart = {
                         tracker.resetTracking()
+                        totalX = 0f
+                        totalY = 0f
                         armed = false
+                        scope.launch { x.stop(); y.stop() }
                     },
                     onDragEnd = {
                         val v = tracker.calculateVelocity()
-                        val d = if (horizontal) x.value else y.value
+                        val d = if (horizontal) totalX else totalY
                         val speed = if (horizontal) v.x else v.y
                         val committed = abs(d) >= threshold ||
                             (abs(d) >= flickDistance && abs(speed) >= flickSpeed && sign(speed) == sign(d))
@@ -242,13 +249,16 @@ private fun GestureCard(
                     onDrag = { change, drag ->
                         change.consume()
                         tracker.addPosition(change.uptimeMillis, change.position)
-                        if (x.value == 0f && y.value == 0f) horizontal = abs(drag.x) >= abs(drag.y)
-                        val along = if (horizontal) x.value + drag.x else y.value + drag.y
+                        totalX += drag.x
+                        totalY += drag.y
+                        horizontal = abs(totalX) >= abs(totalY)
+                        val along = if (horizontal) totalX else totalY
                         // Directions without an action resist, so the card shows it will not go there.
                         val resist = latestCommandFor(gestureFor(horizontal, along)) == Command.Nothing
-                        val step = (if (horizontal) drag.x else drag.y) * (if (resist) 0.25f else 1f)
+                        val shown = along * (if (resist) 0.25f else 1f)
                         scope.launch {
-                            if (horizontal) x.snapTo(x.value + step) else y.snapTo(y.value + step)
+                            // The card moves along one axis only; the other snaps back to rest.
+                            if (horizontal) { x.snapTo(shown); y.snapTo(0f) } else { y.snapTo(shown); x.snapTo(0f) }
                         }
                         val nowArmed = !resist && abs(along) >= threshold
                         if (nowArmed && !armed) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
