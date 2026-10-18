@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import app.wortschatz.core.Card
+import app.wortschatz.core.Audio
 import app.wortschatz.core.CardType
 import app.wortschatz.core.Command
 import app.wortschatz.core.Gesture
@@ -83,7 +84,12 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         val current = _state.value.current ?: return
         if (current.card.type == CardType.ARTICLE || _state.value.revealed) return
         _state.update { it.copy(revealed = true) }
-        if (current.card.type == CardType.PLURAL) current.entry.plural?.let { speaker.speak("die $it") }
+        val answer = when (current.card.type) {
+            CardType.PLURAL -> Audio.plural(current.entry)
+            CardType.VERB_FORMS -> Audio.verbForms(current.entry)
+            else -> null
+        }
+        answer?.let(speaker::speak)
     }
 
     fun rate(rating: Rating) = onSession { s ->
@@ -109,6 +115,8 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         val card = s.undo() ?: return@onSession
         show(s, card)
     }
+
+    fun speakText(text: String) = speaker.speak(text)
 
     /** Runs whatever the active gesture scheme assigns to [gesture] on the current card. */
     fun onGesture(gesture: Gesture) {

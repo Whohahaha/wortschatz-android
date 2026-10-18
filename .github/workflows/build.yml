@@ -25,6 +25,27 @@ jobs:
       - name: Test core logic
         run: ./gradlew :core:test
 
+      # Pronunciation: every word, plural, verb form and example is synthesized with Piper
+      # (offline neural TTS, German "thorsten" voice, CC0) and bundled into the APK.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore generated audio
+        uses: actions/cache@v4
+        with:
+          path: .audio-cache
+          key: audio-thorsten-high-${{ hashFiles('app/src/main/assets/wordbooks/**', 'core/src/main/kotlin/app/wortschatz/core/Audio.kt', 'tools/gen_audio.py') }}
+          restore-keys: audio-thorsten-high-
+
+      - name: Generate pronunciation audio
+        run: |
+          command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+          python -m pip install piper-tts==1.3.0
+          python -m piper.download_voices --data-dir .voices de_DE-thorsten-high
+          ./gradlew :core:audioManifest
+          python tools/gen_audio.py build/audio-manifest.tsv .voices/de_DE-thorsten-high.onnx .audio-cache app/src/main/assets/audio
+
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug
 

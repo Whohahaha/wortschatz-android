@@ -2,6 +2,7 @@ package app.wortschatz.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -84,7 +85,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
             ) {
-                CardFace(current, state.revealed, state.articleChoice, onSpeak = vm::speakCurrent)
+                CardFace(current, state.revealed, state.articleChoice, onSpeak = vm::speakCurrent, onSpeakText = vm::speakText)
             }
 
             when {
@@ -254,7 +255,13 @@ private fun GestureCard(
 }
 
 @Composable
-private fun CardFace(current: StudyCard, revealed: Boolean, articleChoice: Gender?, onSpeak: () -> Unit) {
+private fun CardFace(
+    current: StudyCard,
+    revealed: Boolean,
+    articleChoice: Gender?,
+    onSpeak: () -> Unit,
+    onSpeakText: (String) -> Unit,
+) {
     val entry = current.entry
     Column(
         Modifier.fillMaxSize().padding(24.dp),
@@ -273,7 +280,7 @@ private fun CardFace(current: StudyCard, revealed: Boolean, articleChoice: Gende
                 SpeakButton(onSpeak)
                 if (revealed) {
                     Answer(entry.meaning)
-                    Details(entry)
+                    Details(entry, onSpeakText)
                 }
             }
             CardType.ARTICLE -> {
@@ -367,7 +374,7 @@ private fun Answer(text: String) {
 }
 
 @Composable
-private fun Details(entry: Entry) {
+private fun Details(entry: Entry, onSpeakText: (String) -> Unit) {
     Spacer(Modifier.height(16.dp))
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     if (entry.pos == PartOfSpeech.NOUN) {
@@ -378,7 +385,12 @@ private fun Details(entry: Entry) {
     }
     if (entry.example.isNotEmpty()) {
         Spacer(Modifier.height(16.dp))
-        Text(entry.example, textAlign = TextAlign.Center, fontWeight = FontWeight.Medium)
+        Text(
+            "🔊 ${entry.example}",
+            Modifier.clickable { onSpeakText(entry.example) }.padding(4.dp),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Medium,
+        )
         Text(entry.exampleZh, textAlign = TextAlign.Center, color = muted)
     }
 }

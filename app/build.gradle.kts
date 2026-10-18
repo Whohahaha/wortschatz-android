@@ -32,6 +32,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    androidResources {
+        // Bundled pronunciation is played straight from the APK, which needs it stored uncompressed.
+        noCompress += "webm"
+    }
     buildFeatures {
         compose = true
     }

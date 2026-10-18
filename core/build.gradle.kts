@@ -22,3 +22,13 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+// Lists every text the app may speak, for tools/gen_audio.py.
+tasks.register<JavaExec>("audioManifest") {
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("app.wortschatz.core.AudioKt")
+    args(
+        rootProject.file("app/src/main/assets/wordbooks").path,
+        rootProject.layout.buildDirectory.file("audio-manifest.tsv").get().asFile.path,
+    )
+}
