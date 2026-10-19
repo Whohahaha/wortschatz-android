@@ -25,6 +25,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -32,6 +35,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -171,9 +179,12 @@ private fun GestureCard(
         }
     }
 
+    val tapTargets = remember { TapTargets() }
+
     Box(
         modifier
             .fillMaxWidth()
+            .onGloballyPositioned { tapTargets.origin = it.positionInRoot() }
             .graphicsLayer {
                 translationX = x.value
                 translationY = y.value
@@ -182,6 +193,7 @@ private fun GestureCard(
             .pointerInput(key, scheme) {
                 detectTapGestures(
                     onTap = { offset ->
+                        tapTargets.find(tapTargets.origin + offset)?.let { return@detectTapGestures it() }
                         val third = size.width / 3f
                         latestOnGesture(
                             when {
@@ -267,7 +279,9 @@ private fun GestureCard(
                 )
             },
     ) {
-        ElevatedCard(Modifier.fillMaxSize(), shape = RoundedCornerShape(24.dp)) { content() }
+        ElevatedCard(Modifier.fillMaxSize(), shape = RoundedCornerShape(24.dp)) {
+            CompositionLocalProvider(LocalTapTargets provides tapTargets) { content() }
+        }
         val horizontal = abs(x.value) >= abs(y.value)
         val d = if (horizontal) x.value else y.value
         val progress = abs(d) / threshold
@@ -288,6 +302,29 @@ private fun GestureCard(
             }
         }
     }
+}
+
+/**
+ * Spots on the card that do something when tapped, such as the example sentence. They are
+ * resolved by the card's own tap handler instead of a clickable child, so a swipe that starts
+ * on them still moves the card: nothing inside the card ever swallows a drag.
+ */
+private class TapTargets {
+    var origin = Offset.Zero
+    val targets = HashMap<Any, Pair<Rect, () -> Unit>>()
+
+    fun find(point: Offset): (() -> Unit)? = targets.values.firstOrNull { it.first.contains(point) }?.second
+}
+
+private val LocalTapTargets = staticCompositionLocalOf<TapTargets?> { null }
+
+@Composable
+private fun Modifier.tapTarget(onTap: () -> Unit): Modifier {
+    val targets = LocalTapTargets.current ?: return clickable(onClick = onTap)
+    val key = remember { Any() }
+    val latest by rememberUpdatedState(onTap)
+    DisposableEffect(targets) { onDispose { targets.targets.remove(key) } }
+    return onGloballyPositioned { targets.targets[key] = it.boundsInRoot() to { latest() } }
 }
 
 /** How far a swipe must travel before it counts; a quick flick always counts after 20 dp. */
@@ -430,7 +467,7 @@ private fun Details(entry: Entry, onSpeakText: (String) -> Unit) {
         Spacer(Modifier.height(16.dp))
         Text(
             "🔊 ${entry.example}",
-            Modifier.clickable { onSpeakText(entry.example) }.padding(4.dp),
+            Modifier.tapTarget { onSpeakText(entry.example) }.padding(4.dp),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium,
         )

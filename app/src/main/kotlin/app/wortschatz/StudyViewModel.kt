@@ -363,7 +363,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setNewWordsPerDay(value: Int) {
-        prefs.edit().putInt(KEY_NEW_PER_DAY, value.coerceIn(1, 100)).apply()
+        prefs.edit().putInt(KEY_NEW_PER_DAY, value.coerceIn(5, 100)).apply()
         onSession(rebuild = true) { s -> _state.update { it.copy(home = homeState(s)) } }
     }
 
@@ -414,7 +414,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         totalWords = s.totalWords(),
         reviewsToday = s.reviewsToday(),
         forecast = s.forecast(7).toList(),
-        newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, 10),
+        newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
     )
 
     override fun onCleared() = speaker.shutdown()

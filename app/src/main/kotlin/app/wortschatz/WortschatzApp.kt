@@ -36,7 +36,7 @@ class WortschatzApp : Application() {
 
     val entries: List<Entry> get() = books.entries(activeBookId)
 
-    val studySettings: StudySettings get() = StudySettings(newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, 10))
+    val studySettings: StudySettings get() = StudySettings(newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, DEFAULT_NEW_PER_DAY))
 
     override fun onCreate() {
         super.onCreate()
@@ -46,5 +46,6 @@ class WortschatzApp : Application() {
     companion object {
         const val KEY_BOOK = "active_book"
         const val KEY_NEW_PER_DAY = "new_words_per_day"
+        const val DEFAULT_NEW_PER_DAY = 25
     }
 }

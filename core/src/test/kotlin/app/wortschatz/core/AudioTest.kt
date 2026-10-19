@@ -16,13 +16,13 @@ class AudioTest {
 
     @Test
     fun textsCoverWordPluralVerbFormsAndExample() {
-        val entries = WordBook.parse(File("../app/src/main/assets/wordbooks/goethe_a1_sample.tsv").readText())
+        val entries = WordBook.parse(File("../app/src/main/assets/wordbooks/goethe_a1.tsv").readText())
         val tisch = entries.first { it.lemma == "Tisch" }
-        assertEquals(listOf("der Tisch", "die Tische", "Der Tisch ist neu."), Audio.texts(tisch))
+        assertEquals(listOf("der Tisch", "die Tische", tisch.example), Audio.texts(tisch))
         val fahren = entries.first { it.lemma == "fahren" }
         assertEquals("fährt, fuhr, ist gefahren", Audio.verbForms(fahren))
         val milch = entries.first { it.lemma == "Milch" }
-        assertEquals(listOf("die Milch", "Trinkst du Milch?"), Audio.texts(milch))
+        assertEquals(listOf("die Milch", milch.example), Audio.texts(milch))
     }
 
     @Test

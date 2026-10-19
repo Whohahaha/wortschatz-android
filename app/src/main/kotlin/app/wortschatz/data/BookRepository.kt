@@ -66,7 +66,7 @@ class BookRepository(private val context: Context) {
 
     companion object {
         const val BUILT_IN_ID = "builtin"
-        const val BUILT_IN_TITLE = "Goethe A1 示例词书"
-        private const val BUILT_IN_ASSET = "wordbooks/goethe_a1_sample.tsv"
+        const val BUILT_IN_TITLE = "歌德 A1 词书"
+        private const val BUILT_IN_ASSET = "wordbooks/goethe_a1.tsv"
     }
 }

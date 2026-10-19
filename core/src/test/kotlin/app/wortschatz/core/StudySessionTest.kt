@@ -133,9 +133,9 @@ class StudySessionTest {
 
     @Test
     fun bundledWordBookParses() {
-        val file = File("../app/src/main/assets/wordbooks/goethe_a1_sample.tsv")
+        val file = File("../app/src/main/assets/wordbooks/goethe_a1.tsv")
         val entries = WordBook.parse(file.readText())
-        assertTrue(entries.size >= 80, "only ${entries.size} entries")
+        assertTrue(entries.size >= 700, "only ${entries.size} entries")
         val tisch = entries.first { it.lemma == "Tisch" }
         assertEquals(Gender.DER, tisch.gender)
         assertEquals("Tische", tisch.plural)

@@ -141,7 +141,7 @@ class ImportTest {
 
     @Test
     fun nativeFormatRoundTrips() {
-        val entries = WordBook.parse(File("../app/src/main/assets/wordbooks/goethe_a1_sample.tsv").readText())
+        val entries = WordBook.parse(File("../app/src/main/assets/wordbooks/goethe_a1.tsv").readText())
         val written = WordBook.write(entries, "我的词书")
         assertEquals("我的词书", WordBook.title(written))
         val source = ImportSource.detect("x.tsv", written.toByteArray(), ::jdbc, ::ZstdInputStream, Files.createTempDirectory("t").toFile())

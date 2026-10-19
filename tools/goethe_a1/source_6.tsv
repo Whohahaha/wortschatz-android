@@ -1,0 +1,92 @@
+# Word groups from the list's thematic section (numbers, time, months, colours …)
+other	null	零	Die Vorwahl beginnt mit null.	区号以零开头。
+other	eins	一	Eins, zwei, drei – los!	一、二、三，开始！
+other	zwei	二	Ich habe zwei Brüder.	我有两个哥哥。
+other	drei	三	Wir bleiben drei Tage in Wien.	我们在维也纳待三天。
+other	vier	四	Die Familie hat vier Kinder.	这家有四个孩子。
+other	fünf	五	Der Bus kommt in fünf Minuten.	公交车五分钟后到。
+other	sechs	六	Ich stehe um sechs Uhr auf.	我六点起床。
+other	sieben	七	Die Woche hat sieben Tage.	一周有七天。
+other	acht	八	Der Kurs beginnt um acht.	课八点开始。
+other	neun	九	Mein Sohn ist neun Jahre alt.	我儿子九岁。
+other	zehn	十	Das kostet zehn Euro.	这个十欧元。
+other	elf	十一	Wir wohnen in Zimmer elf.	我们住在十一号房间。
+other	zwölf	十二	Ein Jahr hat zwölf Monate.	一年有十二个月。
+other	zwanzig	二十	Ich bin zwanzig Jahre alt.	我二十岁。
+other	dreißig	三十	Der Monat hat dreißig Tage.	这个月有三十天。
+other	hundert	一百	Das Hotel hat hundert Zimmer.	这家酒店有一百个房间。
+other	tausend	一千	Das Auto kostet fünftausend Euro.	这辆车五千欧元。
+n	die Million	百万	In Berlin wohnen fast vier Millionen Menschen.	柏林住着将近四百万人。
+adj	erste	第一	Heute ist der erste Mai.	今天是五月一日。
+adj	halb	一半的；（钟点）半	Es ist halb drei.	现在两点半。
+n	das Viertel	四分之一；一刻钟	Es ist Viertel nach acht.	现在八点一刻。
+n	die Sekunde	秒	Warte eine Sekunde!	等一秒！
+n	die Minute	分钟	Ich komme in zehn Minuten.	我十分钟后到。
+n	der Tag	天；白天	Guten Tag!	你好！（白天问候）
+n	die Woche	星期，周	Ich arbeite fünf Tage pro Woche.	我一周工作五天。
+n	der Monat	月	Nächsten Monat fahre ich nach Hause.	下个月我回家。
+n	das Jahr	年	Ich lerne seit einem Jahr Deutsch.	我学德语一年了。
+n	der Wochentag	工作日；星期几	Welcher Wochentag ist heute?	今天星期几？
+n	das Wochenende	周末	Schönes Wochenende!	周末愉快！
+n	der Montag	星期一	Am Montag beginnt der Kurs.	课程周一开始。
+n	der Dienstag	星期二	Am Dienstag habe ich frei.	我周二休息。
+n	der Mittwoch	星期三	Wir sehen uns am Mittwoch.	我们周三见。
+n	der Donnerstag	星期四	Am Donnerstag gehe ich schwimmen.	周四我去游泳。
+n	der Freitag	星期五	Am Freitag gehen wir essen.	周五我们去外面吃饭。
+n	der Samstag	星期六	Am Samstag schlafe ich lange.	周六我睡懒觉。
+n	der Sonntag	星期日	Am Sonntag sind die Geschäfte zu.	周日商店不开门。
+n	der Morgen	早晨	Guten Morgen!	早上好！	-
+n	der Vormittag	上午	Am Vormittag arbeite ich.	我上午工作。
+n	der Mittag	中午	Zu Mittag esse ich in der Kantine.	中午我在食堂吃饭。	-
+n	der Nachmittag	下午	Am Nachmittag gehen wir spazieren.	下午我们去散步。
+n	der Abend	晚上	Guten Abend!	晚上好！
+n	die Nacht	夜里	Gute Nacht!	晚安！
+n	der Januar	一月	Im Januar ist es sehr kalt.	一月很冷。	-
+n	der Februar	二月	Mein Geburtstag ist im Februar.	我的生日在二月。	-
+n	der März	三月	Im März beginnt der Frühling.	春天从三月开始。	-
+n	der April	四月	Im April regnet es oft.	四月经常下雨。	-
+n	der Mai	五月	Wir heiraten im Mai.	我们五月结婚。	-
+n	der Juni	六月	Der Kurs endet im Juni.	课程六月结束。	-
+n	der Juli	七月	Im Juli haben die Kinder Ferien.	孩子们七月放假。	-
+n	der August	八月	Im August ist es heiß.	八月很热。	-
+n	der September	九月	Im September beginnt die Schule.	学校九月开学。	-
+n	der Oktober	十月	Im Oktober fahren wir nach Bayern.	十月我们去巴伐利亚。	-
+n	der November	十一月	Im November ist das Wetter oft schlecht.	十一月天气经常不好。	-
+n	der Dezember	十二月	Im Dezember feiern wir Weihnachten.	十二月我们过圣诞节。	-
+n	der Frühling	春天	Im Frühling blühen die Blumen.	春天花开了。	-
+n	der Sommer	夏天	Im Sommer fahren wir ans Meer.	夏天我们去海边。	-
+n	der Herbst	秋天	Im Herbst wird es kühl.	秋天天气变凉。	-
+n	der Winter	冬天	Im Winter schneit es oft.	冬天经常下雪。	-
+n	der Euro	欧元	Das Ticket kostet fünf Euro.	票价五欧元。	-
+n	der Cent	欧分	Eine Briefmarke kostet 95 Cent.	一张邮票 95 欧分。	-
+n	der Meter	米	Der Tisch ist zwei Meter lang.	这张桌子两米长。
+n	der Kilometer	公里	Bis Köln sind es zwanzig Kilometer.	到科隆还有二十公里。
+n	der Liter	升	Ich kaufe einen Liter Milch.	我买一升牛奶。
+n	das Kilo	公斤	Ein Kilo Tomaten, bitte.	请给我一公斤西红柿。	-
+n	das Gramm	克	Ich möchte 200 Gramm Käse.	我要 200 克奶酪。	-
+n	das Prozent	百分比	Heute gibt es 20 Prozent Rabatt.	今天打八折。	-
+other	Deutschland	德国	Ich lebe seit einem Jahr in Deutschland.	我在德国生活了一年。	-
+n	der Deutsche	德国人	Mein Nachbar ist Deutscher.	我的邻居是德国人。	Deutschen
+adj	deutsch	德国的；德语的	Ich lerne die deutsche Sprache.	我在学德语。
+other	Europa	欧洲	Wir machen eine Reise durch Europa.	我们在欧洲旅行。	-
+n	der Europäer	欧洲人	Viele Europäer reisen gern nach Asien.	很多欧洲人喜欢去亚洲旅行。
+adj	europäisch	欧洲的	Berlin ist eine europäische Hauptstadt.	柏林是欧洲的一个首都。
+adj	schwarz	黑色的	Ich trinke den Kaffee schwarz.	我喝黑咖啡。
+adj	weiß	白色的	Im Winter ist alles weiß.	冬天到处一片白。
+adj	grau	灰色的	Heute ist der Himmel grau.	今天天空灰蒙蒙的。
+adj	rot	红色的	Die Ampel ist rot.	红灯了。
+adj	blau	蓝色的	Das Meer ist blau.	大海是蓝色的。
+adj	gelb	黄色的	Die Bananen sind gelb.	香蕉是黄色的。
+adj	grün	绿色的	Die Bäume sind wieder grün.	树又绿了。
+adj	braun	棕色的	Sie hat braune Augen.	她有一双棕色的眼睛。
+n	der Norden	北方	Hamburg liegt im Norden.	汉堡在北部。	-
+n	der Süden	南方	München liegt im Süden.	慕尼黑在南部。	-
+n	der Westen	西方	Köln liegt im Westen.	科隆在西部。	-
+n	der Osten	东方	Dresden liegt im Osten.	德累斯顿在东部。	-
+# A few everyday words kept from the earlier sample book, so existing progress is not lost.
+n	die Lampe	灯	Die Lampe ist kaputt.	灯坏了。
+n	der Stuhl	椅子	Der Stuhl steht am Fenster.	椅子在窗边。
+n	das Fenster	窗户	Mach bitte das Fenster zu.	请把窗户关上。
+n	die Tür	门	Die Tür ist offen.	门开着。
+n	die Katze	猫	Die Katze schläft auf dem Sofa.	猫在沙发上睡觉。
+n	die Freundin	女性朋友；女朋友	Meine Freundin wohnt in Leipzig.	我的女朋友住在莱比锡。	Freundinnen

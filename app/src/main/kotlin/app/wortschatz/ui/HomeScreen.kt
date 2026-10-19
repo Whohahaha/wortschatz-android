@@ -22,7 +22,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import kotlin.math.roundToInt
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,14 +84,7 @@ fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
 
             Forecast(home.forecast)
 
-            Card(Modifier.fillMaxWidth()) {
-                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Text("每天新词", Modifier.weight(1f))
-                    OutlinedButton(onClick = { vm.setNewWordsPerDay(home.newWordsPerDay - 5) }) { Text("−") }
-                    Text("${home.newWordsPerDay}", Modifier.padding(horizontal = 16.dp), fontWeight = FontWeight.Bold)
-                    OutlinedButton(onClick = { vm.setNewWordsPerDay(home.newWordsPerDay + 5) }) { Text("+") }
-                }
-            }
+            NewWordsPerDay(home, vm::setNewWordsPerDay)
 
             Card(Modifier.fillMaxWidth()) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -100,6 +99,35 @@ fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
                     OutlinedButton(onClick = vm::openGestureSettings) { Text("设置") }
                 }
             }
+        }
+    }
+}
+
+/** Slider in steps of 5, with how long the rest of the book takes at that pace. */
+@Composable
+private fun NewWordsPerDay(home: HomeState, onChange: (Int) -> Unit) {
+    var value by remember(home.newWordsPerDay) { mutableFloatStateOf(home.newWordsPerDay.toFloat()) }
+    val perDay = value.roundToInt()
+    val remaining = (home.totalWords - home.learnedWords).coerceAtLeast(0)
+    val days = (remaining + perDay - 1) / perDay
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth().padding(16.dp)) {
+            Row(verticalAlignment = Alignment.Bottom) {
+                Text("每天新词 ", style = MaterialTheme.typography.bodyLarge)
+                Text("$perDay", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.weight(1f))
+                Text(
+                    if (remaining == 0) "这本词书已学完" else "约 $days 天学完剩下的 $remaining 词",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Slider(
+                value = value,
+                onValueChange = { value = (it / 5).roundToInt() * 5f },
+                onValueChangeFinished = { onChange(perDay) },
+                valueRange = 5f..100f,
+                steps = 18,
+            )
         }
     }
 }
