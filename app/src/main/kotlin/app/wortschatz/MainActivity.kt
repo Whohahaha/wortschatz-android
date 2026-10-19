@@ -24,6 +24,7 @@ import app.wortschatz.ui.DrillScreen
 import app.wortschatz.ui.ImportScreen
 import app.wortschatz.ui.GestureSettingsScreen
 import app.wortschatz.ui.HomeScreen
+import app.wortschatz.ui.NumbersScreen
 import app.wortschatz.ui.SettingsScreen
 import app.wortschatz.ui.StudyScreen
 import app.wortschatz.ui.WortschatzTheme
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
                     Screen.BOOKS -> BooksScreen(state.books, viewModel, onPickFile = { pickFile.launch(arrayOf("*/*")) }, onInstallVoice = ::installVoice)
                     Screen.IMPORT -> state.import?.let { ImportScreen(it, viewModel) }
                     Screen.DRILL -> state.drill?.let { DrillScreen(it, viewModel) }
+                    Screen.NUMBERS -> state.numbers?.let { NumbersScreen(it, viewModel) }
                 }
             }
         }

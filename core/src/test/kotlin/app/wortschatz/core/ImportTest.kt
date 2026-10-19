@@ -86,7 +86,7 @@ class ImportTest {
         val tisch = r.entries[0]
         assertEquals(Gender.DER to "Tische", tisch.gender to tisch.plural)
         assertEquals("book1~1", tisch.id)
-        assertEquals(listOf(CardType.MEANING, CardType.ARTICLE, CardType.PLURAL), cardTypesFor(tisch))
+        assertEquals(listOf(CardType.MEANING, CardType.ARTICLE, CardType.PLURAL, CardType.SPELLING, CardType.CLOZE), cardTypesFor(tisch))
         assertEquals("fährt", r.entries[2].verbForms?.present3)
         assertEquals("an·rufen", r.entries[3].display)
         assertEquals(4, r.completed)

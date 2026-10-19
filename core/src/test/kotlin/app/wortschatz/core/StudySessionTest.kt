@@ -31,10 +31,10 @@ class StudySessionTest {
     fun createsOneCardPerKnowledgeDimension() {
         val s = session()
         assertEquals(3, s.totalWords())
-        // tisch: meaning, article, plural; lampe: same; anrufen: meaning, verb forms
+        // tisch: meaning, article, plural, spelling; lampe: same; anrufen: meaning, verb forms, spelling
         val store = InMemoryStudyStore()
         session(store)
-        assertEquals(8, store.loadCards().size)
+        assertEquals(11, store.loadCards().size)
     }
 
     @Test
@@ -195,6 +195,8 @@ class StudySessionTest {
         assertEquals("an·rufen", anrufen.display)
         assertEquals("angerufen", anrufen.verbForms?.participle)
         assertTrue(entries.all { it.meaning.isNotBlank() })
+        val clozes = entries.mapNotNull { Cloze.of(it) }
+        assertTrue(clozes.size >= entries.size * 3 / 4, "only ${clozes.size} gap-fill cards")
     }
 
     @Test

@@ -86,7 +86,10 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
 
             Spacer(Modifier.weight(1.3f))
 
-            TextButton(onClick = vm::startDrill) { Text("冠词快练 der · die · das") }
+            Row {
+                TextButton(onClick = vm::startDrill) { Text("冠词快练") }
+                TextButton(onClick = vm::openNumbers) { Text("听数字") }
+            }
         }
     }
 }

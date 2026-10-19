@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.wortschatz.HomeState
 import app.wortschatz.StudyViewModel
+import app.wortschatz.core.CardType
 import app.wortschatz.core.GestureScheme
 import app.wortschatz.core.NewWordOrder
 import kotlin.math.roundToInt
@@ -74,6 +75,12 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
+            Section("卡片类型")
+            Card(Modifier.fillMaxWidth()) {
+                CardTypeSwitch("拼写卡", "看中文，打出德语单词", CardType.SPELLING, home, vm)
+                CardTypeSwitch("填空卡", "例句挖空，按句子里的形式填写", CardType.CLOZE, home, vm)
+            }
+
             Section("词书")
             SettingRow(home.wordBookTitle, "切换、导入 Anki / CSV 词表") {
                 OutlinedButton(onClick = vm::openBooks) { Text("管理") }
@@ -100,6 +107,13 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
             }
             Spacer(Modifier.height(16.dp))
         }
+    }
+}
+
+@Composable
+private fun CardTypeSwitch(title: String, subtitle: String, type: CardType, home: HomeState, vm: StudyViewModel) {
+    SettingRow(title, subtitle, card = false) {
+        Switch(checked = type !in home.disabledCardTypes, onCheckedChange = { vm.setCardTypeEnabled(type, it) })
     }
 }
 

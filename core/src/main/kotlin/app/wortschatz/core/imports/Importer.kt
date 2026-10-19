@@ -41,6 +41,33 @@ class Lexicon(private val nouns: Map<String, Pair<Gender, String>>, private val 
     fun verb(lemma: String): VerbForms? = verbs[lemma]
     val size: Int get() = nouns.size + verbs.size
 
+    // Inflected form -> lemmas, for looking up a word as it appears in a sentence.
+    private val nounByPlural by lazy {
+        HashMap<String, String>().also { m -> nouns.forEach { (lemma, v) -> if (v.second.isNotEmpty()) m.putIfAbsent(v.second, lemma) } }
+    }
+    private val verbByForm by lazy {
+        HashMap<String, String>().also { m ->
+            verbs.forEach { (lemma, v) ->
+                listOf(v.present3, v.preterite, v.participle).forEach { form ->
+                    form.split(' ').firstOrNull()?.takeIf { it.isNotEmpty() }?.let { m.putIfAbsent(it.lowercase(), lemma) }
+                }
+            }
+        }
+    }
+
+    /** The noun whose singular or plural is [word] ("Kinder" -> "Kind"). */
+    fun nounLemma(word: String): String? = word.takeIf { it in nouns } ?: nounByPlural[word]
+
+    /** The infinitive for [word] as it appears in a sentence: "fährt", "fuhr", "gefahren", "fahre" -> "fahren". */
+    fun verbLemma(word: String): String? {
+        val w = word.lowercase()
+        if (w in verbs) return w
+        verbByForm[w]?.let { return it }
+        // Regular person endings: kaufe, kaufst, kauft, kauften -> kaufen.
+        val stems = listOf("est", "st", "en", "et", "e", "t", "n").filter { w.endsWith(it) }.map { w.removeSuffix(it) } + w
+        return stems.flatMap { listOf(it + "en", it + "n") }.firstOrNull { it in verbs }
+    }
+
     companion object {
         val EMPTY = Lexicon(emptyMap(), emptyMap())
 

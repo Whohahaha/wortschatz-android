@@ -32,6 +32,8 @@ data class StudySettings(
     val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
     /** Seed for [NewWordOrder.RANDOM]; kept fixed so the shuffled order stays the same between sessions. */
     val shuffleSeed: Long = 0,
+    /** Card types the learner switched off; their cards are kept but never shown. */
+    val disabledCardTypes: Set<CardType> = emptySet(),
 )
 
 /** The order new words are introduced in. Reviews are unaffected. */
@@ -59,7 +61,7 @@ data class Counts(val learning: Int, val review: Int, val new: Int) {
  *
  * Order: learning cards that are due, then reviews due today (lowest recall probability
  * first), then new words in the chosen [NewWordOrder], then learning cards due soon.
- * Article, plural and verb-form cards unlock once the word's meaning card has graduated,
+ * Article, plural, verb-form, spelling and gap-fill cards unlock once the word's meaning card has graduated,
  * and at most one card per word is shown per day (apart from learning steps), so sibling
  * cards never give each other away.
  */
@@ -202,7 +204,7 @@ class StudySession(
         return (due + fresh).distinct().map(entryById::getValue)
     }
 
-    private fun activeCards() = cards.values.filter { it.entryId in entryById && it.entryId !in known }
+    private fun activeCards() = cards.values.filter { it.entryId in entryById && it.entryId !in known && it.type !in settings.disabledCardTypes }
 
     /** Words whose meaning card has been seen at least once, or that were marked as known. */
     fun learnedWords(): Int = cards.values.count {

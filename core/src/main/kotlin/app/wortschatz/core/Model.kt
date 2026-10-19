@@ -55,10 +55,13 @@ data class Entry(
 }
 
 enum class CardType(val label: String) {
-    MEANING("释义"), ARTICLE("冠词"), PLURAL("复数"), VERB_FORMS("变位");
+    MEANING("释义"), ARTICLE("冠词"), PLURAL("复数"), VERB_FORMS("变位"), SPELLING("拼写"), CLOZE("填空");
 
     /** Cards whose answer can be checked by the app instead of by self-rating. */
-    val isObjective: Boolean get() = this == ARTICLE
+    val isObjective: Boolean get() = this == ARTICLE || isTyped
+
+    /** Cards answered by typing the German word. */
+    val isTyped: Boolean get() = this == SPELLING || this == CLOZE
 }
 
 fun cardTypesFor(entry: Entry): List<CardType> = buildList {
@@ -66,6 +69,8 @@ fun cardTypesFor(entry: Entry): List<CardType> = buildList {
     if (entry.gender != null) add(CardType.ARTICLE)
     if (entry.pos == PartOfSpeech.NOUN && !entry.plural.isNullOrEmpty()) add(CardType.PLURAL)
     if (entry.verbForms != null) add(CardType.VERB_FORMS)
+    if (Typing.spellable(entry)) add(CardType.SPELLING)
+    if (Cloze.of(entry) != null) add(CardType.CLOZE)
 }
 
 data class Card(

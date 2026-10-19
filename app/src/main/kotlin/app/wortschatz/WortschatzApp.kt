@@ -2,6 +2,7 @@ package app.wortschatz
 
 import android.app.Application
 import android.content.Context
+import app.wortschatz.core.CardType
 import app.wortschatz.core.Entry
 import app.wortschatz.core.NewWordOrder
 import app.wortschatz.core.StudySettings
@@ -42,6 +43,7 @@ class WortschatzApp : Application() {
             newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, DEFAULT_NEW_PER_DAY),
             newWordOrder = NewWordOrder.entries.firstOrNull { it.name == prefs.getString(KEY_NEW_ORDER, null) } ?: NewWordOrder.BOOK,
             shuffleSeed = prefs.getLong(KEY_SHUFFLE_SEED, 0),
+            disabledCardTypes = CardType.entries.filter { prefs.getBoolean(KEY_CARD_OFF_PREFIX + it.name, false) }.toSet(),
         )
 
     override fun onCreate() {
@@ -56,5 +58,6 @@ class WortschatzApp : Application() {
         const val DEFAULT_NEW_PER_DAY = 25
         const val KEY_NEW_ORDER = "new_word_order"
         const val KEY_SHUFFLE_SEED = "shuffle_seed"
+        const val KEY_CARD_OFF_PREFIX = "card_off_"
     }
 }

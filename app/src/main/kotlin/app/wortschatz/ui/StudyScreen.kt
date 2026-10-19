@@ -1,9 +1,32 @@
 package app.wortschatz.ui
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import app.wortschatz.TypedAnswer
+import app.wortschatz.core.Cloze
+import app.wortschatz.core.Lookup
+import app.wortschatz.core.LookupResult
+import app.wortschatz.core.Verdict
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -79,7 +102,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
     val current = state.current ?: return
     val type = current.card.type
     Scaffold { padding ->
-        Column(Modifier.fillMaxSize().padding(padding).padding(16.dp)) {
+        Column(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding().padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 TextButton(onClick = vm::goHome) { Text("‹ 返回") }
                 Spacer(Modifier.weight(1f))
@@ -91,7 +114,11 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 TextButton(onClick = vm::undo, enabled = state.canUndo) { Text("↶ 撤销") }
             }
 
-            val answered = if (type == CardType.ARTICLE) state.articleChoice != null else state.revealed
+            val answered = when {
+                type == CardType.ARTICLE -> state.articleChoice != null
+                type.isTyped -> state.typed != null
+                else -> state.revealed
+            }
             GestureCard(
                 key = current.card.id + current.card.memory.reps,
                 scheme = state.scheme,
@@ -100,11 +127,15 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
             ) {
-                CardFace(current, state.revealed, state.articleChoice, onSpeak = vm::speakCurrent, onSpeakText = vm::speakText)
+                CardFace(
+                    current, state.revealed, state.articleChoice, state.typed,
+                    onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord,
+                )
             }
 
             when {
                 type == CardType.ARTICLE -> ArticleButtons(state.articleChoice, current.entry.gender, vm::chooseArticle)
+                type.isTyped -> TypedAnswerBar(current.card.id + current.card.memory.reps, state.typed, vm)
                 !state.revealed -> Button(onClick = vm::reveal, modifier = Modifier.fillMaxWidth().height(64.dp)) {
                     Text("显示答案", fontSize = 18.sp)
                 }
@@ -112,6 +143,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
             }
         }
     }
+    state.lookup?.let { LookupDialog(it, onSpeak = vm::speakText, onDismiss = vm::closeLookup) }
 }
 
 private val swipeGestures = setOf(Gesture.SWIPE_LEFT, Gesture.SWIPE_RIGHT, Gesture.SWIPE_UP, Gesture.SWIPE_DOWN)
@@ -315,20 +347,26 @@ private fun GestureCard(
  */
 private class TapTargets {
     var origin = Offset.Zero
-    val targets = HashMap<Any, Pair<Rect, () -> Unit>>()
+    val targets = HashMap<Any, Pair<Rect, (Offset) -> Unit>>()
 
-    fun find(point: Offset): (() -> Unit)? = targets.values.firstOrNull { it.first.contains(point) }?.second
+    /** The handler under [point], called with the point relative to that target. */
+    fun find(point: Offset): (() -> Unit)? =
+        targets.values.firstOrNull { it.first.contains(point) }?.let { (rect, onTap) -> { onTap(point - rect.topLeft) } }
 }
 
 private val LocalTapTargets = staticCompositionLocalOf<TapTargets?> { null }
 
 @Composable
-private fun Modifier.tapTarget(onTap: () -> Unit): Modifier {
-    val targets = LocalTapTargets.current ?: return clickable(onClick = onTap)
+private fun Modifier.tapTarget(onTap: () -> Unit): Modifier = tapTargetAt { onTap() }
+
+/** Like [tapTarget], with where on the target the tap landed. */
+@Composable
+private fun Modifier.tapTargetAt(onTap: (Offset) -> Unit): Modifier {
+    val targets = LocalTapTargets.current ?: return pointerInput(Unit) { detectTapGestures(onTap = onTap) }
     val key = remember { Any() }
     val latest by rememberUpdatedState(onTap)
     DisposableEffect(targets) { onDispose { targets.targets.remove(key) } }
-    return onGloballyPositioned { targets.targets[key] = it.boundsInRoot() to { latest() } }
+    return onGloballyPositioned { targets.targets[key] = it.boundsInRoot() to { offset -> latest(offset) } }
 }
 
 /** How far a swipe must travel before it counts; a quick flick always counts after 20 dp. */
@@ -343,8 +381,10 @@ private fun CardFace(
     current: StudyCard,
     revealed: Boolean,
     articleChoice: Gender?,
+    typed: TypedAnswer?,
     onSpeak: () -> Unit,
     onSpeakText: (String) -> Unit,
+    onLookup: (String) -> Unit,
 ) {
     val entry = current.entry
     Column(
@@ -364,7 +404,7 @@ private fun CardFace(
                 SpeakButton(onSpeak)
                 if (revealed) {
                     Answer(entry.meaning)
-                    Details(entry, onSpeakText)
+                    Details(entry, onSpeakText, onLookup)
                 }
             }
             CardType.ARTICLE -> {
@@ -419,6 +459,8 @@ private fun CardFace(
                     FormRow("完成时", perfect(forms.auxiliary, forms.participle))
                 }
             }
+            CardType.SPELLING -> SpellingFace(entry, typed, onSpeak, onSpeakText, onLookup)
+            CardType.CLOZE -> ClozeFace(entry, typed, onSpeakText, onLookup)
         }
     }
 }
@@ -476,7 +518,7 @@ private fun Answer(text: String) {
 }
 
 @Composable
-private fun Details(entry: Entry, onSpeakText: (String) -> Unit) {
+private fun Details(entry: Entry, onSpeakText: (String) -> Unit, onLookup: (String) -> Unit) {
     Spacer(Modifier.height(16.dp))
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     if (entry.pos == PartOfSpeech.NOUN) {
@@ -490,24 +532,213 @@ private fun Details(entry: Entry, onSpeakText: (String) -> Unit) {
         Spacer(Modifier.height(16.dp))
         // A split separable verb is easy to miss when reading: highlight both of its parts.
         val highlight = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-        val parts = Hints.separableParts(entry.example, entry)
-        Text(
-            buildAnnotatedString {
-                append("🔊 ")
-                var at = 0
-                for (range in parts) {
-                    append(entry.example.substring(at, range.first))
-                    withStyle(highlight) { append(entry.example.substring(range)) }
-                    at = range.last + 1
-                }
-                append(entry.example.substring(at))
-            },
-            Modifier.tapTarget { onSpeakText(entry.example) }.padding(4.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Medium,
-        )
+        Example(entry.example, Hints.separableParts(entry.example, entry), highlight, onSpeakText, onLookup)
         Text(entry.exampleZh, textAlign = TextAlign.Center, color = muted)
     }
+}
+
+/**
+ * An example sentence: tapping 🔊 reads it aloud, tapping a word looks it up.
+ * [marked] ranges of the sentence are drawn in [markStyle].
+ */
+@Composable
+private fun Example(
+    sentence: String,
+    marked: List<IntRange>,
+    markStyle: SpanStyle,
+    onSpeakText: (String) -> Unit,
+    onLookup: (String) -> Unit,
+) {
+    val speaker = "🔊 "
+    var layout by remember { mutableStateOf<TextLayoutResult?>(null) }
+    val pad = with(LocalDensity.current) { 4.dp.toPx() }
+    Text(
+        buildAnnotatedString {
+            append(speaker)
+            var at = 0
+            for (range in marked) {
+                append(sentence.substring(at, range.first))
+                withStyle(markStyle) { append(sentence.substring(range)) }
+                at = range.last + 1
+            }
+            append(sentence.substring(at))
+        },
+        Modifier
+            .tapTargetAt { offset ->
+                val index = layout?.getOffsetForPosition(offset - Offset(pad, pad)) ?: return@tapTargetAt
+                val word = if (index < speaker.length) null else Lookup.wordAt(sentence, index - speaker.length)
+                if (word == null) onSpeakText(sentence) else onLookup(word)
+            }
+            .padding(4.dp),
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Medium,
+        onTextLayout = { layout = it },
+    )
+    Text(
+        "点句中的词可以查词",
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+    )
+}
+
+/** Spelling card: the meaning is shown, the German word is typed below the card. */
+@Composable
+private fun SpellingFace(
+    entry: Entry,
+    typed: TypedAnswer?,
+    onSpeak: () -> Unit,
+    onSpeakText: (String) -> Unit,
+    onLookup: (String) -> Unit,
+) {
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    if (typed == null) {
+        Text(entry.meaning, fontSize = 30.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(16.dp))
+        Text(
+            buildAnnotatedString {
+                entry.gender?.let { g -> withStyle(SpanStyle(color = genderColor(g), fontWeight = FontWeight.Bold)) { append(g.article + " ") } }
+                append("_".repeat(entry.lemma.length.coerceIn(3, 12)))
+            },
+            fontSize = 28.sp,
+            color = muted,
+        )
+        Spacer(Modifier.height(12.dp))
+        Text("用德语拼出来", color = muted)
+    } else {
+        Headword(entry)
+        SpeakButton(onSpeak)
+        VerdictLine(typed)
+        Text(entry.meaning, color = muted)
+        if (entry.example.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            Example(entry.example, emptyList(), SpanStyle(), onSpeakText, onLookup)
+        }
+    }
+}
+
+/** Gap-fill card: the example sentence with the word left out, to be typed in its right form. */
+@Composable
+private fun ClozeFace(entry: Entry, typed: TypedAnswer?, onSpeakText: (String) -> Unit, onLookup: (String) -> Unit) {
+    val cloze = remember(entry) { Cloze.of(entry) } ?: return
+    val muted = MaterialTheme.colorScheme.onSurfaceVariant
+    if (typed == null) {
+        Text(cloze.prompt, fontSize = 24.sp, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(12.dp))
+        Text(entry.exampleZh, color = muted, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(20.dp))
+        Text("提示：${entry.meaning}", color = muted, textAlign = TextAlign.Center)
+        Text("按句子里的形式填写", style = MaterialTheme.typography.bodySmall, color = muted)
+    } else {
+        val mark = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+        Example(entry.example, cloze.gaps, mark, onSpeakText, onLookup)
+        Text(entry.exampleZh, color = muted, textAlign = TextAlign.Center)
+        VerdictLine(typed)
+        Spacer(Modifier.height(8.dp))
+        Headword(entry)
+        Text(entry.meaning, color = muted)
+    }
+}
+
+@Composable
+private fun VerdictLine(typed: TypedAnswer) {
+    Spacer(Modifier.height(12.dp))
+    val (text, color) = when (typed.verdict) {
+        Verdict.CORRECT -> "✓ 正确" to CountColors.Review
+        Verdict.CLOSE -> "差一点：你写的是 ${typed.input}" to Color(0xFFE09B2D)
+        Verdict.WRONG -> (if (typed.input.isBlank()) "答案是 ${typed.expected}" else "✗ 你写的是 ${typed.input}") to CountColors.Learning
+    }
+    Text(text, color = color, fontSize = 18.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+    if (typed.verdict != Verdict.CORRECT && typed.input.isNotBlank()) {
+        Text("正确：${typed.expected}", fontSize = 18.sp, textAlign = TextAlign.Center)
+    }
+    Spacer(Modifier.height(8.dp))
+}
+
+/** Input under a spelling or gap-fill card, with keys for the letters most keyboards hide. */
+@Composable
+private fun TypedAnswerBar(key: String, typed: TypedAnswer?, vm: StudyViewModel) {
+    if (typed != null) {
+        if (typed.verdict != Verdict.CORRECT) {
+            Button(onClick = vm::continueTyped, modifier = Modifier.fillMaxWidth().height(64.dp)) {
+                Text(if (typed.verdict == Verdict.CLOSE) "继续（记为模糊）" else "继续", fontSize = 18.sp)
+            }
+        } else {
+            Spacer(Modifier.height(64.dp))
+        }
+        return
+    }
+    var value by remember(key) { mutableStateOf(TextFieldValue("")) }
+    val focus = remember { FocusRequester() }
+    LaunchedEffect(key) { focus.requestFocus() }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = { value = it },
+            modifier = Modifier.fillMaxWidth().focusRequester(focus),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.titleLarge,
+            placeholder = { Text("输入德语") },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(onDone = { vm.submitTyped(value.text) }),
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            listOf("ä", "ö", "ü", "ß", "Ä", "Ö", "Ü").forEach { letter ->
+                OutlinedButton(
+                    onClick = {
+                        val sel = value.selection
+                        val text = value.text.replaceRange(sel.start, sel.end, letter)
+                        value = TextFieldValue(text, TextRange(sel.start + letter.length))
+                    },
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(0.dp),
+                ) { Text(letter, fontSize = 18.sp) }
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            OutlinedButton(onClick = vm::giveUpTyped, modifier = Modifier.weight(1f).height(52.dp)) { Text("不会") }
+            Button(onClick = { vm.submitTyped(value.text) }, modifier = Modifier.weight(2f).height(52.dp)) { Text("检查", fontSize = 18.sp) }
+        }
+    }
+}
+
+/** What the offline dictionary knows about a tapped word. */
+@Composable
+private fun LookupDialog(result: LookupResult, onSpeak: (String) -> Unit, onDismiss: () -> Unit) {
+    val headword = result.entry?.spoken
+        ?: result.noun?.let { "${it.first.article} ${result.nounLemma}" }
+        ?: result.verbLemma
+        ?: result.word
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = { TextButton(onClick = onDismiss) { Text("好") } },
+        dismissButton = { TextButton(onClick = { onSpeak(headword) }) { Text("🔊 发音") } },
+        title = { Text(headword) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                if (!headword.endsWith(result.word) && !headword.equals(result.word, ignoreCase = true)) {
+                    Text("句中形式：${result.word}", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                result.entry?.let { Text(it.meaning, fontSize = 20.sp) }
+                result.noun?.let { (gender, plural) ->
+                    Text(
+                        buildAnnotatedString {
+                            withStyle(SpanStyle(color = genderColor(gender), fontWeight = FontWeight.Bold)) { append(gender.article) }
+                            append(" ${result.nounLemma}")
+                            append(if (plural.isNotEmpty()) " · 复数 die $plural" else " · 无复数")
+                        }
+                    )
+                }
+                result.verb?.let { Text("${it.present3} · ${it.preterite} · ${perfect(it.auxiliary, it.participle)}") }
+                if (!result.found) Text("离线词典里没有这个词。", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                else if (result.entry == null) Text("不在当前词书里，只有语法信息。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+    )
 }
 
 @Composable

@@ -20,6 +20,12 @@ import app.wortschatz.core.Counts
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
 import app.wortschatz.core.NewWordOrder
+import app.wortschatz.core.Cloze
+import app.wortschatz.core.GermanNumbers
+import app.wortschatz.core.Lookup
+import app.wortschatz.core.LookupResult
+import app.wortschatz.core.Typing
+import app.wortschatz.core.Verdict
 import app.wortschatz.core.StudySession
 import app.wortschatz.core.StudySettings
 import app.wortschatz.core.formatInterval
@@ -44,7 +50,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { HOME, STUDY, DONE, SETTINGS, GESTURES, BOOKS, IMPORT, DRILL }
+enum class Screen { HOME, STUDY, DONE, SETTINGS, GESTURES, BOOKS, IMPORT, DRILL, NUMBERS }
 
 data class HomeState(
     val wordBookTitle: String,
@@ -55,6 +61,7 @@ data class HomeState(
     val forecast: List<Int>,
     val newWordsPerDay: Int,
     val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
+    val disabledCardTypes: Set<CardType> = emptySet(),
     val streak: Int = 0,
     val knownWords: Int = 0,
     /** Reviews due beyond today's limit, held back so a missed week is not one huge session. */
@@ -78,6 +85,32 @@ data class DrillState(
     val finished: Boolean get() = index >= words.size
 }
 
+/** A typed answer on a spelling or gap-fill card, once checked. */
+data class TypedAnswer(val input: String, val verdict: Verdict, val expected: String)
+
+/** Which numbers the listening drill reads out. */
+enum class NumberRange(val label: String, val range: IntRange, val year: Boolean = false) {
+    SMALL("0–20", 0..20),
+    TENS("21–99", 21..99),
+    HUNDREDS("100–999", 100..999),
+    THOUSANDS("1000–9999", 1000..9999),
+    YEARS("年份", 1900..2030, year = true),
+}
+
+/** Listening drill: a number is read out in German and typed as digits. Practice only. */
+data class NumberDrillState(
+    val range: NumberRange = NumberRange.TENS,
+    val target: Int = 0,
+    val input: String = "",
+    /** Non-null once the answer has been checked. */
+    val right: Boolean? = null,
+    val correct: Int = 0,
+    val total: Int = 0,
+    val combo: Int = 0,
+) {
+    val spoken: String get() = if (range.year) GermanNumbers.year(target) else GermanNumbers.words(target)
+}
+
 data class StudyCard(val card: Card, val entry: Entry, val intervals: Map<Rating, String>)
 
 data class UiState(
@@ -94,6 +127,10 @@ data class UiState(
     val books: BooksState = BooksState(),
     val import: ImportState? = null,
     val drill: DrillState? = null,
+    val typed: TypedAnswer? = null,
+    /** A word tapped in an example sentence, while its lookup is shown. */
+    val lookup: LookupResult? = null,
+    val numbers: NumberDrillState? = null,
 )
 
 data class BooksState(
@@ -147,7 +184,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     fun startStudy() = onSession { s -> showNext(s) }
 
     fun goHome() = onSession { s ->
-        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, drill = null, home = homeState(s)) }
+        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, drill = null, numbers = null, lookup = null, home = homeState(s)) }
     }
 
     // ---- Article speed drill ----
@@ -352,7 +389,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun reveal() {
         val current = _state.value.current ?: return
-        if (current.card.type == CardType.ARTICLE || _state.value.revealed) return
+        if (current.card.type.isObjective || _state.value.revealed) return
         _state.update { it.copy(revealed = true) }
         val answer = when (current.card.type) {
             CardType.PLURAL -> Audio.plural(current.entry)
@@ -381,6 +418,132 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // ---- Spelling and gap-fill cards ----
+
+    /** Checks a typed answer. Right moves on by itself; anything else waits for [continueTyped]. */
+    fun submitTyped(input: String) {
+        val current = _state.value.current ?: return
+        if (!current.card.type.isTyped || _state.value.typed != null) return
+        val entry = current.entry
+        val typed = if (current.card.type == CardType.SPELLING) {
+            TypedAnswer(input, Typing.gradeSpelling(input, entry), entry.lemma)
+        } else {
+            val cloze = Cloze.of(entry) ?: return
+            TypedAnswer(input, cloze.grade(input), cloze.answer)
+        }
+        _state.update { it.copy(typed = typed) }
+        speaker.speak(if (current.card.type == CardType.SPELLING) entry.spoken else entry.example)
+        if (typed.verdict == Verdict.CORRECT) {
+            viewModelScope.launch {
+                delay(900)
+                if (_state.value.current?.card?.id == current.card.id) rate(Rating.GOOD)
+            }
+        }
+    }
+
+    /** "不会": show the answer; the card counts as forgotten. */
+    fun giveUpTyped() {
+        val current = _state.value.current ?: return
+        if (!current.card.type.isTyped || _state.value.typed != null) return
+        val expected = if (current.card.type == CardType.SPELLING) current.entry.lemma else Cloze.of(current.entry)?.answer.orEmpty()
+        _state.update { it.copy(typed = TypedAnswer("", Verdict.WRONG, expected)) }
+        speaker.speak(if (current.card.type == CardType.SPELLING) current.entry.spoken else current.entry.example)
+    }
+
+    /** Close (case, umlaut spelling, one letter off) counts as Hard; wrong as Again. */
+    fun continueTyped() {
+        val typed = _state.value.typed ?: return
+        rate(if (typed.verdict == Verdict.CLOSE) Rating.HARD else Rating.AGAIN)
+    }
+
+    // ---- Looking up words in example sentences ----
+
+    private var lookupIndex: Pair<String, Lookup>? = null
+
+    fun lookupWord(word: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.Default) {
+                val bookId = app.activeBookId
+                val index = lookupIndex?.takeIf { it.first == bookId }?.second
+                    ?: Lookup(app.entries, app.lexicon).also { lookupIndex = bookId to it }
+                index.find(word)
+            }
+            _state.update { it.copy(lookup = result) }
+        }
+    }
+
+    fun closeLookup() = _state.update { it.copy(lookup = null) }
+
+    // ---- Number listening drill ----
+
+    fun openNumbers() {
+        val range = NumberRange.entries.firstOrNull { it.name == prefs.getString(KEY_NUMBER_RANGE, null) } ?: NumberRange.TENS
+        _state.update { it.copy(screen = Screen.NUMBERS, numbers = nextNumber(NumberDrillState(range = range))) }
+        replayNumber()
+    }
+
+    fun setNumberRange(range: NumberRange) {
+        prefs.edit().putString(KEY_NUMBER_RANGE, range.name).apply()
+        _state.update { it.copy(numbers = nextNumber(NumberDrillState(range = range))) }
+        replayNumber()
+    }
+
+    fun replayNumber() {
+        _state.value.numbers?.let { speaker.speak(it.spoken) }
+    }
+
+    fun numberKey(key: Char) {
+        val n = _state.value.numbers ?: return
+        if (n.right != null) return
+        val input = when (key) {
+            '⌫' -> n.input.dropLast(1)
+            else -> (n.input + key).take(4)
+        }
+        _state.update { it.copy(numbers = n.copy(input = input)) }
+    }
+
+    fun submitNumber() {
+        val n = _state.value.numbers ?: return
+        if (n.right != null || n.input.isEmpty()) return
+        val right = n.input.toIntOrNull() == n.target
+        _state.update {
+            it.copy(
+                numbers = n.copy(
+                    right = right,
+                    correct = n.correct + if (right) 1 else 0,
+                    total = n.total + 1,
+                    combo = if (right) n.combo + 1 else 0,
+                )
+            )
+        }
+        if (right) {
+            viewModelScope.launch {
+                delay(900)
+                if (_state.value.numbers?.let { it.target == n.target && it.right != null } == true) nextNumberAndSpeak()
+            }
+        } else {
+            replayNumber()
+        }
+    }
+
+    fun nextNumberAndSpeak() {
+        _state.update { s -> s.copy(numbers = s.numbers?.let(::nextNumber)) }
+        replayNumber()
+    }
+
+    private fun nextNumber(n: NumberDrillState): NumberDrillState {
+        var target = n.range.range.random()
+        if (n.range.range.count() > 1) while (target == n.target) target = n.range.range.random()
+        return n.copy(target = target, input = "", right = null)
+    }
+
+    // ---- Card types ----
+
+    fun setCardTypeEnabled(type: CardType, enabled: Boolean) {
+        prefs.edit().putBoolean(WortschatzApp.KEY_CARD_OFF_PREFIX + type.name, !enabled).apply()
+        onSession(rebuild = true) { s -> _state.update { it.copy(home = homeState(s)) } }
+    }
+
     /** "斩": the current word is already known and never comes up again. */
     fun markKnown() = onSession { s ->
         val current = _state.value.current ?: return@onSession
@@ -399,7 +562,11 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     fun onGesture(gesture: Gesture) {
         val s = _state.value
         val current = s.current ?: return
-        val answered = if (current.card.type == CardType.ARTICLE) s.articleChoice != null else s.revealed
+        val answered = when {
+            current.card.type == CardType.ARTICLE -> s.articleChoice != null
+            current.card.type.isTyped -> s.typed != null
+            else -> s.revealed
+        }
         when (val command = resolve(s.scheme.actionFor(gesture), current.card.type, answered)) {
             Command.Nothing -> Unit
             Command.Reveal -> reveal()
@@ -449,6 +616,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         val current = s.current ?: return
         // Hearing "der Tisch" would give away an article card that has not been answered yet.
         if (current.card.type == CardType.ARTICLE && s.articleChoice == null) return
+        if (current.card.type.isTyped && s.typed == null) return
         speaker.speak(current.entry.spoken)
     }
 
@@ -487,12 +655,13 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
                 current = StudyCard(card, entry, intervals),
                 revealed = false,
                 articleChoice = null,
+                typed = null,
                 counts = s.counts(),
                 canUndo = s.canUndo,
             )
         }
         // Never read the answer aloud before it is shown: article cards stay silent until answered.
-        if (card.type != CardType.ARTICLE) speaker.speak(entry.spoken)
+        if (!card.type.isObjective) speaker.speak(entry.spoken)
     }
 
     private fun onSession(rebuild: Boolean = false, block: (StudySession) -> Unit) {
@@ -515,6 +684,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         forecast = s.forecast(7).toList(),
         newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
         newWordOrder = app.studySettings.newWordOrder,
+        disabledCardTypes = app.studySettings.disabledCardTypes,
         streak = s.streak(),
         knownWords = s.knownWords(),
         backlog = s.backlog(),
@@ -530,5 +700,6 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         const val KEY_CUSTOM = "gesture_custom"
         const val KEY_SENSITIVITY = "swipe_sensitivity"
         const val DRILL_SIZE = 20
+        const val KEY_NUMBER_RANGE = "number_range"
     }
 }

@@ -27,6 +27,9 @@ object Audio {
     /** Everything the app may read aloud for an entry. */
     fun texts(entry: Entry): List<String> =
         listOfNotNull(entry.spoken, plural(entry), verbForms(entry), entry.example.ifEmpty { null })
+
+    /** Numbers for the listening drill that get bundled audio; larger ones use the phone's voice. */
+    val numberTexts: List<String> get() = (0..100).map(GermanNumbers::words)
 }
 
 /**
@@ -38,6 +41,7 @@ fun main(args: Array<String>) {
     val texts = File(args[0]).listFiles { f -> f.extension == "tsv" }.orEmpty().sorted()
         .flatMap { WordBook.parse(it.readText()) }
         .flatMap(Audio::texts)
+        .plus(Audio.numberTexts)
         .distinct()
     File(args[1]).apply { parentFile?.mkdirs() }.writeText(texts.joinToString("") { "${Audio.key(it)}\t$it\n" })
     println("Wrote ${texts.size} texts to ${args[1]}")
