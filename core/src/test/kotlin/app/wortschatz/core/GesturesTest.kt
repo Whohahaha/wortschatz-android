@@ -55,9 +55,11 @@ class GesturesTest {
 
     @Test
     fun articleCardsCannotBeRatedOrHeardBeforeAnswering() {
-        GestureAction.entries.filter { it.answers || it == GestureAction.REVEAL }.forEach {
+        GestureAction.entries.filter { (it.answers || it == GestureAction.REVEAL) && it != GestureAction.MASTER }.forEach {
             assertEquals(Command.Nothing, resolve(it, CardType.ARTICLE, revealed = false), it.name)
         }
+        // "Already known" works on any card, article cards included.
+        assertEquals(Command.Master, resolve(GestureAction.MASTER, CardType.ARTICLE, revealed = false))
         assertEquals(Command.Nothing, resolve(GestureAction.SPEAK, CardType.ARTICLE, revealed = false))
         assertEquals(Command.Speak, resolve(GestureAction.SPEAK, CardType.ARTICLE, revealed = true))
         assertEquals(Command.Undo, resolve(GestureAction.UNDO, CardType.ARTICLE, revealed = false))

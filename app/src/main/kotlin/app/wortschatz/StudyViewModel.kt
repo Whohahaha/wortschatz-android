@@ -43,7 +43,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { HOME, STUDY, DONE, GESTURES, BOOKS, IMPORT }
+enum class Screen { HOME, STUDY, DONE, GESTURES, BOOKS, IMPORT, DRILL }
 
 data class HomeState(
     val wordBookTitle: String,
@@ -53,7 +53,28 @@ data class HomeState(
     val reviewsToday: Int,
     val forecast: List<Int>,
     val newWordsPerDay: Int,
+    val streak: Int = 0,
+    val knownWords: Int = 0,
+    /** Reviews due beyond today's limit, held back so a missed week is not one huge session. */
+    val backlog: Int = 0,
+    val reminderEnabled: Boolean = false,
+    val reminderHour: Int = Reminder.DEFAULT_HOUR,
 )
+
+/** One round of the article speed drill. Practice only: answers here do not change the schedule. */
+data class DrillState(
+    val words: List<Entry>,
+    val index: Int = 0,
+    /** The article tapped for the current word; non-null while the feedback is shown. */
+    val choice: Gender? = null,
+    val correct: Int = 0,
+    val combo: Int = 0,
+    val bestCombo: Int = 0,
+    val mistakes: List<Entry> = emptyList(),
+) {
+    val current: Entry? get() = words.getOrNull(index)
+    val finished: Boolean get() = index >= words.size
+}
 
 data class StudyCard(val card: Card, val entry: Entry, val intervals: Map<Rating, String>)
 
@@ -70,6 +91,7 @@ data class UiState(
     val swipeSensitivity: SwipeSensitivity = SwipeSensitivity.MEDIUM,
     val books: BooksState = BooksState(),
     val import: ImportState? = null,
+    val drill: DrillState? = null,
 )
 
 data class BooksState(
@@ -123,8 +145,64 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     fun startStudy() = onSession { s -> showNext(s) }
 
     fun goHome() = onSession { s ->
-        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, home = homeState(s)) }
+        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, drill = null, home = homeState(s)) }
     }
+
+    // ---- Article speed drill ----
+
+    fun startDrill() = onSession { s ->
+        val words = s.drillNouns(DRILL_SIZE)
+        if (words.isEmpty()) {
+            viewModelScope.launch { toast("这本词书里没有名词") }
+            return@onSession
+        }
+        _state.update { it.copy(screen = Screen.DRILL, drill = DrillState(words)) }
+    }
+
+    fun drillAnswer(gender: Gender) {
+        val drill = _state.value.drill ?: return
+        val word = drill.current ?: return
+        if (drill.choice != null) return
+        val right = gender == word.gender
+        val combo = if (right) drill.combo + 1 else 0
+        _state.update {
+            it.copy(
+                drill = drill.copy(
+                    choice = gender,
+                    correct = drill.correct + if (right) 1 else 0,
+                    combo = combo,
+                    bestCombo = maxOf(drill.bestCombo, combo),
+                    mistakes = if (right) drill.mistakes else drill.mistakes + word,
+                )
+            )
+        }
+        speaker.speak(word.spoken)
+        viewModelScope.launch {
+            delay(if (right) 550 else 1400)
+            _state.update { s ->
+                val d = s.drill ?: return@update s
+                if (d.current?.id != word.id) s else s.copy(drill = d.copy(index = d.index + 1, choice = null))
+            }
+        }
+    }
+
+    // ---- Daily reminder ----
+
+    /** Call after the notification permission was granted (or is not needed). */
+    fun setReminderEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean(Reminder.KEY_ENABLED, enabled).apply()
+        Reminder.schedule(app)
+        refreshHome()
+    }
+
+    fun changeReminderHour(delta: Int) {
+        val hour = (prefs.getInt(Reminder.KEY_HOUR, Reminder.DEFAULT_HOUR) + delta + 24) % 24
+        prefs.edit().putInt(Reminder.KEY_HOUR, hour).apply()
+        Reminder.schedule(app)
+        refreshHome()
+    }
+
+    private fun refreshHome() = onSession { s -> _state.update { it.copy(home = homeState(s)) } }
 
     // ---- Word books and import ----
 
@@ -301,6 +379,13 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /** "斩": the current word is already known and never comes up again. */
+    fun markKnown() = onSession { s ->
+        val current = _state.value.current ?: return@onSession
+        s.markKnown(current.card)
+        showNext(s)
+    }
+
     fun undo() = onSession { s ->
         val card = s.undo() ?: return@onSession
         show(s, card)
@@ -319,6 +404,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
             is Command.Rate -> rate(command.rating)
             Command.Undo -> undo()
             Command.Speak -> speakCurrent()
+            Command.Master -> markKnown()
         }
     }
 
@@ -415,6 +501,11 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         reviewsToday = s.reviewsToday(),
         forecast = s.forecast(7).toList(),
         newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
+        streak = s.streak(),
+        knownWords = s.knownWords(),
+        backlog = s.backlog(),
+        reminderEnabled = prefs.getBoolean(Reminder.KEY_ENABLED, false),
+        reminderHour = prefs.getInt(Reminder.KEY_HOUR, Reminder.DEFAULT_HOUR),
     )
 
     override fun onCleared() = speaker.shutdown()
@@ -424,5 +515,6 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         const val KEY_SCHEME = "gesture_scheme"
         const val KEY_CUSTOM = "gesture_custom"
         const val KEY_SENSITIVITY = "swipe_sensitivity"
+        const val DRILL_SIZE = 20
     }
 }

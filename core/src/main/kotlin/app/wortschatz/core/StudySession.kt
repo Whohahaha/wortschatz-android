@@ -15,6 +15,11 @@ interface StudyStore {
     /** Restores the card to its earlier state and deletes the log. */
     fun undoReview(restored: Card, logId: Long)
     fun logsSince(timestamp: Long): List<ReviewLog>
+    /** Times of every answer since [timestamp]; only used for the streak, so it can be cheap. */
+    fun reviewTimesSince(timestamp: Long): List<Long> = logsSince(timestamp).map { it.timestamp }
+    /** Words the user marked as already known ("斩"); they never come up again. */
+    fun knownEntries(): Set<String>
+    fun setKnown(entryId: String, known: Boolean)
 }
 
 data class StudySettings(
@@ -52,10 +57,18 @@ class StudySession(
     private val cards = LinkedHashMap<String, Card>()
     private var todayStart = 0L
     private val todayLogs = ArrayList<ReviewLog>()
-    private val undoStack = ArrayDeque<ReviewLog>()
+    private val undoStack = ArrayDeque<Undoable>()
+    private val known = HashSet<String>()
+
+    /** What [undo] can take back: an answer, or marking a word as known. */
+    private sealed interface Undoable {
+        data class Answer(val log: ReviewLog) : Undoable
+        data class Known(val card: Card) : Undoable
+    }
 
     init {
         store.loadCards().forEach { cards[it.id] = it }
+        known += store.knownEntries()
         val missing = entries.flatMap { e ->
             cardTypesFor(e).map { Card(e.id, it) }.filter { it.id !in cards }
         }
@@ -68,12 +81,10 @@ class StudySession(
 
     fun entry(card: Card): Entry = entryById.getValue(card.entryId)
 
-    val canUndo: Boolean get() = undoStack.isNotEmpty()
-
     fun nextCard(): Card? {
         val now = clock()
         refreshDay(now)
-        val active = cards.values.filter { it.entryId in entryById }
+        val active = activeCards()
         val siblingsSeen = siblingsSeenToday()
         fun buried(c: Card) = siblingsSeen[c.entryId]?.any { it != c.id } == true
         fun inLearning(c: Card) = c.memory.phase == Phase.LEARNING || c.memory.phase == Phase.RELEARNING
@@ -99,18 +110,35 @@ class StudySession(
         val saved = log.copy(id = store.recordReview(updated, log))
         cards[card.id] = updated
         todayLogs.add(saved)
-        undoStack.addLast(saved)
+        undoStack.addLast(Undoable.Answer(saved))
         return updated
     }
 
-    /** Reverts the last answer and returns the card so it can be shown again. */
-    fun undo(): Card? {
-        val log = undoStack.removeLastOrNull() ?: return null
-        val restored = cards.getValue(log.cardId).copy(memory = log.before)
-        store.undoReview(restored, log.id)
-        cards[log.cardId] = restored
-        todayLogs.removeAll { it.id == log.id }
-        return restored
+    /** Marks the card's word as already known: none of its cards come up again ("斩"). */
+    fun markKnown(card: Card) {
+        store.setKnown(card.entryId, true)
+        known += card.entryId
+        undoStack.addLast(Undoable.Known(card))
+    }
+
+    val canUndo: Boolean get() = undoStack.isNotEmpty()
+
+    /** Reverts the last answer (or "known" mark) and returns the card so it can be shown again. */
+    fun undo(): Card? = when (val last = undoStack.removeLastOrNull()) {
+        null -> null
+        is Undoable.Known -> {
+            store.setKnown(last.card.entryId, false)
+            known -= last.card.entryId
+            cards.getValue(last.card.id)
+        }
+        is Undoable.Answer -> {
+            val log = last.log
+            val restored = cards.getValue(log.cardId).copy(memory = log.before)
+            store.undoReview(restored, log.id)
+            cards[log.cardId] = restored
+            todayLogs.removeAll { it.id == log.id }
+            restored
+        }
     }
 
     /** Time until the card is due again for each rating, in milliseconds. */
@@ -122,7 +150,7 @@ class StudySession(
     fun counts(): Counts {
         val now = clock()
         refreshDay(now)
-        val active = cards.values.filter { it.entryId in entryById }
+        val active = activeCards()
         val siblingsSeen = siblingsSeenToday()
         fun buried(c: Card) = siblingsSeen[c.entryId]?.any { it != c.id } == true
         val learning = active.count {
@@ -141,7 +169,7 @@ class StudySession(
     fun upcomingEntries(days: Int = 1): List<Entry> {
         refreshDay(clock())
         val horizon = todayEnd() + days * Fsrs.DAY
-        val active = cards.values.filter { it.entryId in entryById }
+        val active = activeCards()
         val due = active.filter { it.memory.phase != Phase.NEW && it.memory.due < horizon }.map { it.entryId }
         val fresh = active.filter { it.type == CardType.MEANING && it.memory.phase == Phase.NEW }
             .sortedBy { order.getValue(it.entryId) }
@@ -151,9 +179,42 @@ class StudySession(
         return (due + fresh).distinct().map(entryById::getValue)
     }
 
-    /** Words whose meaning card has been seen at least once. */
-    fun learnedWords(): Int =
-        cards.values.count { it.type == CardType.MEANING && it.entryId in entryById && it.memory.phase != Phase.NEW }
+    private fun activeCards() = cards.values.filter { it.entryId in entryById && it.entryId !in known }
+
+    /** Words whose meaning card has been seen at least once, or that were marked as known. */
+    fun learnedWords(): Int = cards.values.count {
+        it.type == CardType.MEANING && it.entryId in entryById && (it.memory.phase != Phase.NEW || it.entryId in known)
+    }
+
+    /**
+     * Nouns for the article speed drill: words already met first (shuffled), topped up with the
+     * next new nouns in book order. Practice only; it does not touch the schedule.
+     */
+    fun drillNouns(count: Int, random: kotlin.random.Random = kotlin.random.Random.Default): List<Entry> {
+        val nouns = entryById.values.filter { it.gender != null }
+        val meaning = cards.values.filter { it.type == CardType.MEANING }.associateBy { it.entryId }
+        val (met, fresh) = nouns.partition { meaning[it.id]?.memory?.phase != Phase.NEW || it.id in known }
+        return (met.shuffled(random) + fresh.sortedBy { order.getValue(it.id) }).take(count).shuffled(random)
+    }
+
+    fun knownWords(): Int = entryById.keys.count { it in known }
+
+    /** Reviews due today beyond the daily limit; they wait, most-at-risk first, for later days. */
+    fun backlog(): Int {
+        refreshDay(clock())
+        val due = activeCards().count { it.memory.phase == Phase.REVIEW && it.memory.due < todayEnd() }
+        return (due - settings.maxReviewsPerDay).coerceAtLeast(0)
+    }
+
+    /** Consecutive study days up to today (or up to yesterday, if nothing was studied yet today). */
+    fun streak(): Int {
+        refreshDay(clock())
+        val days = store.reviewTimesSince(todayStart - 400 * Fsrs.DAY).map { (todayStart - dayStart(it)) / Fsrs.DAY }.toSet()
+        var day = if (0L in days) 0L else 1L
+        var count = 0
+        while (day in days) { count++; day++ }
+        return count
+    }
 
     fun totalWords(): Int = entryById.size
 
@@ -163,7 +224,7 @@ class StudySession(
     fun forecast(days: Int = 7): IntArray {
         refreshDay(clock())
         val result = IntArray(days)
-        cards.values.filter { it.memory.phase == Phase.REVIEW && it.entryId in entryById }.forEach {
+        activeCards().filter { it.memory.phase == Phase.REVIEW }.forEach {
             val day = ((it.memory.due - todayStart) / Fsrs.DAY).coerceAtLeast(0)
             if (day < days) result[day.toInt()]++
         }
@@ -249,4 +310,9 @@ class InMemoryStudyStore : StudyStore {
         logs.removeAll { it.id == logId }
     }
     override fun logsSince(timestamp: Long) = logs.filter { it.timestamp >= timestamp }
+    private val known = HashSet<String>()
+    override fun knownEntries(): Set<String> = known.toSet()
+    override fun setKnown(entryId: String, known: Boolean) {
+        if (known) this.known += entryId else this.known -= entryId
+    }
 }

@@ -3,6 +3,8 @@
 
     <!-- Keeps the daily audio preparation job scheduled after a reboot. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Daily study reminder; asked for only when the user turns the reminder on. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- Needed on Android 11+ to find the installed text-to-speech engine. -->
     <queries>
@@ -41,6 +43,13 @@
                 <data android:mimeType="application/vnd.anki" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".ReminderReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <service
             android:name=".AudioPrepJob"
             android:exported="false"

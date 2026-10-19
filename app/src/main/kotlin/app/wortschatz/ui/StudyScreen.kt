@@ -67,6 +67,7 @@ import app.wortschatz.core.GestureScheme
 import app.wortschatz.core.resolve
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
+import app.wortschatz.core.Hints
 import app.wortschatz.core.PartOfSpeech
 import app.wortschatz.core.fsrs.Rating
 import kotlinx.coroutines.launch
@@ -86,6 +87,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 Text("  ${state.counts.learning}", color = CountColors.Learning, fontWeight = FontWeight.Bold)
                 Text("  ${state.counts.review}", color = CountColors.Review, fontWeight = FontWeight.Bold)
                 Spacer(Modifier.weight(1f))
+                TextButton(onClick = vm::markKnown) { Text("斩") }
                 TextButton(onClick = vm::undo, enabled = state.canUndo) { Text("↶ 撤销") }
             }
 
@@ -121,6 +123,7 @@ private fun Command.color(): Color = when (this) {
         Rating.GOOD -> Color(0xFF30A46C)
         Rating.EASY -> Color(0xFF3B82F6)
     }
+    Command.Master -> Color(0xFF8E4EC6)
     else -> Color(0xFF8B8D98)
 }
 
@@ -134,6 +137,7 @@ private fun Command.label(): String = when (this) {
     Command.Reveal -> "显示答案"
     Command.Undo -> "撤销"
     Command.Speak -> "发音"
+    Command.Master -> "斩：已会"
     Command.Nothing -> ""
 }
 
@@ -238,7 +242,7 @@ private fun GestureCard(
                         val command = if (committed) latestCommandFor(gesture) else Command.Nothing
                         when (command) {
                             Command.Nothing -> settle()
-                            is Command.Rate -> {
+                            is Command.Rate, Command.Master -> {
                                 if (!armed) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 scope.launch {
                                     when (gesture) {
@@ -380,6 +384,7 @@ private fun CardFace(
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(entry.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    GenderTip(entry)
                 }
             }
             CardType.PLURAL -> {
@@ -444,7 +449,24 @@ private fun Headword(entry: Entry) {
 
 @Composable
 private fun SpeakButton(onSpeak: () -> Unit) {
-    TextButton(onClick = onSpeak) { Text("🔊 发音") }
+    Text(
+        "🔊 发音",
+        Modifier.tapTarget(onSpeak).padding(horizontal = 16.dp, vertical = 10.dp),
+        color = MaterialTheme.colorScheme.primary,
+    )
+}
+
+/** Rule of thumb for the article, or a warning when this noun breaks it. */
+@Composable
+private fun GenderTip(entry: Entry) {
+    val hint = Hints.gender(entry) ?: return
+    Spacer(Modifier.height(12.dp))
+    Text(
+        if (hint.follows) "💡 ${hint.rule}" else "⚠️ ${hint.rule}，但它是例外",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textAlign = TextAlign.Center,
+    )
 }
 
 @Composable
@@ -459,14 +481,27 @@ private fun Details(entry: Entry, onSpeakText: (String) -> Unit) {
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     if (entry.pos == PartOfSpeech.NOUN) {
         Text(entry.plural?.let { "复数：die $it" } ?: "无复数", color = muted)
+        GenderTip(entry)
     }
     entry.verbForms?.let {
         Text("${it.present3} · ${it.preterite} · ${perfect(it.auxiliary, it.participle)}", color = muted)
     }
     if (entry.example.isNotEmpty()) {
         Spacer(Modifier.height(16.dp))
+        // A split separable verb is easy to miss when reading: highlight both of its parts.
+        val highlight = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+        val parts = Hints.separableParts(entry.example, entry)
         Text(
-            "🔊 ${entry.example}",
+            buildAnnotatedString {
+                append("🔊 ")
+                var at = 0
+                for (range in parts) {
+                    append(entry.example.substring(at, range.first))
+                    withStyle(highlight) { append(entry.example.substring(range)) }
+                    at = range.last + 1
+                }
+                append(entry.example.substring(at))
+            },
             Modifier.tapTarget { onSpeakText(entry.example) }.padding(4.dp),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium,

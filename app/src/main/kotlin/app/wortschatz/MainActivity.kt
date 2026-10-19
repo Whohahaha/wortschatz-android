@@ -1,8 +1,11 @@
 package app.wortschatz
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.KeyEvent
@@ -17,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.wortschatz.core.Gesture
 import app.wortschatz.ui.BooksScreen
 import app.wortschatz.ui.DoneScreen
+import app.wortschatz.ui.DrillScreen
 import app.wortschatz.ui.ImportScreen
 import app.wortschatz.ui.GestureSettingsScreen
 import app.wortschatz.ui.HomeScreen
@@ -30,6 +34,21 @@ class MainActivity : ComponentActivity() {
         uri?.let(viewModel::beginImport)
     }
 
+    // The reminder is only switched on once the notification permission is granted.
+    private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        viewModel.setReminderEnabled(granted)
+    }
+
+    private fun toggleReminder(enabled: Boolean) {
+        if (enabled && Build.VERSION.SDK_INT >= 33 &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
+            askNotifications.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            viewModel.setReminderEnabled(enabled)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,12 +60,13 @@ class MainActivity : ComponentActivity() {
                     if (state.screen == Screen.IMPORT) viewModel.openBooks() else viewModel.goHome()
                 }
                 when (state.screen) {
-                    Screen.HOME -> HomeScreen(state.home, state.scheme, viewModel)
+                    Screen.HOME -> HomeScreen(state.home, state.scheme, viewModel, onReminderToggle = ::toggleReminder)
                     Screen.STUDY -> StudyScreen(state, viewModel)
                     Screen.DONE -> DoneScreen(state, viewModel)
                     Screen.GESTURES -> GestureSettingsScreen(state.scheme, state.swipeSensitivity, viewModel)
                     Screen.BOOKS -> BooksScreen(state.books, viewModel, onPickFile = { pickFile.launch(arrayOf("*/*")) }, onInstallVoice = ::installVoice)
                     Screen.IMPORT -> state.import?.let { ImportScreen(it, viewModel) }
+                    Screen.DRILL -> state.drill?.let { DrillScreen(it, viewModel) }
                 }
             }
         }

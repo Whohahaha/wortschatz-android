@@ -18,7 +18,7 @@ import app.wortschatz.core.fsrs.Rating
  * truth that a future sync will exchange between devices.
  */
 class SqliteStudyStore(context: Context) :
-    SQLiteOpenHelper(context, "wortschatz.db", null, 1), StudyStore {
+    SQLiteOpenHelper(context, "wortschatz.db", null, 2), StudyStore {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
@@ -37,9 +37,37 @@ class SqliteStudyStore(context: Context) :
                 reps INTEGER NOT NULL, lapses INTEGER NOT NULL)"""
         )
         db.execSQL("CREATE INDEX review_log_ts ON review_log(ts)")
+        createKnownEntries(db)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) = Unit
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) createKnownEntries(db)
+    }
+
+    /** Words marked as already known ("斩"), with when; kept separate so a future sync can exchange them. */
+    private fun createKnownEntries(db: SQLiteDatabase) =
+        db.execSQL("CREATE TABLE known_entry (entry_id TEXT PRIMARY KEY, ts INTEGER NOT NULL)")
+
+    override fun knownEntries(): Set<String> =
+        readableDatabase.rawQuery("SELECT entry_id FROM known_entry", null).use { c ->
+            buildSet { while (c.moveToNext()) add(c.getString(0)) }
+        }
+
+    override fun setKnown(entryId: String, known: Boolean) {
+        if (known) {
+            writableDatabase.insertWithOnConflict("known_entry", null, ContentValues().apply {
+                put("entry_id", entryId)
+                put("ts", System.currentTimeMillis())
+            }, SQLiteDatabase.CONFLICT_REPLACE)
+        } else {
+            writableDatabase.delete("known_entry", "entry_id = ?", arrayOf(entryId))
+        }
+    }
+
+    override fun reviewTimesSince(timestamp: Long): List<Long> =
+        readableDatabase.rawQuery("SELECT ts FROM review_log WHERE ts >= ?", arrayOf(timestamp.toString())).use { c ->
+            buildList { while (c.moveToNext()) add(c.getLong(0)) }
+        }
 
     override fun loadCards(): List<Card> = readableDatabase.rawQuery("SELECT * FROM card", null).use { c ->
         buildList {

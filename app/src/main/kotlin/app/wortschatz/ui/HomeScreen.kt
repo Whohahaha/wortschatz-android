@@ -23,6 +23,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.Slider
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -41,7 +42,7 @@ import app.wortschatz.UiState
 import app.wortschatz.core.GestureScheme
 
 @Composable
-fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
+fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, onReminderToggle: (Boolean) -> Unit) {
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -78,13 +79,52 @@ fun HomeScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel) {
             }
 
             Text(
-                "已学 ${home.learnedWords} / ${home.totalWords} 词 · 今天答题 ${home.reviewsToday} 次",
+                buildString {
+                    if (home.streak > 0) append("🔥 连续 ${home.streak} 天 · ")
+                    append("已学 ${home.learnedWords} / ${home.totalWords} 词")
+                    if (home.knownWords > 0) append("（斩 ${home.knownWords}）")
+                    append(" · 今天答题 ${home.reviewsToday} 次")
+                },
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+
+            if (home.backlog > 0) {
+                Text(
+                    "积压了 ${home.backlog} 个复习。每天先复习最容易忘的，积压会在接下来几天慢慢消化，不用一次补完。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = CountColors.Learning,
+                )
+            }
+
+            FilledTonalButton(onClick = vm::startDrill, modifier = Modifier.fillMaxWidth()) {
+                Text("冠词快练：der / die / das 三色速答")
+            }
 
             Forecast(home.forecast)
 
             NewWordsPerDay(home, vm::setNewWordsPerDay)
+
+            Card(Modifier.fillMaxWidth()) {
+                Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text("每日提醒")
+                        Text(
+                            "只在有词要学时提醒，并告诉你还剩多少。",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Switch(checked = home.reminderEnabled, onCheckedChange = onReminderToggle)
+                }
+                if (home.reminderEnabled) {
+                    Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text("提醒时间", Modifier.weight(1f))
+                        OutlinedButton(onClick = { vm.changeReminderHour(-1) }) { Text("−") }
+                        Text("%02d:00".format(home.reminderHour), Modifier.padding(horizontal = 12.dp), fontWeight = FontWeight.Bold)
+                        OutlinedButton(onClick = { vm.changeReminderHour(1) }) { Text("+") }
+                    }
+                }
+            }
 
             Card(Modifier.fillMaxWidth()) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {

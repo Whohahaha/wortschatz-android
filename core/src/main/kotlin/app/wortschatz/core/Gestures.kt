@@ -28,10 +28,12 @@ enum class GestureAction(val label: String) {
     REVEAL_OR_AGAIN("先显示答案，再按不认识"),
     UNDO("撤销上一题"),
     SPEAK("播放发音"),
+    /** "斩": the word is already known and never comes up again (undo brings it back). */
+    MASTER("斩（已会，不再出现）"),
     ;
 
     /** Whether the card should fly off screen when this action is triggered by a swipe. */
-    val answers: Boolean get() = this in setOf(AGAIN, HARD, GOOD, EASY, REVEAL_OR_GOOD, REVEAL_OR_AGAIN)
+    val answers: Boolean get() = this in setOf(AGAIN, HARD, GOOD, EASY, REVEAL_OR_GOOD, REVEAL_OR_AGAIN, MASTER)
 }
 
 /** What the study screen should do after resolving a gesture against the current card. */
@@ -41,6 +43,7 @@ sealed interface Command {
     data class Rate(val rating: Rating) : Command
     data object Undo : Command
     data object Speak : Command
+    data object Master : Command
 }
 
 data class GestureScheme(
@@ -112,11 +115,11 @@ object GestureSchemes {
     /** 国产背单词 App 式: 左右滑 = 认识/不认识, 上滑“斩”掉. Swipe directions mirror 不背单词/墨墨 habits. */
     val CN_STYLE = scheme(
         "cn_style", "国产 App 式（墨墨、不背单词）",
-        "点卡片看答案，左滑认识、右滑不认识，上滑太简单（相当于“斩”），下滑撤销，长按发音。",
+        "点卡片看答案，左滑认识、右滑不认识，上滑“斩”掉已经会的词，下滑撤销，长按发音。",
         *tapAll,
         Gesture.SWIPE_LEFT to GestureAction.GOOD,
         Gesture.SWIPE_RIGHT to GestureAction.AGAIN,
-        Gesture.SWIPE_UP to GestureAction.EASY,
+        Gesture.SWIPE_UP to GestureAction.MASTER,
         Gesture.SWIPE_DOWN to GestureAction.UNDO,
         Gesture.LONG_PRESS to GestureAction.SPEAK,
         Gesture.DOUBLE_TAP to GestureAction.HARD,
@@ -161,6 +164,7 @@ fun resolve(action: GestureAction, type: CardType, revealed: Boolean): Command {
         return when (action) {
             GestureAction.UNDO -> Command.Undo
             GestureAction.SPEAK -> if (revealed) Command.Speak else Command.Nothing
+            GestureAction.MASTER -> Command.Master
             else -> Command.Nothing
         }
     }
@@ -175,5 +179,6 @@ fun resolve(action: GestureAction, type: CardType, revealed: Boolean): Command {
         GestureAction.REVEAL_OR_AGAIN -> if (revealed) Command.Rate(Rating.AGAIN) else Command.Reveal
         GestureAction.UNDO -> Command.Undo
         GestureAction.SPEAK -> Command.Speak
+        GestureAction.MASTER -> Command.Master
     }
 }

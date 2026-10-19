@@ -41,6 +41,7 @@ class WortschatzApp : Application() {
     override fun onCreate() {
         super.onCreate()
         AudioPrepJob.schedule(this)
+        Reminder.schedule(this)
     }
 
     companion object {

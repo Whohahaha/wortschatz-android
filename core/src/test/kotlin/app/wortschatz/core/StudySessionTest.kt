@@ -124,6 +124,45 @@ class StudySessionTest {
     }
 
     @Test
+    fun knownWordsNeverComeBackUntilUndone() {
+        val s = session()
+        val first = s.nextCard()!!
+        s.markKnown(first)
+        assertEquals(1, s.knownWords())
+        assertEquals(1, s.learnedWords())
+        assertTrue(generateSequence { s.nextCard()?.also { s.answer(it, Rating.EASY, 1000) } }.none { it.entryId == first.entryId })
+        // Undo the answers, then the "known" mark: the word is back.
+        while (true) { if (s.undo()?.entryId == first.entryId) break }
+        assertEquals(0, s.knownWords())
+        assertEquals(first.entryId, s.nextCard()?.entryId)
+    }
+
+    @Test
+    fun drillPrefersNounsAlreadyMet() {
+        val s = session()
+        assertEquals(setOf("tisch", "lampe"), s.drillNouns(5).map { it.id }.toSet())
+        val first = s.nextCard()!!
+        assertEquals("tisch", first.entryId)
+        s.answer(first, Rating.GOOD, 1000)
+        // Tisch has been met, Lampe is still new: Tisch is picked first.
+        assertEquals(listOf("tisch"), s.drillNouns(1).map { it.id })
+    }
+
+    @Test
+    fun streakCountsConsecutiveStudyDays() {
+        val s = session()
+        assertEquals(0, s.streak())
+        s.answer(s.nextCard()!!, Rating.GOOD, 1000)
+        assertEquals(1, s.streak())
+        now += DAY
+        assertEquals(1, s.streak(), "nothing studied yet today keeps yesterday's streak")
+        s.answer(s.nextCard()!!, Rating.GOOD, 1000)
+        assertEquals(2, s.streak())
+        now += 2 * DAY
+        assertEquals(0, s.streak())
+    }
+
+    @Test
     fun forecastCountsUpcomingReviews() {
         val s = session()
         while (true) s.answer(s.nextCard() ?: break, Rating.EASY, 1000)
