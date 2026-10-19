@@ -3,6 +3,7 @@ package app.wortschatz
 import android.app.Application
 import android.content.Context
 import app.wortschatz.core.Entry
+import app.wortschatz.core.NewWordOrder
 import app.wortschatz.core.StudySettings
 import app.wortschatz.core.imports.Lexicon
 import app.wortschatz.data.BookRepository
@@ -36,7 +37,12 @@ class WortschatzApp : Application() {
 
     val entries: List<Entry> get() = books.entries(activeBookId)
 
-    val studySettings: StudySettings get() = StudySettings(newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, DEFAULT_NEW_PER_DAY))
+    val studySettings: StudySettings
+        get() = StudySettings(
+            newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, DEFAULT_NEW_PER_DAY),
+            newWordOrder = NewWordOrder.entries.firstOrNull { it.name == prefs.getString(KEY_NEW_ORDER, null) } ?: NewWordOrder.BOOK,
+            shuffleSeed = prefs.getLong(KEY_SHUFFLE_SEED, 0),
+        )
 
     override fun onCreate() {
         super.onCreate()
@@ -48,5 +54,7 @@ class WortschatzApp : Application() {
         const val KEY_BOOK = "active_book"
         const val KEY_NEW_PER_DAY = "new_words_per_day"
         const val DEFAULT_NEW_PER_DAY = 25
+        const val KEY_NEW_ORDER = "new_word_order"
+        const val KEY_SHUFFLE_SEED = "shuffle_seed"
     }
 }

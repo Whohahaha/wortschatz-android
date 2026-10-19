@@ -49,7 +49,7 @@ fun GestureSettingsScreen(scheme: GestureScheme, sensitivity: SwipeSensitivity, 
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = vm::goHome) { Text("‹ 返回") }
+                TextButton(onClick = vm::openSettings) { Text("‹ 返回") }
                 Text("手势设置", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             }
 

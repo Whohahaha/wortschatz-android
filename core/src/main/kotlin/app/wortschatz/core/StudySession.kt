@@ -29,7 +29,26 @@ data class StudySettings(
     /** The study day rolls over at this local hour, so a late night session counts as "today". */
     val dayStartHour: Int = 4,
     val zone: ZoneId = ZoneId.systemDefault(),
+    val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
+    /** Seed for [NewWordOrder.RANDOM]; kept fixed so the shuffled order stays the same between sessions. */
+    val shuffleSeed: Long = 0,
 )
+
+/** The order new words are introduced in. Reviews are unaffected. */
+enum class NewWordOrder(val label: String) {
+    RANDOM("随机"),
+    ALPHABETICAL("从 A 开始"),
+    BOOK("词书顺序"),
+}
+
+/** German dictionary order: case and umlauts folded (ä sorts with a), ß as ss, separable marks ignored. */
+fun germanSortKey(lemma: String): String = buildString {
+    for (c in lemma.lowercase()) when (c) {
+        'ä' -> append('a'); 'ö' -> append('o'); 'ü' -> append('u'); 'ß' -> append("ss")
+        '|', '·', '-', ' ' -> {}
+        else -> append(c)
+    }
+}
 
 data class Counts(val learning: Int, val review: Int, val new: Int) {
     val total: Int get() = learning + review + new
@@ -39,7 +58,7 @@ data class Counts(val learning: Int, val review: Int, val new: Int) {
  * Decides which card to show next and records answers.
  *
  * Order: learning cards that are due, then reviews due today (lowest recall probability
- * first), then new words in word-book order, then learning cards due soon.
+ * first), then new words in the chosen [NewWordOrder], then learning cards due soon.
  * Article, plural and verb-form cards unlock once the word's meaning card has graduated,
  * and at most one card per word is shown per day (apart from learning steps), so sibling
  * cards never give each other away.
@@ -53,7 +72,11 @@ class StudySession(
     val fsrs = Fsrs(desiredRetention = settings.desiredRetention)
 
     private val entryById = entries.associateBy { it.id }
-    private val order = entries.withIndex().associate { (i, e) -> e.id to i }
+    private val order: Map<String, Int> = when (settings.newWordOrder) {
+        NewWordOrder.BOOK -> entries
+        NewWordOrder.ALPHABETICAL -> entries.sortedWith(compareBy({ germanSortKey(it.lemma) }, { it.lemma }))
+        NewWordOrder.RANDOM -> entries.shuffled(kotlin.random.Random(settings.shuffleSeed))
+    }.withIndex().associate { (i, e) -> e.id to i }
     private val cards = LinkedHashMap<String, Card>()
     private var todayStart = 0L
     private val todayLogs = ArrayList<ReviewLog>()

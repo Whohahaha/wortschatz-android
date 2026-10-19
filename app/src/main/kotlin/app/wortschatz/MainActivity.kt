@@ -24,6 +24,7 @@ import app.wortschatz.ui.DrillScreen
 import app.wortschatz.ui.ImportScreen
 import app.wortschatz.ui.GestureSettingsScreen
 import app.wortschatz.ui.HomeScreen
+import app.wortschatz.ui.SettingsScreen
 import app.wortschatz.ui.StudyScreen
 import app.wortschatz.ui.WortschatzTheme
 
@@ -57,10 +58,15 @@ class MainActivity : ComponentActivity() {
             WortschatzTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()
                 BackHandler(enabled = state.screen != Screen.HOME) {
-                    if (state.screen == Screen.IMPORT) viewModel.openBooks() else viewModel.goHome()
+                    when (state.screen) {
+                        Screen.IMPORT -> viewModel.openBooks()
+                        Screen.GESTURES -> viewModel.openSettings()
+                        else -> viewModel.goHome()
+                    }
                 }
                 when (state.screen) {
-                    Screen.HOME -> HomeScreen(state.home, state.scheme, viewModel, onReminderToggle = ::toggleReminder)
+                    Screen.HOME -> HomeScreen(state.home, viewModel)
+                    Screen.SETTINGS -> SettingsScreen(state.home, state.scheme, viewModel, onReminderToggle = ::toggleReminder)
                     Screen.STUDY -> StudyScreen(state, viewModel)
                     Screen.DONE -> DoneScreen(state, viewModel)
                     Screen.GESTURES -> GestureSettingsScreen(state.scheme, state.swipeSensitivity, viewModel)

@@ -149,6 +149,19 @@ class StudySessionTest {
     }
 
     @Test
+    fun newWordOrderCanBeAlphabeticalOrRandom() {
+        fun newOrder(order: NewWordOrder, seed: Long = 0): List<String> {
+            val s = StudySession(WordBook.parse(book), InMemoryStudyStore(), settings.copy(newWordsPerDay = 3, newWordOrder = order, shuffleSeed = seed)) { now }
+            return generateSequence { s.nextCard()?.also { s.answer(it, Rating.EASY, 1000) } }.map { it.entryId }.toList()
+        }
+        assertEquals(listOf("tisch", "lampe", "anrufen"), newOrder(NewWordOrder.BOOK))
+        assertEquals(listOf("anrufen", "lampe", "tisch"), newOrder(NewWordOrder.ALPHABETICAL))
+        assertEquals(newOrder(NewWordOrder.RANDOM, 7), newOrder(NewWordOrder.RANDOM, 7), "same seed, same order")
+        assertEquals(setOf("tisch", "lampe", "anrufen"), newOrder(NewWordOrder.RANDOM, 7).toSet())
+        assertEquals(listOf("abend", "apfel", "arzt", "ubung"), listOf("Übung", "Arzt", "Apfel", "Abend").map(::germanSortKey).sorted())
+    }
+
+    @Test
     fun streakCountsConsecutiveStudyDays() {
         val s = session()
         assertEquals(0, s.streak())

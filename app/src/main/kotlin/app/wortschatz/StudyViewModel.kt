@@ -19,6 +19,7 @@ import app.wortschatz.core.resolve
 import app.wortschatz.core.Counts
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
+import app.wortschatz.core.NewWordOrder
 import app.wortschatz.core.StudySession
 import app.wortschatz.core.StudySettings
 import app.wortschatz.core.formatInterval
@@ -43,7 +44,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { HOME, STUDY, DONE, GESTURES, BOOKS, IMPORT, DRILL }
+enum class Screen { HOME, STUDY, DONE, SETTINGS, GESTURES, BOOKS, IMPORT, DRILL }
 
 data class HomeState(
     val wordBookTitle: String,
@@ -53,6 +54,7 @@ data class HomeState(
     val reviewsToday: Int,
     val forecast: List<Int>,
     val newWordsPerDay: Int,
+    val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
     val streak: Int = 0,
     val knownWords: Int = 0,
     /** Reviews due beyond today's limit, held back so a missed week is not one huge session. */
@@ -414,6 +416,8 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun openGestureSettings() = _state.update { it.copy(screen = Screen.GESTURES) }
 
+    fun openSettings() = onSession { s -> _state.update { it.copy(screen = Screen.SETTINGS, home = homeState(s)) } }
+
     fun selectGestureScheme(id: String) {
         prefs.edit().putString(KEY_SCHEME, id).apply()
         _state.update { it.copy(scheme = loadScheme()) }
@@ -450,6 +454,15 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setNewWordsPerDay(value: Int) {
         prefs.edit().putInt(KEY_NEW_PER_DAY, value.coerceIn(5, 100)).apply()
+        onSession(rebuild = true) { s -> _state.update { it.copy(home = homeState(s)) } }
+    }
+
+    fun setNewWordOrder(order: NewWordOrder) {
+        prefs.edit().apply {
+            putString(WortschatzApp.KEY_NEW_ORDER, order.name)
+            // Each switch to random deals a fresh shuffle, which then stays put between sessions.
+            if (order == NewWordOrder.RANDOM) putLong(WortschatzApp.KEY_SHUFFLE_SEED, System.nanoTime())
+        }.apply()
         onSession(rebuild = true) { s -> _state.update { it.copy(home = homeState(s)) } }
     }
 
@@ -501,6 +514,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         reviewsToday = s.reviewsToday(),
         forecast = s.forecast(7).toList(),
         newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
+        newWordOrder = app.studySettings.newWordOrder,
         streak = s.streak(),
         knownWords = s.knownWords(),
         backlog = s.backlog(),
