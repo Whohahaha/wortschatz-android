@@ -2,7 +2,6 @@ package app.wortschatz.ui
 
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material3.TextButton
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +31,7 @@ import app.wortschatz.StudyViewModel
 import app.wortschatz.UiState
 
 @Composable
-fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
+fun HomeScreen(home: HomeState?, vm: StudyViewModel, onRestore: () -> Unit) {
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -42,11 +43,28 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
         ) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text("德语单词", Modifier.weight(1f), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-                TextButton(onClick = vm::openSettings) { Text("设置") }
+                OutlinedButton(onClick = vm::openSettings) { Text("⚙ 设置") }
             }
+            Spacer(Modifier.height(8.dp))
             Row(Modifier.fillMaxWidth()) {
-                TextButton(onClick = vm::openBooks, contentPadding = PaddingValues(0.dp)) {
-                    Text("${home.wordBookTitle}  ›", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedButton(onClick = vm::openBooks) { Text("📚 ${home.wordBookTitle}") }
+            }
+            if (home.offerRestore) {
+                Spacer(Modifier.height(16.dp))
+                Card(Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(16.dp)) {
+                        Text("以前用过？可以从备份恢复进度", fontWeight = FontWeight.Medium)
+                        Text(
+                            "旧版本会自动备份到「下载/Wortschatz」文件夹。",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Button(onClick = onRestore) { Text("从备份恢复") }
+                            TextButton(onClick = vm::dismissRestore) { Text("不用了") }
+                        }
+                    }
                 }
             }
 
@@ -86,9 +104,14 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel) {
 
             Spacer(Modifier.weight(1.3f))
 
-            Row {
-                TextButton(onClick = vm::startDrill) { Text("冠词快练") }
-                TextButton(onClick = vm::openNumbers) { Text("听数字") }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                FilledTonalButton(onClick = vm::startDrill, modifier = Modifier.weight(1f).height(52.dp)) { Text("冠词快练") }
+                FilledTonalButton(onClick = vm::openNumbers, modifier = Modifier.weight(1f).height(52.dp)) { Text("听数字") }
+            }
+            Spacer(Modifier.height(12.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                FilledTonalButton(onClick = vm::openWords, modifier = Modifier.weight(1f).height(52.dp)) { Text("词表") }
+                FilledTonalButton(onClick = vm::openStats, modifier = Modifier.weight(1f).height(52.dp)) { Text("统计") }
             }
         }
     }

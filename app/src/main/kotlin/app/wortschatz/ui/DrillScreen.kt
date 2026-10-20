@@ -74,7 +74,7 @@ private fun Question(drill: DrillState, vm: StudyViewModel) {
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 val choice = drill.choice
-                Text(
+                FitText(
                     buildAnnotatedString {
                         if (choice == null) append("___ ") else {
                             val gender = word.gender!!
@@ -85,9 +85,8 @@ private fun Question(drill: DrillState, vm: StudyViewModel) {
                         }
                         append(word.lemma)
                     },
-                    fontSize = 44.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center,
+                    Modifier.fillMaxWidth(),
+                    maxSize = 44.sp,
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(word.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)

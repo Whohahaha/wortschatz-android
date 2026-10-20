@@ -98,7 +98,7 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 @Composable
-fun StudyScreen(state: UiState, vm: StudyViewModel) {
+fun StudyScreen(state: UiState, vm: StudyViewModel, onShadow: (String) -> Unit) {
     val current = state.current ?: return
     val type = current.card.type
     Scaffold { padding ->
@@ -126,10 +126,10 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 commandFor = { g -> resolve(state.scheme.actionFor(g), type, answered) },
                 onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
-            ) {
+            ) { dragProgress ->
                 CardFace(
-                    current, state.revealed, state.articleChoice, state.typed,
-                    onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord,
+                    current, state.revealed, state.articleChoice, state.typed, state.recording, dragProgress,
+                    onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord, onShadow = onShadow,
                 )
             }
 
@@ -186,7 +186,8 @@ private fun GestureCard(
     commandFor: (Gesture) -> Command,
     onGesture: (Gesture) -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    /** Gets how far the card is dragged, 0 at rest and 1 at the commit distance. */
+    content: @Composable (dragProgress: () -> Float) -> Unit,
 ) {
     val x = remember(key) { Animatable(0f) }
     val y = remember(key) { Animatable(0f) }
@@ -249,9 +250,11 @@ private fun GestureCard(
             .pointerInput(key, scheme, sensitivity) {
                 if (!swipeEnabled) return@pointerInput
                 val tracker = VelocityTracker()
-                // Direction is judged from this drag's own movement, never from where the card
-                // still is after the last swipe sprang back, and it is re-judged on every move:
-                // a drag that starts slightly off still goes where the finger ends up.
+                // The card follows the finger freely in both directions, diagonals included, so
+                // turning from up/down to left/right is one continuous movement. Which way the
+                // swipe counts is only decided on release, by the larger of the two components.
+                // It is judged from this drag's own movement, never from where the card still is
+                // after the last swipe sprang back.
                 var totalX = 0f
                 var totalY = 0f
                 var horizontal = true
@@ -277,12 +280,11 @@ private fun GestureCard(
                             is Command.Rate, Command.Master -> {
                                 if (!armed) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 scope.launch {
-                                    when (gesture) {
-                                        Gesture.SWIPE_RIGHT -> x.animateTo(flyOut, tween(120))
-                                        Gesture.SWIPE_LEFT -> x.animateTo(-flyOut, tween(120))
-                                        Gesture.SWIPE_UP -> y.animateTo(-flyOut * 2, tween(120))
-                                        else -> y.animateTo(flyOut * 2, tween(120))
-                                    }
+                                    // Fly out along the way the finger was going, diagonal or not.
+                                    val len = kotlin.math.hypot(totalX, totalY).coerceAtLeast(1f)
+                                    val target = if (horizontal) flyOut * 1.5f else flyOut * 2.5f
+                                    launch { x.animateTo(totalX / len * target, tween(140)) }
+                                    y.animateTo(totalY / len * target, tween(140))
                                     latestOnGesture(gesture)
                                 }
                             }
@@ -301,13 +303,15 @@ private fun GestureCard(
                         totalY += drag.y
                         horizontal = abs(totalX) >= abs(totalY)
                         val along = if (horizontal) totalX else totalY
-                        // Directions without an action resist, so the card shows it will not go there.
-                        val resist = latestCommandFor(gestureFor(horizontal, along)) == Command.Nothing
-                        val shown = along * (if (resist) 0.25f else 1f)
+                        // Each direction without an action resists on its own axis, so the card
+                        // shows it will not go there while still following the finger.
+                        val resistX = latestCommandFor(gestureFor(true, totalX)) == Command.Nothing
+                        val resistY = latestCommandFor(gestureFor(false, totalY)) == Command.Nothing
                         scope.launch {
-                            // The card moves along one axis only; the other snaps back to rest.
-                            if (horizontal) { x.snapTo(shown); y.snapTo(0f) } else { y.snapTo(shown); x.snapTo(0f) }
+                            x.snapTo(totalX * (if (resistX) 0.25f else 1f))
+                            y.snapTo(totalY * (if (resistY) 0.25f else 1f))
                         }
+                        val resist = if (horizontal) resistX else resistY
                         val nowArmed = !resist && abs(along) >= threshold
                         if (nowArmed && !armed) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                         armed = nowArmed
@@ -316,15 +320,22 @@ private fun GestureCard(
             },
     ) {
         ElevatedCard(Modifier.fillMaxSize(), shape = RoundedCornerShape(24.dp)) {
-            CompositionLocalProvider(LocalTapTargets provides tapTargets) { content() }
+            CompositionLocalProvider(LocalTapTargets provides tapTargets) {
+                content { (kotlin.math.hypot(x.value, y.value) / threshold).coerceIn(0f, 1f) }
+            }
         }
-        val horizontal = abs(x.value) >= abs(y.value)
+        val ax = abs(x.value)
+        val ay = abs(y.value)
+        val horizontal = ax >= ay
         val d = if (horizontal) x.value else y.value
         val progress = abs(d) / threshold
         if (swipeEnabled && progress > 0.1f) {
             val command = commandFor(gestureFor(horizontal, d))
             if (command != Command.Nothing) {
                 val ready = progress >= 1f
+                // Near the diagonal the label fades, so switching between the two directions
+                // is a crossfade rather than a jump.
+                val dominance = ((maxOf(ax, ay) - minOf(ax, ay)) / maxOf(ax, ay).coerceAtLeast(1f) * 2.5f).coerceIn(0f, 1f)
                 Text(
                     command.label(),
                     color = command.color(),
@@ -333,7 +344,7 @@ private fun GestureCard(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .padding(24.dp)
-                        .alpha((progress * 1.5f).coerceAtMost(1f)),
+                        .alpha((progress * 1.5f).coerceAtMost(1f) * dominance),
                 )
             }
         }
@@ -382,9 +393,12 @@ private fun CardFace(
     revealed: Boolean,
     articleChoice: Gender?,
     typed: TypedAnswer?,
+    recording: Boolean,
+    dragProgress: () -> Float,
     onSpeak: () -> Unit,
     onSpeakText: (String) -> Unit,
     onLookup: (String) -> Unit,
+    onShadow: (String) -> Unit,
 ) {
     val entry = current.entry
     Column(
@@ -401,15 +415,20 @@ private fun CardFace(
         when (current.card.type) {
             CardType.MEANING -> {
                 Headword(entry)
-                SpeakButton(onSpeak)
+                if (revealed) SpeakRow(onSpeak, recording) { onShadow(entry.spoken) } else SpeakButton(onSpeak)
                 if (revealed) {
                     Answer(entry.meaning)
                     Details(entry, onSpeakText, onLookup)
+                    Confusables(current.confusables)
+                } else {
+                    // While the card is being swiped the meaning fades in, so the learner sees
+                    // whether they remembered it before letting go.
+                    Box(Modifier.graphicsLayer { alpha = fadeIn(dragProgress()) }) { Answer(entry.meaning) }
                 }
             }
             CardType.ARTICLE -> {
                 if (articleChoice == null) {
-                    Text("___ ${entry.lemma}", fontSize = 40.sp, fontWeight = FontWeight.SemiBold)
+                    FitText("___ ${entry.lemma}", Modifier.fillMaxWidth())
                     Spacer(Modifier.height(12.dp))
                     Text(entry.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
@@ -431,15 +450,28 @@ private fun CardFace(
                 Headword(entry)
                 Spacer(Modifier.height(16.dp))
                 Text("复数是？", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (!revealed && !entry.plural.isNullOrEmpty()) {
+                    Spacer(Modifier.height(16.dp))
+                    Box(Modifier.graphicsLayer { alpha = fadeIn(dragProgress()) }) {
+                        FitText(
+                            buildAnnotatedString {
+                                withStyle(SpanStyle(color = genderColor(Gender.DIE))) { append("die ") }
+                                append(entry.plural.orEmpty())
+                            },
+                            Modifier.fillMaxWidth(),
+                            maxSize = 36.sp,
+                        )
+                    }
+                }
                 if (revealed) {
                     Spacer(Modifier.height(16.dp))
-                    Text(
+                    FitText(
                         buildAnnotatedString {
                             withStyle(SpanStyle(color = genderColor(Gender.DIE))) { append("die ") }
                             append(entry.plural.orEmpty())
                         },
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        Modifier.fillMaxWidth(),
+                        maxSize = 36.sp,
                     )
                     Spacer(Modifier.height(8.dp))
                     Text(entry.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -451,8 +483,15 @@ private fun CardFace(
                 Text(entry.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(16.dp))
                 val forms = entry.verbForms
-                if (!revealed || forms == null) {
+                if (forms == null) {
                     Text("说出：er/sie/es 现在时 · 过去式 · 完成时", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else if (!revealed) {
+                    Text("说出：er/sie/es 现在时 · 过去式 · 完成时", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Column(Modifier.graphicsLayer { alpha = fadeIn(dragProgress()) }) {
+                        FormRow("er/sie/es", forms.present3)
+                        FormRow("过去式", forms.preterite)
+                        FormRow("完成时", perfect(forms.auxiliary, forms.participle))
+                    }
                 } else {
                     FormRow("er/sie/es", forms.present3)
                     FormRow("过去式", forms.preterite)
@@ -465,10 +504,13 @@ private fun CardFace(
     }
 }
 
+/** Answer opacity for a drag: hidden for small accidental moves, fully shown at the commit distance. */
+private fun fadeIn(progress: Float): Float = ((progress - 0.15f) / 0.85f).coerceIn(0f, 1f)
+
 /** The word as it should be learned: article coloured by gender, separable prefix marked. */
 @Composable
 private fun Headword(entry: Entry) {
-    Text(
+    FitText(
         buildAnnotatedString {
             entry.gender?.let { g ->
                 withStyle(SpanStyle(color = genderColor(g), fontWeight = FontWeight.Bold)) { append(g.article) }
@@ -483,8 +525,33 @@ private fun Headword(entry: Entry) {
                 append(entry.lemma)
             }
         },
-        fontSize = 40.sp,
-        fontWeight = FontWeight.SemiBold,
+        Modifier.fillMaxWidth(),
+    )
+}
+
+/** Listen, plus shadowing: record yourself, then hear your take and the reference. */
+@Composable
+private fun SpeakRow(onSpeak: () -> Unit, recording: Boolean, onShadow: () -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        SpeakButton(onSpeak)
+        Text(
+            if (recording) "⏺ 录音中，点此停止" else "🎙 跟读",
+            Modifier.tapTarget(onShadow).padding(horizontal = 16.dp, vertical = 10.dp),
+            color = if (recording) CountColors.Learning else MaterialTheme.colorScheme.primary,
+            fontWeight = if (recording) FontWeight.Bold else null,
+        )
+    }
+}
+
+/** Words in the book with the same Chinese meaning, so the difference gets noticed. */
+@Composable
+private fun Confusables(words: List<Entry>) {
+    if (words.isEmpty()) return
+    Spacer(Modifier.height(12.dp))
+    Text(
+        "易混：" + words.joinToString("；") { "${it.spoken} ${it.meaning}" },
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
     )
 }

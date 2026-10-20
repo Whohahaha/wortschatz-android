@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -14,8 +15,8 @@ android {
         applicationId = "app.wortschatz"
         minSdk = 26
         targetSdk = 36
-        versionCode = 9
-        versionName = "0.8.0"
+        versionCode = 12
+        versionName = "0.10.0"
 
         // Only 64-bit ARM phones are targeted; native libraries added later ship for arm64 alone.
         ndk {
@@ -23,9 +24,25 @@ android {
         }
     }
 
+    // Every build is signed with the same key so new versions install over old ones and keep the
+    // learner's data. See signing/keystore.properties.
+    val signing = Properties().apply { rootProject.file("signing/keystore.properties").reader().use { load(it) } }
+    signingConfigs {
+        create("fixed") {
+            storeFile = rootProject.file("signing/" + signing.getProperty("storeFile"))
+            storePassword = signing.getProperty("storePassword")
+            keyAlias = signing.getProperty("keyAlias")
+            keyPassword = signing.getProperty("keyPassword")
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("fixed")
+        }
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("fixed")
         }
     }
     compileOptions {

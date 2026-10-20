@@ -43,7 +43,14 @@ import kotlin.math.roundToInt
 
 /** Everything that is set once and then left alone, so the home screen only has to show today. */
 @Composable
-fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, onReminderToggle: (Boolean) -> Unit) {
+fun SettingsScreen(
+    home: HomeState?,
+    scheme: GestureScheme,
+    vm: StudyViewModel,
+    onReminderToggle: (Boolean) -> Unit,
+    onExport: () -> Unit,
+    onRestore: () -> Unit,
+) {
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -64,6 +71,11 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
 
             Section("学习计划")
             NewWordsPerDay(home, vm::setNewWordsPerDay)
+            Text(
+                "每天 10～20 分钟就够。觉得吃力时先调低新词，复习照常做，积压会慢慢消化。",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             NewWordOrderPicker(home.newWordOrder, vm::setNewWordOrder)
             Forecast(home.forecast)
             Text(
@@ -74,6 +86,11 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+
+            Section("发音")
+            SettingRow("慢速朗读", "单词和例句放慢到 0.75 倍") {
+                Switch(checked = home.slowSpeech, onCheckedChange = vm::setSlowSpeech)
+            }
 
             Section("卡片类型")
             Card(Modifier.fillMaxWidth()) {
@@ -98,6 +115,23 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
                         Text("%02d:00".format(home.reminderHour), Modifier.padding(horizontal = 12.dp), fontWeight = FontWeight.Bold)
                         OutlinedButton(onClick = { vm.changeReminderHour(1) }) { Text("+") }
                     }
+                }
+            }
+
+            Section("备份与恢复")
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("进度、设置和导入的词书每天自动备份到「下载/Wortschatz」，卸载 App 也不会删掉。")
+                    Text(
+                        if (home.lastBackup == 0L) "还没有自动备份过" else "上次自动备份：" + java.text.SimpleDateFormat("M月d日 HH:mm", java.util.Locale.CHINA).format(java.util.Date(home.lastBackup)),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(onClick = vm::backupNow) { Text("立即备份") }
+                        OutlinedButton(onClick = onExport) { Text("导出到…") }
+                    }
+                    OutlinedButton(onClick = onRestore) { Text("从备份恢复（替换当前进度）") }
                 }
             }
 

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Daily study reminder; asked for only when the user turns the reminder on. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- Needed on Android 11+ to find the installed text-to-speech engine. -->
     <queries>

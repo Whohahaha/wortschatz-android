@@ -26,6 +26,12 @@ import app.wortschatz.core.Lookup
 import app.wortschatz.core.LookupResult
 import app.wortschatz.core.Typing
 import app.wortschatz.core.Verdict
+import app.wortschatz.core.Milestone
+import app.wortschatz.core.Milestones
+import app.wortschatz.core.Stats
+import app.wortschatz.core.WordProgress
+import app.wortschatz.core.WordStatus
+import app.wortschatz.core.confusables
 import app.wortschatz.core.StudySession
 import app.wortschatz.core.StudySettings
 import app.wortschatz.core.formatInterval
@@ -55,7 +61,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { HOME, STUDY, DONE, SETTINGS, GESTURES, BOOKS, IMPORT, DRILL, NUMBERS }
+enum class Screen { HOME, STUDY, DONE, SETTINGS, GESTURES, BOOKS, IMPORT, DRILL, NUMBERS, WORDS, STATS }
 
 data class HomeState(
     val wordBookTitle: String,
@@ -67,6 +73,11 @@ data class HomeState(
     val newWordsPerDay: Int,
     val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
     val disabledCardTypes: Set<CardType> = emptySet(),
+    /** When the daily copy in Download/Wortschatz was last written; 0 = never. */
+    val lastBackup: Long = 0,
+    /** A fresh install with no progress yet: offer to restore a backup. */
+    val offerRestore: Boolean = false,
+    val slowSpeech: Boolean = false,
     val streak: Int = 0,
     val knownWords: Int = 0,
     /** Reviews due beyond today's limit, held back so a missed week is not one huge session. */
@@ -116,7 +127,36 @@ data class NumberDrillState(
     val spoken: String get() = if (range.year) GermanNumbers.year(target) else GermanNumbers.words(target)
 }
 
-data class StudyCard(val card: Card, val entry: Entry, val intervals: Map<Rating, String>)
+data class StudyCard(
+    val card: Card,
+    val entry: Entry,
+    val intervals: Map<Rating, String>,
+    /** Words in the book with the same Chinese meaning, shown with the answer. */
+    val confusables: List<Entry> = emptyList(),
+)
+
+/** Filters of the word list. */
+enum class WordFilter(val label: String) {
+    ALL("全部"), LEECH("难词"), LEARNING("学习中"), MASTERED("已掌握"), NEW("未学"), KNOWN("已斩");
+
+    fun accepts(w: WordProgress) = when (this) {
+        ALL -> true
+        LEECH -> w.isLeech && w.status != WordStatus.KNOWN
+        LEARNING -> w.status == WordStatus.LEARNING
+        MASTERED -> w.status == WordStatus.MASTERED
+        NEW -> w.status == WordStatus.NEW
+        KNOWN -> w.status == WordStatus.KNOWN
+    }
+}
+
+data class WordsState(
+    val filter: WordFilter = WordFilter.ALL,
+    val query: String = "",
+    val rows: List<WordProgress> = emptyList(),
+    val counts: Map<WordFilter, Int> = emptyMap(),
+)
+
+data class StatsState(val stats: Stats, val milestones: List<Milestone>, val totalWords: Int)
 
 data class UiState(
     val screen: Screen = Screen.HOME,
@@ -136,6 +176,10 @@ data class UiState(
     /** A word tapped in an example sentence, while its lookup is shown. */
     val lookup: LookupResult? = null,
     val numbers: NumberDrillState? = null,
+    val words: WordsState? = null,
+    val stats: StatsState? = null,
+    /** Recording for shadowing is running. */
+    val recording: Boolean = false,
 )
 
 data class BooksState(
@@ -181,6 +225,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     private val app = application as WortschatzApp
     private val prefs = application.getSharedPreferences("settings", Context.MODE_PRIVATE)
     private val speaker = Speaker(application)
+    private val shadowing = Shadowing(application)
 
     // StudySession is not thread-safe: every call goes through this one-at-a-time dispatcher.
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
@@ -198,13 +243,16 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         _state.update { it.copy(scheme = loadScheme(), swipeSensitivity = loadSensitivity()) }
+        speaker.rate = if (prefs.getBoolean(KEY_SLOW, false)) SLOW_RATE else 1f
         onSession { s -> _state.update { it.copy(home = homeState(s)) } }
+        autoBackup()
     }
 
     fun startStudy() = onSession { s -> showNext(s) }
 
     fun goHome() = onSession { s ->
-        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, drill = null, numbers = null, lookup = null, home = homeState(s)) }
+        stopShadowing()
+        _state.update { it.copy(screen = Screen.HOME, current = null, import = null, drill = null, numbers = null, lookup = null, words = null, stats = null, home = homeState(s)) }
     }
 
     // ---- Article speed drill ----
@@ -619,6 +667,114 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         return n.copy(target = target, input = "", right = null)
     }
 
+    // ---- Backup ----
+
+    // Nothing to keep yet on a fresh install, and an empty copy would only confuse a later restore.
+    private fun autoBackup() = onSession { s ->
+        if (s.learnedWords() > 0 && app.backup.autoBackup()) _state.update { it.copy(home = homeState(s)) }
+    }
+
+    fun backupNow() {
+        viewModelScope.launch {
+            val ok = withContext(sessionThread) { app.backup.autoBackup(maxAgeMs = 0) }
+            toast(if (ok) "已备份到 下载/Wortschatz" else "备份失败")
+            refreshHome()
+        }
+    }
+
+    fun exportBackup(uri: Uri) {
+        viewModelScope.launch {
+            val ok = withContext(sessionThread) {
+                runCatching { app.contentResolver.openOutputStream(uri, "wt")!!.use(app.backup::export) }.isSuccess
+            }
+            toast(if (ok) "备份已导出" else "导出失败")
+        }
+    }
+
+    /** Restores a backup, then restarts the app so everything is read again from the restored data. */
+    fun restoreBackup(uri: Uri) {
+        viewModelScope.launch {
+            val error = withContext(sessionThread) {
+                runCatching { app.contentResolver.openInputStream(uri)!!.use(app.backup::restore) }.exceptionOrNull()
+            }
+            if (error != null) {
+                toast(error.message?.takeIf { it.any { c -> c.code > 0x2e80 } } ?: "恢复失败：不是有效的备份文件")
+                return@launch
+            }
+            toast("已恢复，正在重新打开")
+            delay(600)
+            app.packageManager.getLaunchIntentForPackage(app.packageName)?.let {
+                it.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                app.startActivity(it)
+            }
+            Runtime.getRuntime().exit(0)
+        }
+    }
+
+    fun dismissRestore() {
+        prefs.edit().putBoolean(KEY_RESTORE_DISMISSED, true).apply()
+        refreshHome()
+    }
+
+    // ---- Word list and statistics ----
+
+    fun openWords() = onSession { s -> _state.update { it.copy(screen = Screen.WORDS, words = wordsState(s, it.words ?: WordsState())) } }
+
+    fun setWordFilter(filter: WordFilter) = onSession { s ->
+        _state.update { it.copy(words = wordsState(s, (it.words ?: WordsState()).copy(filter = filter))) }
+    }
+
+    fun setWordQuery(query: String) {
+        _state.update { it.copy(words = it.words?.copy(query = query)) }
+        onSession { s -> _state.update { it.copy(words = wordsState(s, it.words ?: WordsState(query = query))) } }
+    }
+
+    /** Puts a word marked as known back into the schedule. */
+    fun restoreWord(entryId: String) = onSession { s ->
+        s.unmarkKnown(entryId)
+        _state.update { it.copy(words = wordsState(s, it.words ?: WordsState()), home = homeState(s)) }
+    }
+
+    private fun wordsState(s: StudySession, base: WordsState): WordsState {
+        val all = s.wordProgress()
+        val q = base.query.trim().lowercase()
+        val rows = all.filter { base.filter.accepts(it) }.filter {
+            q.isEmpty() || it.entry.lemma.lowercase().contains(q) || it.entry.meaning.contains(q)
+        }.let { list -> if (base.filter == WordFilter.LEECH) list.sortedByDescending { it.lapses } else list }
+        return base.copy(rows = rows, counts = WordFilter.entries.associateWith { f -> all.count(f::accepts) })
+    }
+
+    fun openStats() = onSession { s ->
+        val stats = s.stats()
+        _state.update { it.copy(screen = Screen.STATS, stats = StatsState(stats, Milestones.of(stats, s.totalWords()), s.totalWords())) }
+    }
+
+    // ---- Pronunciation: slow speech and shadowing ----
+
+    fun setSlowSpeech(slow: Boolean) {
+        prefs.edit().putBoolean(KEY_SLOW, slow).apply()
+        speaker.rate = if (slow) SLOW_RATE else 1f
+        refreshHome()
+    }
+
+    /** First tap starts recording; the second stops it and plays the learner's take, then the reference. */
+    fun toggleShadow(text: String) {
+        if (shadowing.isRecording) {
+            val ok = shadowing.stop()
+            _state.update { it.copy(recording = false) }
+            if (ok) speaker.playFile(shadowing.file.path) { speaker.speak(text) }
+        } else if (shadowing.start()) {
+            _state.update { it.copy(recording = true) }
+        } else {
+            viewModelScope.launch { toast("无法录音") }
+        }
+    }
+
+    private fun stopShadowing() {
+        if (shadowing.isRecording) shadowing.stop()
+        _state.update { it.copy(recording = false) }
+    }
+
     // ---- Card types ----
 
     fun setCardTypeEnabled(type: CardType, enabled: Boolean) {
@@ -722,19 +878,21 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
             _state.update {
                 it.copy(screen = Screen.DONE, current = null, canUndo = s.canUndo, counts = s.counts(), home = homeState(s))
             }
+            autoBackup()
         } else {
             show(s, card)
         }
     }
 
     private fun show(s: StudySession, card: Card) {
+        stopShadowing()
         val entry = s.entry(card)
         val intervals = s.preview(card).mapValues { formatInterval(it.value) }
         shownAt = System.currentTimeMillis()
         _state.update {
             it.copy(
                 screen = Screen.STUDY,
-                current = StudyCard(card, entry, intervals),
+                current = StudyCard(card, entry, intervals, confusables(entry, app.entries)),
                 revealed = false,
                 articleChoice = null,
                 typed = null,
@@ -767,6 +925,9 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
         newWordOrder = app.studySettings.newWordOrder,
         disabledCardTypes = app.studySettings.disabledCardTypes,
+        lastBackup = app.backup.lastAutoBackup,
+        slowSpeech = prefs.getBoolean(KEY_SLOW, false),
+        offerRestore = s.learnedWords() == 0 && s.reviewsToday() == 0 && !prefs.getBoolean(KEY_RESTORE_DISMISSED, false),
         streak = s.streak(),
         knownWords = s.knownWords(),
         backlog = s.backlog(),
@@ -783,5 +944,8 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         const val KEY_SENSITIVITY = "swipe_sensitivity"
         const val DRILL_SIZE = 20
         const val KEY_NUMBER_RANGE = "number_range"
+        const val KEY_RESTORE_DISMISSED = "restore_dismissed"
+        const val KEY_SLOW = "slow_speech"
+        const val SLOW_RATE = 0.75f
     }
 }

@@ -7,6 +7,7 @@ import app.wortschatz.core.Entry
 import app.wortschatz.core.NewWordOrder
 import app.wortschatz.core.StudySettings
 import app.wortschatz.core.imports.Lexicon
+import app.wortschatz.data.Backup
 import app.wortschatz.data.BookDownloader
 import app.wortschatz.data.BookRepository
 import app.wortschatz.data.SqliteStudyStore
@@ -16,6 +17,7 @@ import java.util.zip.GZIPInputStream
 class WortschatzApp : Application() {
     val store by lazy { SqliteStudyStore(this) }
     val books by lazy { BookRepository(this) }
+    val backup by lazy { Backup(this, store) }
     val downloader by lazy { BookDownloader(books, cacheDir) }
     val prefs by lazy { getSharedPreferences("settings", Context.MODE_PRIVATE) }
 
