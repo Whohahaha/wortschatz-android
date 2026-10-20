@@ -1,5 +1,6 @@
 package app.wortschatz.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,13 +13,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
@@ -27,10 +32,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +58,7 @@ fun SettingsScreen(
     onExport: () -> Unit,
     onRestore: () -> Unit,
 ) {
+    var resetting by remember { mutableStateOf(false) }
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -139,9 +147,69 @@ fun SettingsScreen(
             SettingRow("当前：${scheme.name}", scheme.description) {
                 OutlinedButton(onClick = vm::openGestureSettings) { Text("修改") }
             }
+
+            Section("重新开始")
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("清空学习记录，从第一个词重新学。词书、发音和设置都不受影响。")
+                    OutlinedButton(
+                        onClick = { resetting = true },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error),
+                    ) { Text("重置学习进度…") }
+                }
+            }
             Spacer(Modifier.height(16.dp))
         }
     }
+
+    if (resetting && home != null) {
+        ResetDialog(
+            bookTitle = home.wordBookTitle,
+            onReset = { allBooks -> vm.resetProgress(allBooks); resetting = false },
+            onDismiss = { resetting = false },
+        )
+    }
+}
+
+/** Asks which progress to clear, and says plainly what goes and what stays. */
+@Composable
+private fun ResetDialog(bookTitle: String, onReset: (allBooks: Boolean) -> Unit, onDismiss: () -> Unit) {
+    var allBooks by remember { mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("重置学习进度？") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(false to "只重置「$bookTitle」", true to "重置全部词书").forEach { (all, label) ->
+                    Row(
+                        Modifier.fillMaxWidth().selectable(selected = allBooks == all, role = Role.RadioButton) { allBooks = all },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(selected = allBooks == all, onClick = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text(label)
+                    }
+                }
+                Text(
+                    (if (allBooks) "所有词书" else "这本词书") + "的复习记录、记忆进度和「斩」掉的词都会清空，连续天数和统计也会重新算。" +
+                        "词书、发音和设置不变。",
+                )
+                Text(
+                    "重置前会先另存一份备份到「下载/Wortschatz」，后悔了可以在「从备份恢复」里选它找回。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onReset(allBooks) }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
+                Text("重置")
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+    )
 }
 
 @Composable

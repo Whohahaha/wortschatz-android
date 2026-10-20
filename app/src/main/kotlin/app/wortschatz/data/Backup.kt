@@ -79,7 +79,7 @@ class Backup(private val context: Context, private val store: SqliteStudyStore) 
         if (Build.VERSION.SDK_INT < 29) return false
         if (System.currentTimeMillis() - lastAutoBackup < maxAgeMs) return false
         val uri = prefs.getString(KEY_AUTO_URI, null)?.let(Uri::parse)
-        val written = uri?.let(::tryWrite) == true || createAutoFile()?.let { tryWrite(it).also { ok -> if (ok) prefs.edit().putString(KEY_AUTO_URI, it.toString()).apply() } } == true
+        val written = uri?.let(::tryWrite) == true || createFile(AUTO_NAME)?.let { tryWrite(it).also { ok -> if (ok) prefs.edit().putString(KEY_AUTO_URI, it.toString()).apply() } } == true
         if (written) prefs.edit().putLong(KEY_AUTO_TIME, System.currentTimeMillis()).apply()
         return written
     }
@@ -92,10 +92,19 @@ class Backup(private val context: Context, private val store: SqliteStudyStore) 
         false
     }
 
-    private fun createAutoFile(): Uri? {
+    /**
+     * Writes a copy named [name] to Download/Wortschatz, apart from the daily one, so later daily
+     * backups never overwrite it. Returns false if it could not be written.
+     */
+    fun saveCopy(name: String): Boolean {
+        val uri = createFile(name) ?: return false
+        return tryWrite(uri).also { ok -> if (!ok) runCatching { context.contentResolver.delete(uri, null, null) } }
+    }
+
+    private fun createFile(name: String): Uri? {
         if (Build.VERSION.SDK_INT < 29) return null
         val values = ContentValues().apply {
-            put(MediaStore.Downloads.DISPLAY_NAME, AUTO_NAME)
+            put(MediaStore.Downloads.DISPLAY_NAME, name)
             put(MediaStore.Downloads.MIME_TYPE, "application/zip")
             put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Wortschatz")
         }

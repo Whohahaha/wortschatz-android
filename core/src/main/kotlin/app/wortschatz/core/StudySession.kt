@@ -20,6 +20,11 @@ interface StudyStore {
     /** Words the user marked as already known ("斩"); they never come up again. */
     fun knownEntries(): Set<String>
     fun setKnown(entryId: String, known: Boolean)
+    /**
+     * Forgets everything learned about [entryIds] (cards, review history, "known" marks), or
+     * about every word when it is null. Fresh cards are made again by the next [StudySession].
+     */
+    fun reset(entryIds: Set<String>?)
 }
 
 data class StudySettings(
@@ -323,7 +328,7 @@ class StudySession(
             it.type != CardType.MEANING && it.memory.phase == Phase.NEW && !buried(it) &&
                 meaningByEntry[it.entryId]?.memory?.phase == Phase.REVIEW
         }
-            .sortedWith(compareBy({ order.getValue(it.entryId) }, { it.type.ordinal }))
+            .sortedWith(compareBy({ order.getValue(it.entryId) }, { UNLOCK_ORDER.indexOf(it.type) }))
             .distinctBy { it.entryId }
             .take(grammarLeft.coerceAtLeast(0))
         return newWords + grammar
@@ -353,6 +358,8 @@ class StudySession(
 
     companion object {
         private const val LEARN_AHEAD = 20 * Fsrs.MINUTE
+        /** After a word graduates its other cards come one a day: article first, then producing the word. */
+        private val UNLOCK_ORDER = listOf(CardType.ARTICLE, CardType.SPELLING, CardType.PLURAL, CardType.CLOZE, CardType.VERB_FORMS)
     }
 }
 
@@ -391,5 +398,11 @@ class InMemoryStudyStore : StudyStore {
     override fun knownEntries(): Set<String> = known.toSet()
     override fun setKnown(entryId: String, known: Boolean) {
         if (known) this.known += entryId else this.known -= entryId
+    }
+    override fun reset(entryIds: Set<String>?) {
+        val gone = cards.values.filter { entryIds == null || it.entryId in entryIds }.map { it.id }.toSet()
+        gone.forEach(cards::remove)
+        logs.removeAll { it.cardId in gone }
+        if (entryIds == null) known.clear() else known -= entryIds
     }
 }

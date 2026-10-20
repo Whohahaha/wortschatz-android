@@ -159,8 +159,8 @@ object GestureSchemes {
  * Article cards are graded by the app, so gestures cannot rate them, and pronunciation stays
  * silent until the article has been chosen, since hearing "der Tisch" gives the answer away.
  */
-fun resolve(action: GestureAction, type: CardType, revealed: Boolean): Command {
-    if (type.isObjective) {
+fun resolve(action: GestureAction, type: CardType, revealed: Boolean, objective: Boolean = type.isObjective): Command {
+    if (objective) {
         return when (action) {
             GestureAction.UNDO -> Command.Undo
             GestureAction.SPEAK -> if (revealed) Command.Speak else Command.Nothing

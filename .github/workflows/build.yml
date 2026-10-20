@@ -2,7 +2,8 @@ name: Build APK
 
 on:
   push:
-    branches: [main]
+    # release/** builds an APK from code not yet on main (for example while a PR is open).
+    branches: [main, "release/**"]
   pull_request:
   workflow_dispatch:
 
@@ -82,6 +83,17 @@ jobs:
         with:
           name: wortschatz-arm64-v8a-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publish release-branch APK
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="build-${GITHUB_REF_NAME//\//-}"
+          cp app/build/outputs/apk/debug/app-debug.apk wortschatz-arm64-v8a-debug.apk
+          gh release delete "$tag" --yes --cleanup-tag || true
+          gh release create "$tag" wortschatz-arm64-v8a-debug.apk --prerelease --target "$GITHUB_SHA" \
+            --title "$GITHUB_REF_NAME" --notes "从 $GITHUB_REF_NAME 分支编译的调试版 APK（仅 arm64-v8a）。"
 
       # Keeps a "latest" pre-release with the newest APK, so it can be downloaded straight to a phone.
       - name: Publish latest APK
