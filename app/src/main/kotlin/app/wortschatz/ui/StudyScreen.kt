@@ -1,6 +1,10 @@
 package app.wortschatz.ui
 
 import androidx.compose.animation.core.Animatable
+import app.wortschatz.core.Conjugation
+import app.wortschatz.core.QuizMode
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
@@ -117,18 +121,19 @@ fun StudyScreen(state: UiState, vm: StudyViewModel, onShadow: (String) -> Unit) 
             val answered = when {
                 type == CardType.ARTICLE -> state.articleChoice != null
                 type.isTyped -> state.typed != null
+                current.mode.isChoice -> state.picked != null
                 else -> state.revealed
             }
             GestureCard(
                 key = current.card.id + current.card.memory.reps,
                 scheme = state.scheme,
                 sensitivity = state.swipeSensitivity,
-                commandFor = { g -> resolve(state.scheme.actionFor(g), type, answered) },
+                commandFor = { g -> resolve(state.scheme.actionFor(g), type, answered, current.objective) },
                 onGesture = vm::onGesture,
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
             ) { dragProgress ->
                 CardFace(
-                    current, state.revealed, state.articleChoice, state.typed, state.recording, dragProgress,
+                    current, state.revealed || state.picked != null, state.articleChoice, state.typed, state.recording, dragProgress,
                     onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord, onShadow = onShadow,
                 )
             }
@@ -136,6 +141,7 @@ fun StudyScreen(state: UiState, vm: StudyViewModel, onShadow: (String) -> Unit) 
             when {
                 type == CardType.ARTICLE -> ArticleButtons(state.articleChoice, current.entry.gender, vm::chooseArticle)
                 type.isTyped -> TypedAnswerBar(current.card.id + current.card.memory.reps, state.typed, vm)
+                current.mode.isChoice -> ChoiceButtons(current, state.picked, vm::pick)
                 !state.revealed -> Button(onClick = vm::reveal, modifier = Modifier.fillMaxWidth().height(64.dp)) {
                     Text("显示答案", fontSize = 18.sp)
                 }
@@ -406,14 +412,31 @@ private fun CardFace(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(
-            "${current.card.type.label} · ${entry.level} · ${entry.pos.label}",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        QuestionTag(current)
         Spacer(Modifier.height(24.dp))
         when (current.card.type) {
-            CardType.MEANING -> {
+            CardType.MEANING -> if (current.mode == QuizMode.PICK_WORD) {
+                // Chinese shown; the German is picked below and revealed once answered.
+                if (!revealed) {
+                    Text(entry.meaning, fontSize = 30.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+                    Spacer(Modifier.height(12.dp))
+                    Text("选出对应的德语", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else {
+                    Headword(entry)
+                    SpeakButton(onSpeak)
+                    Answer(entry.meaning)
+                }
+            } else if (current.mode == QuizMode.PICK_MEANING) {
+                Headword(entry)
+                SpeakButton(onSpeak)
+                if (!revealed) {
+                    Spacer(Modifier.height(12.dp))
+                    Text("选出它的中文意思", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else {
+                    Answer(entry.meaning)
+                    Details(entry, onSpeakText, onLookup)
+                }
+            } else {
                 Headword(entry)
                 if (revealed) SpeakRow(onSpeak, recording) { onShadow(entry.spoken) } else SpeakButton(onSpeak)
                 if (revealed) {
@@ -496,10 +519,97 @@ private fun CardFace(
                     FormRow("er/sie/es", forms.present3)
                     FormRow("过去式", forms.preterite)
                     FormRow("完成时", perfect(forms.auxiliary, forms.participle))
+                    ConjugationTable(entry)
                 }
             }
             CardType.SPELLING -> SpellingFace(entry, typed, onSpeak, onSpeakText, onLookup)
             CardType.CLOZE -> ClozeFace(entry, typed, onSpeakText, onLookup)
+        }
+    }
+}
+
+/** Present tense for all six persons, ich/du/er on the left and wir/ihr/sie on the right. */
+@Composable
+private fun ConjugationTable(entry: Entry) {
+    val forms = remember(entry) { Conjugation.present(entry) } ?: return
+    Spacer(Modifier.height(10.dp))
+    Text("现在时变位", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    Row(Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+        for (half in listOf(0, 3)) {
+            Column {
+                for (i in half until half + 3) {
+                    Text(
+                        buildAnnotatedString {
+                            withStyle(SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant)) { append(Conjugation.persons[i] + " ") }
+                            append(forms[i])
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+        }
+    }
+}
+
+/** What kind of question this is, as a coloured tag, so a choice question never looks like a flip card. */
+@Composable
+private fun QuestionTag(current: StudyCard) {
+    val entry = current.entry
+    val kind = when (current.card.type) {
+        CardType.MEANING -> current.mode.label
+        CardType.SPELLING -> "拼写 · 中译德"
+        CardType.CLOZE -> "填空 · 例句"
+        CardType.ARTICLE -> "选冠词"
+        CardType.PLURAL -> "说出复数"
+        CardType.VERB_FORMS -> "说出三形"
+    }
+    val strong = current.objective
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            kind,
+            Modifier
+                .background(
+                    if (strong) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.secondaryContainer,
+                    RoundedCornerShape(8.dp),
+                )
+                .padding(horizontal = 10.dp, vertical = 4.dp),
+            style = MaterialTheme.typography.labelLarge,
+            color = if (strong) MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+        Text(
+            "  ${entry.level} · ${entry.pos.label}",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** Four options under a multiple-choice card; after a tap the right one turns green, a wrong pick red. */
+@Composable
+private fun ChoiceButtons(current: StudyCard, picked: Int?, onPick: (Int) -> Unit) {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        current.options.forEachIndexed { i, option ->
+            val right = option.id == current.entry.id
+            val container = when {
+                picked == null -> MaterialTheme.colorScheme.surfaceVariant
+                right -> CountColors.Review
+                i == picked -> CountColors.Learning
+                else -> MaterialTheme.colorScheme.surfaceVariant
+            }
+            val content = if (picked != null && (right || i == picked)) Color.White else MaterialTheme.colorScheme.onSurface
+            Button(
+                onClick = { onPick(i) },
+                modifier = Modifier.fillMaxWidth().height(52.dp).alpha(if (picked != null && !right && i != picked) 0.5f else 1f),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = container, contentColor = content),
+            ) {
+                Text(
+                    if (current.mode == QuizMode.PICK_WORD) option.spoken else option.meaning,
+                    fontSize = 17.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 }
@@ -595,6 +705,7 @@ private fun Details(entry: Entry, onSpeakText: (String) -> Unit, onLookup: (Stri
     entry.verbForms?.let {
         Text("${it.present3} · ${it.preterite} · ${perfect(it.auxiliary, it.participle)}", color = muted)
     }
+    ConjugationTable(entry)
     if (entry.example.isNotEmpty()) {
         Spacer(Modifier.height(16.dp))
         // A split separable verb is easy to miss when reading: highlight both of its parts.

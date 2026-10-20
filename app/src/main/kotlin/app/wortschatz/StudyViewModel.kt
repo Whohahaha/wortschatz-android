@@ -26,6 +26,8 @@ import app.wortschatz.core.Lookup
 import app.wortschatz.core.LookupResult
 import app.wortschatz.core.Typing
 import app.wortschatz.core.Verdict
+import app.wortschatz.core.Quiz
+import app.wortschatz.core.QuizMode
 import app.wortschatz.core.Milestone
 import app.wortschatz.core.Milestones
 import app.wortschatz.core.Stats
@@ -133,7 +135,14 @@ data class StudyCard(
     val intervals: Map<Rating, String>,
     /** Words in the book with the same Chinese meaning, shown with the answer. */
     val confusables: List<Entry> = emptyList(),
-)
+    /** How a meaning card is asked this time; see [Quiz.modeFor]. */
+    val mode: QuizMode = QuizMode.FLIP,
+    /** The four options of a multiple-choice question, the answer among them. */
+    val options: List<Entry> = emptyList(),
+) {
+    /** Graded by the app (article, typed or multiple choice) rather than self-rated. */
+    val objective: Boolean get() = card.type.isObjective || mode.isChoice
+}
 
 /** Filters of the word list. */
 enum class WordFilter(val label: String) {
@@ -180,6 +189,8 @@ data class UiState(
     val stats: StatsState? = null,
     /** Recording for shadowing is running. */
     val recording: Boolean = false,
+    /** Index of the option tapped on a multiple-choice question; non-null while feedback is shown. */
+    val picked: Int? = null,
 )
 
 data class BooksState(
@@ -519,7 +530,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     fun reveal() {
         val current = _state.value.current ?: return
-        if (current.card.type.isObjective || _state.value.revealed) return
+        if (current.objective || _state.value.revealed) return
         _state.update { it.copy(revealed = true) }
         val answer = when (current.card.type) {
             CardType.PLURAL -> Audio.plural(current.entry)
@@ -782,6 +793,19 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         onSession(rebuild = true) { s -> _state.update { it.copy(home = homeState(s)) } }
     }
 
+    /** Multiple choice: right counts as Good, wrong as Again, after a moment to see the answer. */
+    fun pick(index: Int) {
+        val current = _state.value.current ?: return
+        if (!current.mode.isChoice || _state.value.picked != null) return
+        _state.update { it.copy(picked = index) }
+        speaker.speak(current.entry.spoken)
+        val correct = current.options.getOrNull(index)?.id == current.entry.id
+        viewModelScope.launch {
+            delay(if (correct) 800 else 2000)
+            if (_state.value.current?.card?.id == current.card.id && _state.value.picked != null) rate(if (correct) Rating.GOOD else Rating.AGAIN)
+        }
+    }
+
     /** "斩": the current word is already known and never comes up again. */
     fun markKnown() = onSession { s ->
         val current = _state.value.current ?: return@onSession
@@ -803,9 +827,10 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         val answered = when {
             current.card.type == CardType.ARTICLE -> s.articleChoice != null
             current.card.type.isTyped -> s.typed != null
+            current.mode.isChoice -> s.picked != null
             else -> s.revealed
         }
-        when (val command = resolve(s.scheme.actionFor(gesture), current.card.type, answered)) {
+        when (val command = resolve(s.scheme.actionFor(gesture), current.card.type, answered, current.objective)) {
             Command.Nothing -> Unit
             Command.Reveal -> reveal()
             is Command.Rate -> rate(command.rating)
@@ -855,6 +880,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         // Hearing "der Tisch" would give away an article card that has not been answered yet.
         if (current.card.type == CardType.ARTICLE && s.articleChoice == null) return
         if (current.card.type.isTyped && s.typed == null) return
+        if (current.mode == QuizMode.PICK_WORD && s.picked == null) return
         speaker.speak(current.entry.spoken)
     }
 
@@ -888,20 +914,27 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         stopShadowing()
         val entry = s.entry(card)
         val intervals = s.preview(card).mapValues { formatInterval(it.value) }
+        val mode = Quiz.modeFor(card)
         shownAt = System.currentTimeMillis()
         _state.update {
             it.copy(
                 screen = Screen.STUDY,
-                current = StudyCard(card, entry, intervals, confusables(entry, app.entries)),
+                current = StudyCard(
+                    card, entry, intervals, confusables(entry, app.entries),
+                    mode = mode,
+                    options = if (mode.isChoice) Quiz.options(entry, app.entries, seed = card.id.hashCode() * 31L + card.memory.reps) else emptyList(),
+                ),
                 revealed = false,
+                picked = null,
                 articleChoice = null,
                 typed = null,
                 counts = s.counts(),
                 canUndo = s.canUndo,
             )
         }
-        // Never read the answer aloud before it is shown: article cards stay silent until answered.
-        if (!card.type.isObjective) speaker.speak(entry.spoken)
+        // Never read the answer aloud before it is shown: article, typed and "pick the German"
+        // questions stay silent until answered.
+        if (!card.type.isObjective && mode != QuizMode.PICK_WORD) speaker.speak(entry.spoken)
     }
 
     private fun onSession(rebuild: Boolean = false, block: (StudySession) -> Unit) {

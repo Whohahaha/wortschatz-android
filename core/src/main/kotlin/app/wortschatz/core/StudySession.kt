@@ -323,7 +323,7 @@ class StudySession(
             it.type != CardType.MEANING && it.memory.phase == Phase.NEW && !buried(it) &&
                 meaningByEntry[it.entryId]?.memory?.phase == Phase.REVIEW
         }
-            .sortedWith(compareBy({ order.getValue(it.entryId) }, { it.type.ordinal }))
+            .sortedWith(compareBy({ order.getValue(it.entryId) }, { UNLOCK_ORDER.indexOf(it.type) }))
             .distinctBy { it.entryId }
             .take(grammarLeft.coerceAtLeast(0))
         return newWords + grammar
@@ -353,6 +353,8 @@ class StudySession(
 
     companion object {
         private const val LEARN_AHEAD = 20 * Fsrs.MINUTE
+        /** After a word graduates its other cards come one a day: article first, then producing the word. */
+        private val UNLOCK_ORDER = listOf(CardType.ARTICLE, CardType.SPELLING, CardType.PLURAL, CardType.CLOZE, CardType.VERB_FORMS)
     }
 }
 
