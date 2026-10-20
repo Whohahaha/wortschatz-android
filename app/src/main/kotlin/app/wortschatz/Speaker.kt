@@ -12,8 +12,8 @@ import java.io.IOException
 import java.util.Locale
 
 /**
- * Plays the bundled recording for a text when there is one, then audio prepared on the phone
- * ahead of time (see [AudioPrepJob]), and falls back to live system text-to-speech otherwise. Many phones ship without a German TTS voice, so the first
+ * Plays the bundled recording for a text when there is one, then one downloaded with a word book,
+ * then audio prepared on the phone ahead of time (see [AudioPrepJob]), and falls back to live system text-to-speech otherwise. Many phones ship without a German TTS voice, so the first
  * time the fallback cannot speak German the user is told once where to get one.
  */
 class Speaker(context: Context) {
@@ -63,7 +63,7 @@ class Speaker(context: Context) {
         } catch (e: IOException) {
             null
         }
-        val prepared = if (afd == null) files.prepared(text) ?: return false else null
+        val file = if (afd == null) files.downloaded(text) ?: files.prepared(text) ?: return false else null
         tts.stop()
         player?.release()
         player = MediaPlayer().apply {
@@ -74,7 +74,7 @@ class Speaker(context: Context) {
                     .build()
             )
             if (afd != null) afd.use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
-            else setDataSource(prepared!!.path)
+            else setDataSource(file!!.path)
             setOnPreparedListener { it.start() }
             setOnErrorListener { _, _, _ -> true }
             prepareAsync()

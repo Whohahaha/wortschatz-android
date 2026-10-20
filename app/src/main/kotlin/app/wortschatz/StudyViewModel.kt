@@ -39,6 +39,11 @@ import app.wortschatz.core.imports.Importer
 import app.wortschatz.core.imports.Table
 import app.wortschatz.data.AndroidSqlDatabase
 import app.wortschatz.data.BookInfo
+import app.wortschatz.data.BookKind
+import app.wortschatz.core.BookProgress
+import app.wortschatz.core.CatalogBook
+import app.wortschatz.core.bookProgress
+import kotlinx.coroutines.Job
 import com.github.luben.zstd.ZstdInputStream
 import app.wortschatz.ui.SwipeSensitivity
 import kotlinx.coroutines.Dispatchers
@@ -138,7 +143,22 @@ data class BooksState(
     val activeId: String = "",
     /** Whether the phone has a German voice for books without bundled audio; null = unknown yet. */
     val germanVoice: Boolean? = null,
-)
+    /** Learned / due counts per book id. */
+    val progress: Map<String, BookProgress> = emptyMap(),
+    /** Books offered for download; null until the list has been fetched. */
+    val catalog: List<CatalogBook>? = null,
+    val catalogLoading: Boolean = false,
+    val catalogError: String? = null,
+    /** Running downloads: book id to fraction done (0..1). */
+    val downloads: Map<String, Float> = emptyMap(),
+) {
+    /** Catalog books not on the phone yet. */
+    val available: List<CatalogBook> get() = catalog.orEmpty().filter { c -> books.none { it.id == c.id } }
+
+    /** A newer version in the catalog for a downloaded book, if any. */
+    fun update(book: BookInfo): CatalogBook? =
+        catalog?.firstOrNull { it.id == book.id && book.kind == BookKind.DOWNLOADED && it.version > book.version }
+}
 
 /** The import screen: how the picked file was read and what importing it would produce. */
 data class ImportState(
@@ -248,6 +268,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     fun openBooks() {
         _state.update { it.copy(screen = Screen.BOOKS, import = null) }
         refreshBooks()
+        if (_state.value.books.catalog == null) loadCatalog()
     }
 
     fun selectBook(id: String) {
@@ -257,6 +278,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         AudioPrepJob.runSoon(app)
     }
 
+    /** Removes the book's files; its progress stays, so downloading it again carries on where it was. */
     fun deleteBook(id: String) = viewModelScope.launch {
         val wasActive = app.activeBookId == id
         withContext(Dispatchers.IO) { app.books.delete(id) }
@@ -264,9 +286,69 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         if (wasActive) selectBook(app.activeBookId) else refreshBooks()
     }
 
+    fun loadCatalog() = viewModelScope.launch {
+        updateBooks { it.copy(catalogLoading = true, catalogError = null) }
+        try {
+            val catalog = withContext(Dispatchers.IO) { app.downloader.catalog() }
+            updateBooks { it.copy(catalog = catalog, catalogLoading = false) }
+        } catch (e: Exception) {
+            updateBooks { it.copy(catalogLoading = false, catalogError = "暂时连不上词书库，请检查网络后重试。") }
+        }
+    }
+
+    private val downloadJobs = HashMap<String, Job>()
+
+    /** Downloads a book, or updates one already on the phone; progress is kept either way. */
+    fun downloadBook(book: CatalogBook) {
+        if (downloadJobs[book.id]?.isActive == true) return
+        val updating = app.books.exists(book.id)
+        updateBooks { it.copy(downloads = it.downloads + (book.id to 0f)) }
+        downloadJobs[book.id] = viewModelScope.launch {
+            try {
+                var shown = 0f
+                withContext(Dispatchers.IO) {
+                    app.downloader.download(book) { done, total ->
+                        val fraction = if (total > 0) done.toFloat() / total else 0f
+                        // Only redraw once per percent.
+                        if (fraction - shown >= 0.01f || fraction >= 1f) {
+                            shown = fraction
+                            updateBooks { it.copy(downloads = it.downloads + (book.id to fraction)) }
+                        }
+                    }
+                }
+                if (updating) {
+                    toast("“${book.title}”已更新，学习进度都在")
+                    if (app.activeBookId == book.id) selectBook(book.id) else refreshBooks()
+                } else {
+                    toast("“${book.title}”已下载并设为当前词书。之前词书的进度都保留，随时可以切回去。")
+                    selectBook(book.id)
+                }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                toast("下载没有完成：${e.message ?: e.javaClass.simpleName}。请检查网络后重试。")
+            } finally {
+                downloadJobs.remove(book.id)
+                updateBooks { it.copy(downloads = it.downloads - book.id) }
+            }
+        }
+    }
+
+    fun cancelDownload(id: String) {
+        downloadJobs.remove(id)?.cancel()
+    }
+
+    private fun updateBooks(change: (BooksState) -> BooksState) = _state.update { it.copy(books = change(it.books)) }
+
     private fun refreshBooks() = viewModelScope.launch {
-        val books = withContext(Dispatchers.IO) { app.books.list() }
-        _state.update { it.copy(books = BooksState(books, app.activeBookId, speaker.hasGermanVoice)) }
+        val (books, progress) = withContext(Dispatchers.IO) {
+            val books = app.books.list()
+            val cards = app.store.loadCards()
+            val known = app.store.knownEntries()
+            val now = System.currentTimeMillis()
+            books to books.associate { b -> b.id to bookProgress(app.books.entries(b.id).map { it.id }, cards, known, now) }
+        }
+        updateBooks { it.copy(books = books, activeId = app.activeBookId, germanVoice = speaker.hasGermanVoice, progress = progress) }
     }
 
     /** Opens the import screen for a file picked in the app or shared / opened from another app. */

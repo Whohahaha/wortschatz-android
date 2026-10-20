@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Downloading word books from the public word book repository. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Keeps the daily audio preparation job scheduled after a reboot. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Daily study reminder; asked for only when the user turns the reminder on. -->

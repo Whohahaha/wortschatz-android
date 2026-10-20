@@ -56,6 +56,13 @@
 - 听数字：随机读一个德语数字，用数字键盘输入；0–20、21–99、100–999、1000–9999、年份五档。0–100 打包了离线发音。
 - 点例句查词：点例句里的任意词，离线显示原形、冠词、复数、动词三形，在词书里的还显示中文释义。
 
+## 0.8.0 新增：下载词书
+
+- 「词书」页新增「下载词书」：歌德 A2 词书（A2 词表比 A1 新增的 588 个词）和歌德 B1 词书（B1 词表比 A1、A2 新增的 1640 个词），都带离线发音，中文释义和例句为本项目自编。
+- 词书放在公开仓库 [whohahaha/wortschatz-books](https://github.com/whohahaha/wortschatz-books)，App 先从 GitHub 下载，连不上时改用 jsDelivr 镜像；每个文件都按 SHA-256 校验，下载完整才安装。
+- 进度跟着词条走，不跟着词书文件走：切换词书、删除下载的词书再重新下载、更新词书，背过的词都接着之前的进度。每本词书显示已学多少词、有多少张待复习。
+- 词书库里有新版本时，词书旁边出现「更新」，更新后进度不变。
+
 ## 代码结构
 
 ```
@@ -64,11 +71,14 @@ core/   纯 Kotlin，不依赖安卓，可以在任何 JVM 上跑单元测试
   fsrs/Fsrs.kt         FSRS-5 调度算法
   Model.kt             词条、卡片类型、复习记录
   WordBook.kt          词书（TSV）解析
+  Catalog.kt           可下载词书列表（词书仓库的 index.json）
+  BookProgress.kt      每本词书的学习进度
   StudySession.kt      选下一张卡、记录作答、撤销、统计
   imports/             导入：表格解析、德语词头写法识别、列识别和补全、Anki 卡组读取
 app/    安卓应用
   data/SqliteStudyStore.kt   SQLite 存储：card 表保存当前状态，review_log 只追加，以后做同步时交换的就是这张表
-  data/BookRepository.kt     内置词书和导入的词书（保存在 files/books/，用本 App 的格式）
+  data/BookRepository.kt     内置、下载和导入的词书（保存在 files/books/，用本 App 的格式；下载词书的发音在 files/book-audio/）
+  data/BookDownloader.kt     从词书仓库下载词书和发音
   AudioPrepJob.kt            后台提前生成发音
   StudyViewModel.kt          界面状态
   ui/                        Compose 界面
@@ -85,4 +95,4 @@ app/    安卓应用
 
 ## 下一步（第二阶段）
 
-A2 和 B1 词书、看中文拼写德语的产出卡、动词搭配卡（warten auf + Akk.）、每日提醒通知、账号和多设备同步、入门分级测试、冠词快练模式。
+动词搭配卡（warten auf + Akk.）、每日提醒通知、账号和多设备同步、入门分级测试、冠词快练模式。
