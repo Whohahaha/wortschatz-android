@@ -11,8 +11,10 @@ data class LookupResult(
     val noun: Pair<Gender, String>? = null,
     val verbLemma: String? = null,
     val verb: VerbForms? = null,
+    /** The word is a noun used only in the plural (Eltern), so no singular is shown. */
+    val pluralOnly: Boolean = false,
 ) {
-    val found: Boolean get() = entry != null || noun != null || verb != null
+    val found: Boolean get() = entry != null || noun != null || verb != null || pluralOnly
 }
 
 /** Offline lookup for words in example sentences: the current word book first, then the lexicon. */
@@ -34,18 +36,25 @@ class Lookup(entries: List<Entry>, private val lexicon: Lexicon) {
 
     fun find(word: String): LookupResult {
         val w = word.trim()
-        val nounLemma = lexicon.nounLemma(w) ?: lexicon.nounLemma(w.replaceFirstChar { it.uppercase() })
+        val direct = byForm[w.lowercase()]
+        val capitalized = w.replaceFirstChar { it.uppercase() }
+        // "Eltern" must not turn into the dictionary's "das Elter".
+        val pluralOnly = direct?.pluralOnly == true || capitalized in PLURAL_ONLY_NOUNS
+        val nounLemma = if (pluralOnly) null else lexicon.nounLemma(w) ?: lexicon.nounLemma(capitalized)
         val verbLemma = lexicon.verbLemma(w)
-        val entry = byForm[w.lowercase()]
+        val entry = direct
             ?: nounLemma?.let { byForm[it.lowercase()] }
             ?: verbLemma?.let { byForm[it] }
+        // The book's own noun wins over a different dictionary noun spelled the same way.
+        val noun = nounLemma?.takeIf { entry?.pos != PartOfSpeech.NOUN || it == entry.lemma }
         return LookupResult(
             word = w,
             entry = entry,
-            nounLemma = nounLemma,
-            noun = nounLemma?.let(lexicon::noun),
+            nounLemma = noun,
+            noun = noun?.let(lexicon::noun),
             verbLemma = verbLemma,
             verb = verbLemma?.let(lexicon::verb),
+            pluralOnly = pluralOnly,
         )
     }
 

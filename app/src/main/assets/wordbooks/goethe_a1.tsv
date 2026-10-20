@@ -1,780 +1,780 @@
 # title: 歌德 A1 词书
 # 词头依据歌德学院 Goethe-Zertifikat A1（Start Deutsch 1）公开词表；中文释义和例句为本项目自编。
 # 复数和动词变位来自 Wiktionary（经 kaikki.org 整理），CC BY-SA 4.0。
-id	level	pos	lemma	gender	plural	meaning	present3	preterite	participle	aux	example	example_zh
-ab	A1	adv	ab			从……起；离开					Ab Montag habe ich Urlaub.	从周一起我休假。
-aber	A1	other	aber			但是					Das Hotel ist klein, aber sehr schön.	这家酒店很小，但很漂亮。
-abfahren	A1	v	ab|fahren			（车、人）出发，开走	fährt ab	fuhr ab	abgefahren	sein	Der Bus fährt in fünf Minuten ab.	公交车五分钟后开。
-abfahrt	A1	n	Abfahrt	die	Abfahrten	出发；发车					Die Abfahrt ist um acht Uhr.	八点出发。
-abgeben	A1	v	ab|geben			交出，上交	gibt ab	gab ab	abgegeben	haben	Bitte geben Sie den Test jetzt ab.	请现在交卷。
-abholen	A1	v	ab|holen			接（人）；取（东西）	holt ab	holte ab	abgeholt	haben	Ich hole dich am Bahnhof ab.	我去火车站接你。
-absender	A1	n	Absender	der	Absender	寄件人					Auf dem Paket steht kein Absender.	包裹上没有写寄件人。
-achtung	A1	other	Achtung			注意！小心！					Achtung, der Zug fährt ein!	注意，列车进站了！
-adresse	A1	n	Adresse	die	Adressen	地址					Wie ist Ihre Adresse?	您的地址是什么？
-alle	A1	other	alle			所有的；大家					Alle Kinder spielen im Garten.	所有孩子都在花园里玩。
-allein	A1	adv	allein			独自，单独					Sie wohnt allein in Berlin.	她一个人住在柏林。
-also	A1	adv	also			那么；所以					Also, wir treffen uns um sechs.	那么，我们六点见。
-alt	A1	adj	alt			老的；旧的；……岁					Wie alt bist du?	你多大了？
-alter	A1	n	Alter	das		年龄					Bitte schreiben Sie hier Ihr Alter.	请在这里写上您的年龄。
-an	A1	other	an			在……旁边；在……上					Das Bild hängt an der Wand.	画挂在墙上。
-anbieten	A1	v	an|bieten			提供；请（人吃喝）	bietet an	bot an	angeboten	haben	Darf ich Ihnen einen Kaffee anbieten?	我可以请您喝杯咖啡吗？
-angebot	A1	n	Angebot	das	Angebote	优惠；报价；供应					Die Äpfel sind heute im Angebot.	苹果今天特价。
-andere	A1	other	andere			别的，其他的					Ich möchte eine andere Farbe.	我想要别的颜色。
-anfangen	A1	v	an|fangen			开始	fängt an	fing an	angefangen	haben	Der Kurs fängt um neun Uhr an.	课程九点开始。
-anfang	A1	n	Anfang	der	Anfänge	开始，开端					Am Anfang ist alles neu.	一开始一切都是新的。
-anklicken	A1	v	an|klicken			（用鼠标）点击	klickt an	klickte an	angeklickt	haben	Klicken Sie bitte hier an.	请点击这里。
-ankommen	A1	v	an|kommen			到达	kommt an	kam an	angekommen	sein	Wann kommst du in Hamburg an?	你什么时候到汉堡？
-ankunft	A1	n	Ankunft	die	Ankünfte	到达					Die Ankunft ist um 14 Uhr.	到达时间是 14 点。
-ankreuzen	A1	v	an|kreuzen			打叉（勾选）	kreuzt an	kreuzte an	angekreuzt	haben	Kreuzen Sie die richtige Antwort an.	请勾出正确答案。
-anmachen	A1	v	an|machen			打开（灯、电器）	macht an	machte an	angemacht	haben	Kannst du bitte das Licht anmachen?	你能把灯打开吗？
-anmelden	A1	v	an|melden			（sich ~）报名；登记	meldet an	meldete an	angemeldet	haben	Ich melde mich für den Deutschkurs an.	我报名参加德语课。
-anmeldung	A1	n	Anmeldung	die	Anmeldungen	报名；登记					Die Anmeldung ist im ersten Stock.	报名处在二楼。
-anrede	A1	n	Anrede	die	Anreden	（信件的）称呼					Die Anrede im Brief ist „Liebe Anna“.	信里的称呼是“亲爱的安娜”。
-anrufen	A1	v	an|rufen			打电话	ruft an	rief an	angerufen	haben	Ich rufe dich heute Abend an.	我今晚给你打电话。
-anruf	A1	n	Anruf	der	Anrufe	电话（来电）					Danke für deinen Anruf!	谢谢你打电话来！
-anrufbeantworter	A1	n	Anrufbeantworter	der	Anrufbeantworter	电话答录机					Sprechen Sie bitte auf den Anrufbeantworter.	请在答录机上留言。
-ansage	A1	n	Ansage	die	Ansagen	（电话、广播的）通知，提示语					Hören Sie die Ansage am Telefon.	请听电话里的提示语。
-anschluss	A1	n	Anschluss	der	Anschlüsse	（交通）换乘衔接；（电话、网络）接入					In Köln haben Sie Anschluss nach Bonn.	您在科隆可以换乘去波恩的车。
-an-sein	A1	v	an sein			（灯、电器）开着					Der Fernseher ist noch an.	电视还开着。
-antworten	A1	v	antworten			回答	antwortet	antwortete	geantwortet	haben	Bitte antworten Sie schnell.	请尽快回复。
-antwort	A1	n	Antwort	die	Antworten	回答，答复					Ich warte auf deine Antwort.	我在等你的回复。
-anzeige	A1	n	Anzeige	die	Anzeigen	广告；启事					Ich lese die Anzeigen in der Zeitung.	我在看报纸上的广告。
-anziehen	A1	v	an|ziehen			穿（衣服）；（sich ~）穿衣服	zieht an	zog an	angezogen	haben	Zieh bitte eine Jacke an, es ist kalt.	穿件外套吧，天冷。
-apartment	A1	n	Apartment	das	Apartments	小公寓					Das Apartment hat ein Zimmer und eine Küche.	这套小公寓有一个房间和一个厨房。
-apfel	A1	n	Apfel	der	Äpfel	苹果					Ich esse jeden Tag einen Apfel.	我每天吃一个苹果。
-appetit	A1	n	Appetit	der		胃口，食欲					Guten Appetit!	祝你胃口好！（用餐前）
-arbeiten	A1	v	arbeiten			工作	arbeitet	arbeitete	gearbeitet	haben	Mein Vater arbeitet bei der Post.	我爸爸在邮局工作。
-arbeit	A1	n	Arbeit	die	Arbeiten	工作；劳动					Die Arbeit macht mir Spaß.	我喜欢这份工作。
-arbeitslos	A1	adj	arbeitslos			失业的					Er ist seit einem Monat arbeitslos.	他失业一个月了。
-arbeitsplatz	A1	n	Arbeitsplatz	der	Arbeitsplätze	工作岗位；工位					Mein Arbeitsplatz ist am Fenster.	我的工位在窗边。
-arm	A1	n	Arm	der	Arme	手臂					Mein Arm tut weh.	我的胳膊疼。
-arzt	A1	n	Arzt	der	Ärzte	医生					Ich muss heute zum Arzt.	我今天得去看医生。
-auch	A1	adv	auch			也					Ich komme auch mit.	我也一起去。
-auf	A1	other	auf			在……上面					Das Buch liegt auf dem Tisch.	书在桌子上。
-aufgabe	A1	n	Aufgabe	die	Aufgaben	任务；题目					Lesen Sie die Aufgabe genau.	请仔细读题。
-aufhoeren	A1	v	auf|hören			停止	hört auf	hörte auf	aufgehört	haben	Hör bitte auf, ich muss arbeiten!	别闹了，我得工作！
-auf-sein	A1	v	auf sein			（门、商店）开着					Die Tür ist auf.	门开着。
-aufstehen	A1	v	auf|stehen			起床；站起来	steht auf	stand auf	aufgestanden	sein	Ich stehe jeden Tag um sieben Uhr auf.	我每天七点起床。
-aufzug	A1	n	Aufzug	der	Aufzüge	电梯					Der Aufzug ist leider kaputt.	电梯坏了。
-auge	A1	n	Auge	das	Augen	眼睛					Sie hat blaue Augen.	她有一双蓝眼睛。
-aus	A1	other	aus			从……出来；来自					Ich komme aus China.	我来自中国。
-ausflug	A1	n	Ausflug	der	Ausflüge	郊游，短途旅行					Am Sonntag machen wir einen Ausflug.	周日我们去郊游。
-ausfuellen	A1	v	aus|füllen			填写（表格）	füllt aus	füllte aus	ausgefüllt	haben	Bitte füllen Sie das Formular aus.	请填写这张表。
-ausgang	A1	n	Ausgang	der	Ausgänge	出口					Wo ist der Ausgang?	出口在哪里？
-auskunft	A1	n	Auskunft	die	Auskünfte	问讯；问讯处					Fragen Sie bitte an der Auskunft.	请到问讯处问一下。
-ausland	A1	n	Ausland	das		国外					Mein Bruder arbeitet im Ausland.	我哥哥在国外工作。
-auslaender	A1	n	Ausländer	der	Ausländer	外国人					In der Stadt wohnen viele Ausländer.	这个城市住着很多外国人。
-auslaendisch	A1	adj	ausländisch			外国的					Wir haben viele ausländische Studenten.	我们有很多外国学生。
-ausmachen	A1	v	aus|machen			关掉（灯、电器）；约定	macht aus	machte aus	ausgemacht	haben	Mach bitte den Computer aus.	请把电脑关了。
-aussage	A1	n	Aussage	die	Aussagen	说法；陈述					Ist die Aussage richtig oder falsch?	这个说法是对还是错？
-aussehen	A1	v	aus|sehen			看起来	sieht aus	sah aus	ausgesehen	haben	Du siehst heute sehr gut aus.	你今天看起来气色很好。
-aus-sein	A1	v	aus sein			（灯、电器）关着；结束了					Das Licht ist aus.	灯关着。
-aussteigen	A1	v	aus|steigen			下车	steigt aus	stieg aus	ausgestiegen	sein	Wir steigen an der nächsten Haltestelle aus.	我们下一站下车。
-ausweis	A1	n	Ausweis	der	Ausweise	证件，身份证					Haben Sie Ihren Ausweis dabei?	您带证件了吗？
-ausziehen	A1	v	aus|ziehen			脱（衣服）；搬出去	zieht aus	zog aus	ausgezogen	haben	Bitte ziehen Sie die Schuhe aus.	请把鞋脱掉。
-auto	A1	n	Auto	das	Autos	汽车					Wir fahren mit dem Auto nach München.	我们开车去慕尼黑。
-autobahn	A1	n	Autobahn	die	Autobahnen	高速公路					Auf der Autobahn ist heute viel Verkehr.	今天高速上车很多。
-automat	A1	n	Automat	der	Automaten	自动售货机					Die Fahrkarte kaufe ich am Automaten.	我在自动售票机买车票。
-automatisch	A1	adj	automatisch			自动的					Die Tür öffnet automatisch.	门会自动打开。
-baby	A1	n	Baby	das	Babys	婴儿					Das Baby schläft.	宝宝在睡觉。
-baeckerei	A1	n	Bäckerei	die	Bäckereien	面包店					Ich kaufe Brötchen in der Bäckerei.	我在面包店买小面包。
-bad	A1	n	Bad	das	Bäder	浴室					Die Wohnung hat ein großes Bad.	这套公寓有一个大浴室。
-baden	A1	v	baden			洗澡（泡澡）；游泳	badet	badete	gebadet	haben	Die Kinder baden gern im See.	孩子们喜欢在湖里游泳。
-bahn	A1	n	Bahn	die	Bahnen	铁路；火车					Ich fahre mit der Bahn zur Arbeit.	我坐火车上班。
-bahnhof	A1	n	Bahnhof	der	Bahnhöfe	火车站					Der Bahnhof ist nicht weit.	火车站不远。
-bahnsteig	A1	n	Bahnsteig	der	Bahnsteige	站台					Der Zug fährt von Bahnsteig drei.	火车从三号站台出发。
-bald	A1	adv	bald			不久，很快					Bis bald!	回头见！
-balkon	A1	n	Balkon	der	Balkone	阳台					Wir frühstücken auf dem Balkon.	我们在阳台上吃早饭。
-banane	A1	n	Banane	die	Bananen	香蕉					Die Bananen sind noch grün.	香蕉还是绿的。
-bank	A1	n	Bank	die	Banken	银行；长椅					Ich gehe zur Bank und hole Geld.	我去银行取钱。
-bar	A1	adv	bar			用现金					Kann ich bar bezahlen?	我可以付现金吗？
-bauch	A1	n	Bauch	der	Bäuche	肚子					Ich habe Bauchschmerzen, mein Bauch tut weh.	我肚子疼。
-baum	A1	n	Baum	der	Bäume	树					Vor dem Haus steht ein großer Baum.	房子前面有一棵大树。
-beamte	A1	n	Beamte	der	Beamten	公务员					Der Beamte prüft meinen Pass.	工作人员在检查我的护照。
-bedeuten	A1	v	bedeuten			意思是	bedeutet	bedeutete	bedeutet	haben	Was bedeutet dieses Wort?	这个词是什么意思？
-beginnen	A1	v	beginnen			开始	beginnt	begann	begonnen	haben	Der Film beginnt um acht Uhr.	电影八点开始。
-bei	A1	other	bei			在……那里；在……时候					Ich wohne bei meinen Eltern.	我住在父母家。
-beide	A1	other	beide			两个都					Beide Zimmer sind frei.	两个房间都空着。
-bein	A1	n	Bein	das	Beine	腿					Er hat sich das Bein gebrochen.	他把腿摔断了。
-beispiel	A1	n	Beispiel	das	Beispiele	例子					Hier ist ein Beispiel.	这里有一个例子。
-zum-beispiel	A1	other	zum Beispiel			例如（z. B.）					Ich esse gern Obst, zum Beispiel Äpfel.	我喜欢吃水果，比如苹果。
-bekannt	A1	adj	bekannt			有名的；认识的					Der Kölner Dom ist sehr bekannt.	科隆大教堂非常有名。
-bekannte	A1	n	Bekannte	der	Bekannten	熟人					Er ist ein Bekannter von mir.	他是我的一个熟人。
-bekommen	A1	v	bekommen			得到，收到	bekommt	bekam	bekommen	haben	Ich habe einen Brief bekommen.	我收到了一封信。
-benutzen	A1	v	benutzen			使用	benutzt	benutzte	benutzt	haben	Darf ich dein Handy benutzen?	我可以用一下你的手机吗？
-beruf	A1	n	Beruf	der	Berufe	职业					Was sind Sie von Beruf?	您是做什么工作的？
-besetzt	A1	adj	besetzt			（座位、电话）占用的；占线的					Ist der Platz hier besetzt?	这个座位有人吗？
-besichtigen	A1	v	besichtigen			参观	besichtigt	besichtigte	besichtigt	haben	Morgen besichtigen wir das Schloss.	明天我们参观城堡。
-besser	A1	adj	besser			更好的					Heute geht es mir besser.	我今天好些了。
-beste	A1	adj	beste			最好的					Das ist der beste Kuchen in der Stadt.	这是城里最好吃的蛋糕。
-bestellen	A1	v	bestellen			点（菜）；订购	bestellt	bestellte	bestellt	haben	Ich bestelle eine Pizza.	我点一份披萨。
-besuchen	A1	v	besuchen			拜访；参观；上（学）	besucht	besuchte	besucht	haben	Am Wochenende besuche ich meine Oma.	周末我去看奶奶。
-bett	A1	n	Bett	das	Betten	床					Das Bett ist sehr bequem.	这张床很舒服。
-bezahlen	A1	v	bezahlen			付款	bezahlt	bezahlte	bezahlt	haben	Kann ich mit Karte bezahlen?	我可以刷卡吗？
-bier	A1	n	Bier	das		啤酒					Ein Bier, bitte!	请来一杯啤酒！
-bild	A1	n	Bild	das	Bilder	图片；画					Sehen Sie sich das Bild an.	请看这张图。
-billig	A1	adj	billig			便宜的					Das T-Shirt ist sehr billig.	这件 T 恤很便宜。
-birne	A1	n	Birne	die	Birnen	梨；灯泡					Ich kaufe ein Kilo Birnen.	我买一公斤梨。
-bis	A1	other	bis			直到					Ich arbeite bis fünf Uhr.	我工作到五点。
-ein-bisschen	A1	other	ein bisschen			一点儿					Ich spreche ein bisschen Deutsch.	我会说一点德语。
-bitte	A1	other	bitte			请；不客气					Ein Wasser, bitte.	请来一杯水。
-bitte-n	A1	n	Bitte	die	Bitten	请求					Ich habe eine Bitte an dich.	我想请你帮个忙。
-bitten	A1	v	bitten			请求	bittet	bat	gebeten	haben	Ich bitte Sie um Hilfe.	我请您帮忙。
-bitter	A1	adj	bitter			苦的					Der Kaffee ist sehr bitter.	这咖啡很苦。
-bleiben	A1	v	bleiben			留下，停留	bleibt	blieb	geblieben	sein	Wie lange bleibst du in Wien?	你在维也纳待多久？
-bleistift	A1	n	Bleistift	der	Bleistifte	铅笔					Schreiben Sie bitte mit Bleistift.	请用铅笔写。
-blick	A1	n	Blick	der	Blicke	视线；景色					Das Zimmer hat einen schönen Blick auf das Meer.	这个房间能看到美丽的海景。
-blume	A1	n	Blume	die	Blumen	花					Ich schenke meiner Mutter Blumen.	我送妈妈花。
-bogen	A1	n	Bogen	der	Bögen	（一张）纸；答题纸					Schreiben Sie die Lösungen auf den Antwortbogen.	请把答案写在答题纸上。
-boese	A1	adj	böse			生气的；坏的					Bist du mir böse?	你生我的气吗？
-brauchen	A1	v	brauchen			需要	braucht	brauchte	gebraucht	haben	Ich brauche einen neuen Computer.	我需要一台新电脑。
-breit	A1	adj	breit			宽的					Die Straße ist sehr breit.	这条街很宽。
-brief	A1	n	Brief	der	Briefe	信					Ich schreibe einen Brief an meine Freundin.	我给女朋友写信。
-briefmarke	A1	n	Briefmarke	die	Briefmarken	邮票					Ich brauche eine Briefmarke für die Karte.	这张明信片我需要一张邮票。
-bringen	A1	v	bringen			带来；送去	bringt	brachte	gebracht	haben	Kannst du mir ein Glas Wasser bringen?	你能给我拿一杯水吗？
-brot	A1	n	Brot	das	Brote	面包					Wir essen abends Brot mit Käse.	我们晚上吃面包配奶酪。
-broetchen	A1	n	Brötchen	das	Brötchen	小面包					Zum Frühstück esse ich zwei Brötchen.	早饭我吃两个小面包。
-bruder	A1	n	Bruder	der	Brüder	兄弟					Mein Bruder ist zwanzig Jahre alt.	我哥哥二十岁。
-buch	A1	n	Buch	das	Bücher	书					Das Buch ist sehr interessant.	这本书很有意思。
-buchstabe	A1	n	Buchstabe	der	Buchstaben	字母					Das Wort hat fünf Buchstaben.	这个词有五个字母。
-buchstabieren	A1	v	buchstabieren			拼读（字母）	buchstabiert	buchstabierte	buchstabiert	haben	Können Sie Ihren Namen bitte buchstabieren?	请您拼一下您的名字好吗？
-bus	A1	n	Bus	der	Busse	公交车					Ich fahre mit dem Bus in die Stadt.	我坐公交车进城。
-butter	A1	n	Butter	die		黄油					Möchtest du Butter aufs Brot?	面包上要抹黄油吗？
-café	A1	n	Café	das	Cafés	咖啡馆					Wir treffen uns im Café am Markt.	我们在集市旁的咖啡馆见面。
-cd	A1	n	CD	die	CDs	光盘，CD					Ich höre gern diese CD.	我喜欢听这张 CD。
-chef	A1	n	Chef	der	Chefs	老板，上司					Mein Chef ist heute nicht im Büro.	我的老板今天不在办公室。
-circa	A1	adv	circa			大约（ca.）					Die Fahrt dauert circa zwei Stunden.	路上大约要两个小时。
-computer	A1	n	Computer	der	Computer	电脑					Mein Computer ist zu langsam.	我的电脑太慢了。
-da	A1	adv	da			那里；那时					Da ist der Bahnhof.	火车站在那儿。
-dame	A1	n	Dame	die	Damen	女士					Meine Damen und Herren, willkommen!	女士们先生们，欢迎！
-daneben	A1	adv	daneben			在旁边					Die Post ist im Zentrum, die Bank ist gleich daneben.	邮局在市中心，银行就在旁边。
-danken	A1	v	danken			感谢	dankt	dankte	gedankt	haben	Ich danke Ihnen für Ihre Hilfe.	谢谢您的帮助。
-dank	A1	n	Dank	der		感谢					Vielen Dank!	非常感谢！
-danke	A1	other	danke			谢谢					Danke, das ist sehr nett.	谢谢，你真好。
-dann	A1	adv	dann			然后；那么					Zuerst essen wir, dann gehen wir ins Kino.	我们先吃饭，然后去看电影。
-datum	A1	n	Datum	das	Daten	日期					Welches Datum ist heute?	今天几号？
-dauern	A1	v	dauern			持续，花（时间）	dauert	dauerte	gedauert	haben	Wie lange dauert der Kurs?	这门课要上多久？
-dein	A1	other	dein			你的					Ist das dein Fahrrad?	这是你的自行车吗？
-denn	A1	other	denn			因为；（语气词）到底					Ich bleibe zu Hause, denn ich bin krank.	我待在家里，因为我病了。
-der-die-das	A1	other	der, die, das			定冠词（阳性、阴性、中性）					Der Mann, die Frau und das Kind warten.	那个男人、女人和孩子在等着。
-dich	A1	other	dich			你（第四格）					Ich liebe dich.	我爱你。
-dieser	A1	other	dieser			这个					Dieser Zug fährt nach Berlin.	这趟车开往柏林。
-dir	A1	other	dir			你（第三格）					Ich helfe dir gern.	我很乐意帮你。
-disco	A1	n	Disco	die	Discos	迪斯科舞厅					Am Samstag gehen wir in die Disco.	周六我们去迪厅。
-doktor	A1	n	Doktor	der	Doktoren	医生；博士					Der Doktor sagt, ich muss im Bett bleiben.	医生说我得卧床休息。
-doppelzimmer	A1	n	Doppelzimmer	das	Doppelzimmer	双人间					Wir möchten ein Doppelzimmer für zwei Nächte.	我们想订一间双人房，住两晚。
-dorf	A1	n	Dorf	das	Dörfer	村庄					Meine Großeltern wohnen in einem kleinen Dorf.	我的祖父母住在一个小村子里。
-dort	A1	adv	dort			那里					Siehst du das Haus dort?	你看到那边那座房子了吗？
-draussen	A1	adv	draußen			在外面					Die Kinder spielen draußen.	孩子们在外面玩。
-drucken	A1	v	drucken			打印	druckt	druckte	gedruckt	haben	Kannst du mir die Fahrkarte drucken?	你能帮我把车票打印出来吗？
-drucker	A1	n	Drucker	der	Drucker	打印机					Der Drucker hat kein Papier mehr.	打印机没纸了。
-druecken	A1	v	drücken			按；推	drückt	drückte	gedrückt	haben	Drücken Sie bitte auf den Knopf.	请按一下按钮。
-durch	A1	other	durch			穿过；通过					Wir gehen durch den Park.	我们穿过公园。
-durchsage	A1	n	Durchsage	die	Durchsagen	（广播）通知					Achtung, eine Durchsage für alle Reisenden.	请注意，下面是给所有旅客的广播。
-duerfen	A1	v	dürfen			可以，被允许	darf	durfte	gedurft	haben	Darf ich hier rauchen?	我可以在这儿抽烟吗？
-durst	A1	n	Durst	der		口渴					Ich habe Durst.	我渴了。
-duschen	A1	v	duschen			淋浴，冲澡	duscht	duschte	geduscht	haben	Ich dusche jeden Morgen.	我每天早上洗澡。
-dusche	A1	n	Dusche	die	Duschen	淋浴（间）					Das Zimmer hat eine Dusche.	这个房间有淋浴。
-ecke	A1	n	Ecke	die	Ecken	角落；拐角					Die Apotheke ist gleich um die Ecke.	药店就在拐角处。
-ehefrau	A1	n	Ehefrau	die	Ehefrauen	妻子					Das ist meine Ehefrau.	这是我妻子。
-ehemann	A1	n	Ehemann	der	Ehemänner	丈夫					Ihr Ehemann ist Arzt.	她丈夫是医生。
-ei	A1	n	Ei	das	Eier	鸡蛋					Ich esse zum Frühstück ein Ei.	我早饭吃一个鸡蛋。
-eilig	A1	adj	eilig			匆忙的；紧急的					Ich habe es eilig.	我赶时间。
-ein	A1	other	ein			一个（不定冠词）；一					Ich habe einen Bruder und eine Schwester.	我有一个哥哥和一个姐姐。
-einfach	A1	adj	einfach			简单的；单程的					Die Aufgabe ist ganz einfach.	这道题很简单。
-eingang	A1	n	Eingang	der	Eingänge	入口					Der Eingang ist hinten.	入口在后面。
-einkaufen	A1	v	ein|kaufen			购物，买东西	kauft ein	kaufte ein	eingekauft	haben	Ich kaufe im Supermarkt ein.	我在超市买东西。
-einladen	A1	v	ein|laden			邀请	lädt ein	lud ein	eingeladen	haben	Ich lade dich zu meinem Geburtstag ein.	我邀请你来我的生日会。
-einladung	A1	n	Einladung	die	Einladungen	邀请					Danke für die Einladung!	谢谢你的邀请！
-einmal	A1	adv	einmal			一次；有一次					Ich war einmal in Paris.	我去过一次巴黎。
-einsteigen	A1	v	ein|steigen			上车	steigt ein	stieg ein	eingestiegen	sein	Bitte schnell einsteigen!	请赶快上车！
-eintritt	A1	n	Eintritt	der		入场；门票					Der Eintritt kostet zehn Euro.	门票十欧元。
-einzelzimmer	A1	n	Einzelzimmer	das	Einzelzimmer	单人间					Haben Sie noch ein Einzelzimmer frei?	你们还有空的单人间吗？
-eltern	A1	n	Eltern	die		父母（复数）					Meine Eltern wohnen in Shanghai.	我父母住在上海。
-e-mail	A1	n	E-Mail	die	E-Mails	电子邮件					Ich schreibe dir eine E-Mail.	我给你发一封邮件。
-empfaenger	A1	n	Empfänger	der	Empfänger	收件人					Schreiben Sie den Empfänger auf den Brief.	请在信上写上收件人。
-empfehlen	A1	v	empfehlen			推荐	empfiehlt	empfahl	empfohlen	haben	Was können Sie mir empfehlen?	您能给我推荐什么？
-enden	A1	v	enden			结束	endet	endete	geendet	haben	Der Kurs endet im Juni.	课程六月结束。
-ende	A1	n	Ende	das	Enden	结尾，结束					Am Ende der Straße ist ein Park.	街的尽头有个公园。
-entschuldigen	A1	v	entschuldigen			原谅；（sich ~）道歉	entschuldigt	entschuldigte	entschuldigt	haben	Entschuldigen Sie, wo ist die Toilette?	打扰一下，厕所在哪里？
-entschuldigung	A1	n	Entschuldigung	die	Entschuldigungen	道歉；对不起					Entschuldigung, ich bin zu spät.	对不起，我来晚了。
-er	A1	other	er			他					Er kommt aus Spanien.	他来自西班牙。
-ergebnis	A1	n	Ergebnis	das	Ergebnisse	结果					Das Ergebnis vom Test ist gut.	考试成绩不错。
-erklaeren	A1	v	erklären			解释	erklärt	erklärte	erklärt	haben	Können Sie das bitte noch einmal erklären?	您能再解释一遍吗？
-erlauben	A1	v	erlauben			允许	erlaubt	erlaubte	erlaubt	haben	Rauchen ist hier nicht erlaubt.	这里不许吸烟。
-erwachsene	A1	n	Erwachsene	der	Erwachsenen	成年人					Für Erwachsene kostet der Eintritt acht Euro.	成人门票八欧元。
-erzaehlen	A1	v	erzählen			讲述	erzählt	erzählte	erzählt	haben	Erzähl mal, wie war dein Urlaub?	说说看，你的假期怎么样？
-es	A1	other	es			它；（无人称主语）					Es regnet.	下雨了。
-essen	A1	v	essen			吃	isst	aß	gegessen	haben	Was isst du gern?	你喜欢吃什么？
-essen-n	A1	n	Essen	das		饭菜；吃饭					Das Essen ist fertig!	饭好了！
-euer	A1	other	euer			你们的					Ist das euer Auto?	这是你们的车吗？
-fahren	A1	v	fahren			乘（车）；开（车）	fährt	fuhr	gefahren	sein	Ich fahre morgen nach Berlin.	我明天去柏林。
-fahrer	A1	n	Fahrer	der	Fahrer	司机					Der Fahrer wartet vor dem Hotel.	司机在酒店门口等着。
-fahrkarte	A1	n	Fahrkarte	die	Fahrkarten	车票					Ich brauche eine Fahrkarte nach Hamburg.	我需要一张去汉堡的车票。
-fahrrad	A1	n	Fahrrad	das	Fahrräder	自行车					Ich fahre mit dem Fahrrad zur Schule.	我骑自行车上学。
-falsch	A1	adj	falsch			错误的					Die Antwort ist falsch.	这个答案是错的。
-familie	A1	n	Familie	die	Familien	家庭；家人					Meine Familie ist groß.	我家人很多。
-familienname	A1	n	Familienname	der	Familiennamen	姓					Wie ist Ihr Familienname?	您姓什么？
-familienstand	A1	n	Familienstand	der		婚姻状况					Familienstand: ledig.	婚姻状况：未婚。
-farbe	A1	n	Farbe	die	Farben	颜色					Welche Farbe hat dein Auto?	你的车是什么颜色的？
-fax	A1	n	Fax	das	Faxe	传真					Bitte schicken Sie mir ein Fax.	请给我发一份传真。
-feiertag	A1	n	Feiertag	der	Feiertage	节假日					Am Feiertag sind die Geschäfte geschlossen.	节假日商店关门。
-feiern	A1	v	feiern			庆祝	feiert	feierte	gefeiert	haben	Wir feiern heute meinen Geburtstag.	我们今天庆祝我的生日。
-fehlen	A1	v	fehlen			缺少；缺席	fehlt	fehlte	gefehlt	haben	Wer fehlt heute?	今天谁没来？
-fehler	A1	n	Fehler	der	Fehler	错误					Im Text sind drei Fehler.	这篇文章里有三个错误。
-fernsehen	A1	v	fern|sehen			看电视	sieht fern	sah fern	ferngesehen	haben	Abends sehen wir oft fern.	我们晚上经常看电视。
-fertig	A1	adj	fertig			完成的；准备好的					Ich bin gleich fertig.	我马上就好。
-feuer	A1	n	Feuer	das		火					Haben Sie Feuer?	您有火吗？
-fieber	A1	n	Fieber	das		发烧					Das Kind hat Fieber.	孩子发烧了。
-film	A1	n	Film	der	Filme	电影					Der Film war sehr lustig.	那部电影很好笑。
-finden	A1	v	finden			找到；认为	findet	fand	gefunden	haben	Ich finde meinen Schlüssel nicht.	我找不到钥匙了。
-firma	A1	n	Firma	die	Firmen	公司					Ich arbeite bei einer kleinen Firma.	我在一家小公司工作。
-fisch	A1	n	Fisch	der	Fische	鱼					Heute gibt es Fisch mit Reis.	今天吃鱼配米饭。
-flasche	A1	n	Flasche	die	Flaschen	瓶子					Eine Flasche Wasser, bitte.	请来一瓶水。
-fleisch	A1	n	Fleisch	das		肉					Ich esse kein Fleisch.	我不吃肉。
-fliegen	A1	v	fliegen			飞；坐飞机	fliegt	flog	geflogen	sein	Wir fliegen im Sommer nach China.	我们夏天坐飞机去中国。
-abfliegen	A1	v	ab|fliegen			（飞机）起飞	fliegt ab	flog ab	abgeflogen	sein	Das Flugzeug fliegt um zehn Uhr ab.	飞机十点起飞。
-abflug	A1	n	Abflug	der	Abflüge	起飞					Der Abflug ist um 9:30 Uhr.	起飞时间是 9:30。
-flughafen	A1	n	Flughafen	der	Flughäfen	机场					Wie komme ich zum Flughafen?	去机场怎么走？
-flugzeug	A1	n	Flugzeug	das	Flugzeuge	飞机					Das Flugzeug ist pünktlich.	飞机准点。
-formular	A1	n	Formular	das	Formulare	表格					Bitte unterschreiben Sie das Formular.	请在表格上签字。
-foto	A1	n	Foto	das	Fotos	照片					Ich zeige dir ein Foto von meiner Familie.	我给你看一张我的全家福。
-fragen	A1	v	fragen			问	fragt	fragte	gefragt	haben	Darf ich Sie etwas fragen?	我可以问您一件事吗？
-frage	A1	n	Frage	die	Fragen	问题					Haben Sie noch Fragen?	您还有问题吗？
-frau	A1	n	Frau	die	Frauen	女人；妻子；（称呼）……女士					Frau Müller ist meine Lehrerin.	米勒女士是我的老师。
-frei	A1	adj	frei			空闲的；免费的					Ist der Platz noch frei?	这个座位还空着吗？
-freizeit	A1	n	Freizeit	die		业余时间					Was machst du in deiner Freizeit?	你业余时间做什么？
-fremd	A1	adj	fremd			陌生的；外地的					Ich bin hier fremd.	我不是本地人。
-freuen	A1	v	freuen			（sich ~）高兴	freut	freute	gefreut	haben	Ich freue mich auf das Wochenende.	我盼着周末。
-freund	A1	n	Freund	der	Freunde	朋友；男朋友					Das ist mein Freund Paul.	这是我的朋友保罗。
-frueher	A1	adv	früher			以前					Früher habe ich in Köln gewohnt.	我以前住在科隆。
-fruehstuecken	A1	v	frühstücken			吃早饭	frühstückt	frühstückte	gefrühstückt	haben	Wir frühstücken um acht Uhr.	我们八点吃早饭。
-fruehstueck	A1	n	Frühstück	das		早餐					Das Frühstück ist im Preis inklusive.	房价含早餐。
-fuehrung	A1	n	Führung	die	Führungen	（参观）导览					Die Führung durch das Museum beginnt um zwei.	博物馆导览两点开始。
-fuer	A1	other	für			为了；给					Das Geschenk ist für dich.	这个礼物是给你的。
-fuss	A1	n	Fuß	der	Füße	脚					Wir gehen zu Fuß.	我们走路去。
-fussball	A1	n	Fußball	der	Fußbälle	足球					Am Samstag spielen wir Fußball.	周六我们踢足球。
-garten	A1	n	Garten	der	Gärten	花园					Im Garten stehen viele Blumen.	花园里有很多花。
-gast	A1	n	Gast	der	Gäste	客人					Heute Abend kommen Gäste.	今晚有客人来。
-geben	A1	v	geben			给	gibt	gab	gegeben	haben	Gib mir bitte das Salz.	请把盐递给我。
-geboren	A1	adj	geboren			出生的					Ich bin 1995 in Peking geboren.	我 1995 年出生在北京。
-geburtsjahr	A1	n	Geburtsjahr	das	Geburtsjahre	出生年份					Schreiben Sie bitte Ihr Geburtsjahr auf.	请写下您的出生年份。
-geburtsort	A1	n	Geburtsort	der	Geburtsorte	出生地					Mein Geburtsort ist Nanjing.	我的出生地是南京。
-geburtstag	A1	n	Geburtstag	der	Geburtstage	生日					Herzlichen Glückwunsch zum Geburtstag!	生日快乐！
-gefallen	A1	v	gefallen			使喜欢	gefällt	gefiel	gefallen	haben	Die Wohnung gefällt mir sehr.	我很喜欢这套公寓。
-gegen	A1	other	gegen			对着；反对；（时间）大约					Ich komme gegen sieben Uhr.	我七点左右到。
-gehen	A1	v	gehen			走；去	geht	ging	gegangen	sein	Wir gehen ins Kino.	我们去看电影。
-gehoeren	A1	v	gehören			属于	gehört	gehörte	gehört	haben	Gehört das Handy dir?	这部手机是你的吗？
-geld	A1	n	Geld	das		钱					Ich habe kein Geld mehr.	我没钱了。
-gemuese	A1	n	Gemüse	das		蔬菜					Kinder sollen viel Gemüse essen.	孩子应该多吃蔬菜。
-gepaeck	A1	n	Gepäck	das		行李					Wo kann ich mein Gepäck lassen?	我可以把行李放在哪里？
-gerade	A1	adv	gerade			正在；刚才					Ich koche gerade.	我正在做饭。
-geradeaus	A1	adv	geradeaus			一直往前					Gehen Sie geradeaus und dann links.	一直往前走，然后左转。
-gern	A1	adv	gern			乐意，喜欢					Ich trinke gern Tee.	我喜欢喝茶。
-geschaeft	A1	n	Geschäft	das	Geschäfte	商店；生意					Das Geschäft öffnet um neun Uhr.	这家店九点开门。
-geschenk	A1	n	Geschenk	das	Geschenke	礼物					Das ist ein Geschenk für dich.	这是给你的礼物。
-geschwister	A1	n	Geschwister	die		兄弟姐妹（复数）					Hast du Geschwister?	你有兄弟姐妹吗？
-gespraech	A1	n	Gespräch	das	Gespräche	谈话					Wir haben ein langes Gespräch.	我们聊了很久。
-gestern	A1	adv	gestern			昨天					Gestern war ich im Kino.	我昨天去看了电影。
-gestorben	A1	adj	gestorben			去世的					Mein Opa ist letztes Jahr gestorben.	我爷爷去年去世了。
-getraenk	A1	n	Getränk	das	Getränke	饮料					Was für Getränke haben Sie?	你们有什么饮料？
-gewicht	A1	n	Gewicht	das		重量；体重					Wie ist das Gewicht vom Koffer?	这个箱子多重？
-gewinnen	A1	v	gewinnen			赢；获得	gewinnt	gewann	gewonnen	haben	Wer hat das Spiel gewonnen?	谁赢了比赛？
-glas	A1	n	Glas	das	Gläser	玻璃杯；玻璃					Ein Glas Wein, bitte.	请来一杯葡萄酒。
-glauben	A1	v	glauben			相信；认为	glaubt	glaubte	geglaubt	haben	Ich glaube, er kommt heute nicht.	我觉得他今天不来了。
-gleich	A1	adv	gleich			马上；相同的					Ich komme gleich.	我马上来。
-gleis	A1	n	Gleis	das	Gleise	（火车）轨道，站台号					Der Zug fährt von Gleis fünf ab.	火车从五号站台发车。
-glueck	A1	n	Glück	das		幸运；幸福					Viel Glück bei der Prüfung!	祝考试顺利！
-gluecklich	A1	adj	glücklich			幸福的；快乐的					Wir sind sehr glücklich.	我们很幸福。
-glueckwunsch	A1	n	Glückwunsch	der	Glückwünsche	祝贺					Herzlichen Glückwunsch!	衷心祝贺！
-grad	A1	n	Grad	der		度（温度）					Heute sind es zwanzig Grad.	今天二十度。
-gratulieren	A1	v	gratulieren			祝贺	gratuliert	gratulierte	gratuliert	haben	Ich gratuliere dir zum Geburtstag.	祝你生日快乐。
-grillen	A1	v	grillen			烧烤	grillt	grillte	gegrillt	haben	Am Sonntag grillen wir im Garten.	周日我们在花园里烧烤。
-gross	A1	adj	groß			大的；高的					Mein Bruder ist sehr groß.	我哥哥个子很高。
-groesse	A1	n	Größe	die	Größen	尺码；大小					Haben Sie die Hose in Größe 40?	这条裤子有 40 码的吗？
-grosseltern	A1	n	Großeltern	die		祖父母，外祖父母（复数）					Meine Großeltern sind schon alt.	我的祖父母已经老了。
-grossmutter	A1	n	Großmutter	die	Großmütter	祖母，外祖母					Meine Großmutter backt gern Kuchen.	我奶奶喜欢烤蛋糕。
-grossvater	A1	n	Großvater	der	Großväter	祖父，外祖父					Mein Großvater war Lehrer.	我爷爷以前是老师。
-gruppe	A1	n	Gruppe	die	Gruppen	组；团体					Wir arbeiten in Gruppen.	我们分组练习。
-gruss	A1	n	Gruß	der	Grüße	问候					Viele Grüße an deine Eltern!	代我向你父母问好！
-gueltig	A1	adj	gültig			有效的					Ihr Pass ist nicht mehr gültig.	您的护照已经过期了。
-guenstig	A1	adj	günstig			便宜的；划算的					Das Hotel ist sehr günstig.	这家酒店很实惠。
-gut	A1	adj	gut			好的					Das Essen ist sehr gut.	饭菜很好吃。
-haar	A1	n	Haar	das	Haare	头发					Sie hat lange Haare.	她留着长发。
-haben	A1	v	haben			有	hat	hatte	gehabt	haben	Ich habe zwei Kinder.	我有两个孩子。
-haehnchen	A1	n	Hähnchen	das	Hähnchen	鸡肉；（烤）鸡					Ich nehme das Hähnchen mit Pommes.	我要鸡肉配薯条。
-halbpension	A1	n	Halbpension	die		（酒店）半膳					Das Zimmer mit Halbpension kostet 80 Euro.	带早晚餐的房间 80 欧元。
-halle	A1	n	Halle	die	Hallen	大厅					Wir warten in der Halle.	我们在大厅等。
-hallo	A1	other	hallo			你好					Hallo, wie geht's?	你好，最近怎么样？
-halten	A1	v	halten			停；拿着	hält	hielt	gehalten	haben	Der Bus hält vor dem Rathaus.	公交车停在市政厅前。
-haltestelle	A1	n	Haltestelle	die	Haltestellen	车站（公交、电车）					Wo ist die nächste Haltestelle?	最近的车站在哪儿？
-hand	A1	n	Hand	die	Hände	手					Wasch dir bitte die Hände.	请洗手。
-handy	A1	n	Handy	das	Handys	手机					Mein Handy ist kaputt.	我的手机坏了。
-haus	A1	n	Haus	das	Häuser	房子					Wir wohnen in einem alten Haus.	我们住在一栋老房子里。
-hausaufgabe	A1	n	Hausaufgabe	die	Hausaufgaben	家庭作业					Hast du deine Hausaufgaben gemacht?	你写完作业了吗？
-hausfrau	A1	n	Hausfrau	die	Hausfrauen	家庭主妇					Meine Mutter ist Hausfrau.	我妈妈是家庭主妇。
-hausmann	A1	n	Hausmann	der	Hausmänner	家庭主夫					Er ist zurzeit Hausmann.	他现在在家带孩子做家务。
-heimat	A1	n	Heimat	die		家乡					Meine Heimat ist China.	我的家乡在中国。
-heiraten	A1	v	heiraten			结婚	heiratet	heiratete	geheiratet	haben	Wir heiraten im Mai.	我们五月结婚。
-heissen	A1	v	heißen			叫（名字）	heißt	hieß	geheißen	haben	Wie heißen Sie?	您叫什么名字？
-helfen	A1	v	helfen			帮助	hilft	half	geholfen	haben	Kannst du mir helfen?	你能帮我吗？
-hell	A1	adj	hell			明亮的；浅色的					Das Zimmer ist schön hell.	这个房间很亮堂。
-herd	A1	n	Herd	der	Herde	炉灶					Das Essen steht auf dem Herd.	饭在灶上。
-herr	A1	n	Herr	der	Herren	先生					Herr Schmidt ist nicht da.	施密特先生不在。
-herzlich	A1	adj	herzlich			衷心的；热情的					Herzlich willkommen!	热烈欢迎！
-heute	A1	adv	heute			今天					Heute ist Montag.	今天星期一。
-hier	A1	adv	hier			这里					Hier ist mein Ausweis.	这是我的证件。
-hilfe	A1	n	Hilfe	die		帮助					Danke für deine Hilfe!	谢谢你的帮助！
-hinten	A1	adv	hinten			在后面					Die Toiletten sind hinten links.	厕所在后面左边。
-hobby	A1	n	Hobby	das	Hobbys	爱好					Mein Hobby ist Lesen.	我的爱好是读书。
-hoch	A1	adj	hoch			高的					Der Berg ist sehr hoch.	这座山很高。
-hochzeit	A1	n	Hochzeit	die	Hochzeiten	婚礼					Die Hochzeit ist im Juni.	婚礼在六月。
-holen	A1	v	holen			去拿；去叫	holt	holte	geholt	haben	Ich hole schnell meine Jacke.	我去拿一下外套。
-hoeren	A1	v	hören			听；听见	hört	hörte	gehört	haben	Ich höre gern Musik.	我喜欢听音乐。
-hotel	A1	n	Hotel	das	Hotels	酒店					Unser Hotel ist direkt am Bahnhof.	我们的酒店就在火车站旁边。
-hund	A1	n	Hund	der	Hunde	狗					Der Hund spielt im Garten.	狗在花园里玩。
-hunger	A1	n	Hunger	der		饥饿					Ich habe großen Hunger.	我很饿。
-ich	A1	other	ich			我					Ich heiße Lin.	我叫林。
-ihr	A1	other	ihr			你们；她的；他们的					Kommt ihr heute Abend?	你们今晚来吗？
-ihm--ihn	A1	other	ihm / ihn			他（第三格 / 第四格）					Ich gebe ihm das Buch. Ich sehe ihn morgen.	我把书给他。我明天见他。
-immer	A1	adv	immer			总是					Er kommt immer zu spät.	他总是迟到。
-in	A1	other	in			在……里面					Ich wohne in Berlin.	我住在柏林。
-information	A1	n	Information	die	Informationen	信息；问讯处					Ich brauche mehr Informationen.	我需要更多信息。
-international	A1	adj	international			国际的					Das ist eine internationale Schule.	这是一所国际学校。
-internet	A1	n	Internet	das		互联网					Ich suche die Adresse im Internet.	我在网上查地址。
-ja	A1	other	ja			是，对					Ja, das stimmt.	是的，没错。
-jacke	A1	n	Jacke	die	Jacken	外套，夹克					Die Jacke ist zu klein.	这件外套太小了。
-jeder	A1	other	jeder			每个					Ich lerne jeden Tag Deutsch.	我每天学德语。
-jetzt	A1	adv	jetzt			现在					Ich habe jetzt keine Zeit.	我现在没空。
-job	A1	n	Job	der	Jobs	工作（口语）					Sie sucht einen neuen Job.	她在找新工作。
-jugendliche	A1	n	Jugendliche	der	Jugendlichen	青少年					Das Café ist bei Jugendlichen sehr beliebt.	这家咖啡馆很受年轻人欢迎。
-jung	A1	adj	jung			年轻的					Meine Lehrerin ist noch sehr jung.	我的老师还很年轻。
-junge	A1	n	Junge	der	Jungen	男孩					Der Junge heißt Max.	这个男孩叫马克斯。
-kaffee	A1	n	Kaffee	der		咖啡					Möchten Sie einen Kaffee?	您要来杯咖啡吗？
-kaputt	A1	adj	kaputt			坏了的					Die Waschmaschine ist kaputt.	洗衣机坏了。
-karte	A1	n	Karte	die	Karten	卡片；票；地图					Hast du eine Karte für das Konzert?	你有音乐会的票吗？
-kreditkarte	A1	n	Kreditkarte	die	Kreditkarten	信用卡					Kann ich mit Kreditkarte bezahlen?	可以用信用卡付款吗？
-kartoffel	A1	n	Kartoffel	die	Kartoffeln	土豆					Zum Fleisch gibt es Kartoffeln.	肉配土豆。
-kasse	A1	n	Kasse	die	Kassen	收银台					Bitte bezahlen Sie an der Kasse.	请到收银台付款。
-kaufen	A1	v	kaufen			买	kauft	kaufte	gekauft	haben	Ich kaufe ein neues Handy.	我要买一部新手机。
-kein	A1	other	kein			没有，不是（否定冠词）					Ich habe keine Zeit.	我没有时间。
-kennen	A1	v	kennen			认识；了解	kennt	kannte	gekannt	haben	Kennst du meinen Bruder?	你认识我哥哥吗？
-kennenlernen	A1	v	kennen|lernen			结识	lernt kennen	lernte kennen	kennengelernt	haben	Ich möchte dich gern kennenlernen.	我很想认识你。
-kind	A1	n	Kind	das	Kinder	孩子					Die Kinder sind in der Schule.	孩子们在学校。
-kindergarten	A1	n	Kindergarten	der	Kindergärten	幼儿园					Meine Tochter geht in den Kindergarten.	我女儿上幼儿园。
-kino	A1	n	Kino	das	Kinos	电影院					Gehen wir heute ins Kino?	我们今天去看电影吗？
-kiosk	A1	n	Kiosk	der	Kioske	售货亭，报亭					Ich kaufe die Zeitung am Kiosk.	我在报亭买报纸。
-klar	A1	adj	klar			清楚的；当然					Alles klar!	明白了！
-klasse	A1	n	Klasse	die	Klassen	班级；等级					In meiner Klasse sind zwanzig Schüler.	我班上有二十个学生。
-kleidung	A1	n	Kleidung	die		衣服					Im Winter brauchst du warme Kleidung.	冬天你需要保暖的衣服。
-klein	A1	adj	klein			小的					Die Wohnung ist zu klein für uns.	这套公寓对我们来说太小了。
-kochen	A1	v	kochen			做饭；煮	kocht	kochte	gekocht	haben	Heute koche ich Nudeln.	今天我煮面条。
-koffer	A1	n	Koffer	der	Koffer	行李箱					Mein Koffer ist sehr schwer.	我的箱子很重。
-kollege	A1	n	Kollege	der	Kollegen	同事					Meine Kollegen sind sehr nett.	我的同事人都很好。
-kommen	A1	v	kommen			来	kommt	kam	gekommen	sein	Woher kommen Sie?	您是哪里人？
-koennen	A1	v	können			能，会	kann	konnte	gekonnt	haben	Kannst du schwimmen?	你会游泳吗？
-konto	A1	n	Konto	das	Konten	银行账户					Ich möchte ein Konto eröffnen.	我想开一个银行账户。
-kopf	A1	n	Kopf	der	Köpfe	头					Mein Kopf tut weh.	我头疼。
-kosten	A1	v	kosten			花费，值（多少钱）	kostet	kostete	gekostet	haben	Was kostet das?	这个多少钱？
-krank	A1	adj	krank			生病的					Ich bin krank und bleibe im Bett.	我病了，在床上躺着。
-kriegen	A1	v	kriegen			得到（口语）	kriegt	kriegte	gekriegt	haben	Ich kriege oft Post von meiner Freundin.	我经常收到女朋友寄来的信。
-kueche	A1	n	Küche	die	Küchen	厨房；菜肴					Die Küche ist sehr modern.	厨房很现代。
-kuchen	A1	n	Kuchen	der	Kuchen	蛋糕					Möchtest du ein Stück Kuchen?	你要来一块蛋糕吗？
-kugelschreiber	A1	n	Kugelschreiber	der	Kugelschreiber	圆珠笔					Hast du einen Kugelschreiber für mich?	你有圆珠笔借我吗？
-kuehlschrank	A1	n	Kühlschrank	der	Kühlschränke	冰箱					Die Milch ist im Kühlschrank.	牛奶在冰箱里。
-kulturell	A1	adj	kulturell			文化的					Die Stadt hat ein großes kulturelles Angebot.	这座城市的文化活动很丰富。
-kuemmern	A1	v	kümmern			（sich ~ um）照顾，关心	kümmert	kümmerte	gekümmert	haben	Wer kümmert sich um den Hund?	谁来照顾狗？
-kunde	A1	n	Kunde	der	Kunden	顾客					Der Kunde möchte bezahlen.	这位顾客要结账。
-kurs	A1	n	Kurs	der	Kurse	课程					Der Deutschkurs beginnt im September.	德语课九月开始。
-kurz	A1	adj	kurz			短的					Die Pause ist nur kurz.	休息时间很短。
-lachen	A1	v	lachen			笑	lacht	lachte	gelacht	haben	Warum lachst du?	你笑什么？
-laden	A1	n	Laden	der	Läden	商店					Der Laden an der Ecke ist sehr klein.	拐角那家小店很小。
-land	A1	n	Land	das	Länder	国家；农村					China ist ein großes Land.	中国是一个大国。
-lang	A1	adj	lang			长的					Der Rock ist zu lang.	这条裙子太长了。
-lange	A1	adv	lange			（时间）长久					Ich warte schon lange.	我已经等了很久。
-langsam	A1	adj	langsam			慢的					Sprechen Sie bitte langsam.	请您说慢一点。
-laufen	A1	v	laufen			跑；走路	läuft	lief	gelaufen	sein	Ich laufe jeden Morgen im Park.	我每天早上在公园跑步。
-laut	A1	adj	laut			大声的；吵闹的					Die Musik ist zu laut.	音乐太吵了。
-leben	A1	v	leben			生活；活着	lebt	lebte	gelebt	haben	Meine Schwester lebt in Australien.	我姐姐生活在澳大利亚。
-leben-n	A1	n	Leben	das		生活；生命					Das Leben in der Stadt ist teuer.	城里的生活很贵。
-lebensmittel	A1	n	Lebensmittel	die		食品（复数）					Lebensmittel kaufe ich im Supermarkt.	我在超市买食品。
-ledig	A1	adj	ledig			未婚的					Ich bin ledig.	我未婚。
-legen	A1	v	legen			放（平放）	legt	legte	gelegt	haben	Leg das Buch bitte auf den Tisch.	请把书放在桌子上。
-lehrer	A1	n	Lehrer	der	Lehrer	老师					Unser Lehrer kommt aus Österreich.	我们的老师来自奥地利。
-leicht	A1	adj	leicht			容易的；轻的					Die Übung ist leicht.	这个练习很简单。
-leider	A1	adv	leider			可惜，遗憾					Ich kann leider nicht kommen.	很遗憾我来不了。
-leise	A1	adj	leise			小声的；安静的					Bitte sprich leise, das Baby schläft.	请小声说话，宝宝在睡觉。
-lernen	A1	v	lernen			学习	lernt	lernte	gelernt	haben	Ich lerne seit drei Monaten Deutsch.	我学德语三个月了。
-lesen	A1	v	lesen			读，阅读	liest	las	gelesen	haben	Ich lese gern Zeitung.	我喜欢看报纸。
-letzte	A1	adj	letzte			最后的；上一个					Letzte Woche war ich krank.	上周我病了。
-leute	A1	n	Leute	die		人们（复数）					Im Park sind viele Leute.	公园里人很多。
-licht	A1	n	Licht	das	Lichter	光；灯					Mach bitte das Licht aus.	请把灯关掉。
-lieb	A1	adj	lieb			亲爱的；可爱的					Liebe Maria, vielen Dank für deinen Brief.	亲爱的玛丽亚，谢谢你的来信。
-lieben	A1	v	lieben			爱	liebt	liebte	geliebt	haben	Ich liebe dich.	我爱你。
-lieber	A1	adv	lieber			更喜欢；宁愿					Ich trinke lieber Tee als Kaffee.	比起咖啡我更喜欢喝茶。
-lieblings	A1	other	Lieblings-			最喜欢的……					Pizza ist mein Lieblingsessen.	披萨是我最爱吃的。
-lied	A1	n	Lied	das	Lieder	歌曲					Wir singen ein Lied.	我们唱一首歌。
-liegen	A1	v	liegen			躺；（平放）位于	liegt	lag	gelegen	haben	Das Handy liegt auf dem Tisch.	手机在桌子上。
-links	A1	adv	links			在左边					Die Bank ist links.	银行在左边。
-lkw	A1	n	Lkw	der	Lkws	卡车					Auf der Autobahn fahren viele Lkws.	高速上有很多卡车。
-lokal	A1	n	Lokal	das	Lokale	饭馆，酒馆					Wir essen heute in einem italienischen Lokal.	我们今天在一家意大利餐馆吃饭。
-loesung	A1	n	Lösung	die	Lösungen	答案；解决办法					Die Lösungen stehen auf Seite 20.	答案在第 20 页。
-lustig	A1	adj	lustig			有趣的，好笑的					Der Film ist sehr lustig.	这部电影很好笑。
-machen	A1	v	machen			做	macht	machte	gemacht	haben	Was machst du am Wochenende?	你周末做什么？
-maedchen	A1	n	Mädchen	das	Mädchen	女孩					Das Mädchen heißt Lena.	这个女孩叫莉娜。
-man	A1	other	man			人们（泛指）					Hier darf man nicht parken.	这里不能停车。
-mann	A1	n	Mann	der	Männer	男人；丈夫					Der Mann dort ist mein Lehrer.	那边那个男人是我的老师。
-maennlich	A1	adj	männlich			男性的					Geschlecht: männlich.	性别：男。
-maschine	A1	n	Maschine	die	Maschinen	机器；飞机					Die Maschine aus Frankfurt landet um elf.	从法兰克福来的飞机十一点降落。
-meer	A1	n	Meer	das	Meere	大海					Im Sommer fahren wir ans Meer.	夏天我们去海边。
-mehr	A1	other	mehr			更多					Ich möchte mehr Zeit für meine Familie.	我想多陪陪家人。
-mein	A1	other	mein			我的					Das ist mein Bruder.	这是我哥哥。
-meiste	A1	other	meiste			大多数的					Die meisten Leute fahren mit dem Bus.	大多数人坐公交车。
-mensch	A1	n	Mensch	der	Menschen	人					Hier wohnen nur wenige Menschen.	这里住的人很少。
-mieten	A1	v	mieten			租（房、车）	mietet	mietete	gemietet	haben	Wir mieten im Urlaub ein Auto.	我们度假时租一辆车。
-miete	A1	n	Miete	die	Mieten	房租					Die Miete ist sehr hoch.	房租很高。
-milch	A1	n	Milch	die		牛奶					Trinkst du Kaffee mit Milch?	你的咖啡要加牛奶吗？
-mit	A1	other	mit			和……一起；用					Ich fahre mit dem Zug.	我坐火车去。
-mitbringen	A1	v	mit|bringen			带来	bringt mit	brachte mit	mitgebracht	haben	Soll ich etwas mitbringen?	要我带点什么吗？
-mitkommen	A1	v	mit|kommen			一起来	kommt mit	kam mit	mitgekommen	sein	Kommst du mit ins Kino?	你跟我们一起去看电影吗？
-mitmachen	A1	v	mit|machen			参加，一起做	macht mit	machte mit	mitgemacht	haben	Machst du beim Spiel mit?	你也来玩吗？
-mitnehmen	A1	v	mit|nehmen			带走	nimmt mit	nahm mit	mitgenommen	haben	Nimm einen Regenschirm mit!	带上雨伞！
-mitte	A1	n	Mitte	die		中间					Das Hotel liegt in der Mitte der Stadt.	酒店在市中心。
-moebel	A1	n	Möbel	die		家具（复数）					Die Möbel sind neu.	家具是新的。
-moechten	A1	v	möchten			想要					Ich möchte einen Tee.	我想要一杯茶。
-moegen	A1	v	mögen			喜欢	mag	mochte	gemocht	haben	Ich mag Schokolade.	我喜欢巧克力。
-moeglich	A1	adj	möglich			可能的					Ist das möglich?	这有可能吗？
-moment	A1	n	Moment	der	Momente	片刻；时刻					Einen Moment, bitte!	请稍等！
-morgen	A1	adv	morgen			明天					Morgen habe ich frei.	我明天休息。
-muede	A1	adj	müde			疲倦的					Ich bin sehr müde.	我很累。
-mund	A1	n	Mund	der	Münder	嘴					Mach bitte den Mund auf.	请张开嘴。
-muessen	A1	v	müssen			必须	muss	musste	gemusst	haben	Ich muss jetzt gehen.	我现在得走了。
-mutter	A1	n	Mutter	die	Mütter	母亲					Meine Mutter ist Lehrerin.	我妈妈是老师。
-nach	A1	other	nach			去（地名）；在……之后					Nach dem Essen gehen wir spazieren.	饭后我们去散步。
-naechste	A1	adj	nächste			下一个；最近的					Wir steigen an der nächsten Haltestelle aus.	我们下一站下车。
-name	A1	n	Name	der	Namen	名字					Mein Name ist Wang.	我姓王。
-nehmen	A1	v	nehmen			拿；乘坐；要（点菜）	nimmt	nahm	genommen	haben	Ich nehme die Suppe.	我要汤。
-nein	A1	other	nein			不，不是					Nein, danke.	不用了，谢谢。
-neu	A1	adj	neu			新的					Ist dein Handy neu?	你的手机是新的吗？
-nicht	A1	other	nicht			不					Ich verstehe das nicht.	我不明白。
-nichts	A1	other	nichts			什么也没有					Ich habe heute nichts gegessen.	我今天什么都没吃。
-nie	A1	adv	nie			从不					Ich trinke nie Alkohol.	我从不喝酒。
-noch	A1	adv	noch			还；仍然					Hast du noch Fragen?	你还有问题吗？
-normal	A1	adj	normal			正常的；普通的					Das ist ganz normal.	这很正常。
-nummer	A1	n	Nummer	die	Nummern	号码					Wie ist deine Telefonnummer?	你的电话号码是多少？
-nur	A1	adv	nur			只，仅仅					Ich habe nur zehn Euro.	我只有十欧元。
-oben	A1	adv	oben			在上面					Das Bad ist oben.	浴室在楼上。
-obst	A1	n	Obst	das		水果					Ich esse jeden Tag Obst.	我每天吃水果。
-oder	A1	other	oder			或者					Möchtest du Tee oder Kaffee?	你要茶还是咖啡？
-oeffnen	A1	v	öffnen			打开	öffnet	öffnete	geöffnet	haben	Kannst du bitte das Fenster öffnen?	你能把窗户打开吗？
-geoeffnet	A1	adj	geöffnet			开着的，营业的					Das Museum ist bis 18 Uhr geöffnet.	博物馆开到 18 点。
-oft	A1	adv	oft			经常					Ich gehe oft schwimmen.	我经常去游泳。
-ohne	A1	other	ohne			没有，不带					Ich trinke Kaffee ohne Zucker.	我喝咖啡不加糖。
-oel	A1	n	Öl	das	Öle	油					Für den Salat brauche ich Öl.	做沙拉我需要油。
-oma	A1	n	Oma	die	Omas	奶奶，外婆					Meine Oma ist 80 Jahre alt.	我奶奶 80 岁了。
-opa	A1	n	Opa	der	Opas	爷爷，外公					Mein Opa erzählt gern Geschichten.	我爷爷喜欢讲故事。
-ordnung	A1	n	Ordnung	die		秩序；整齐					Ist alles in Ordnung?	一切都好吗？
-ort	A1	n	Ort	der	Orte	地方					Das ist ein schöner Ort für ein Picknick.	这是野餐的好地方。
-papier	A1	n	Papier	das		纸					Hast du ein Blatt Papier für mich?	你有张纸给我吗？
-papiere	A1	n	Papiere	die		证件（复数）					Bitte zeigen Sie Ihre Papiere.	请出示您的证件。
-partner	A1	n	Partner	der	Partner	伙伴；伴侣					Mein Partner kommt auch mit.	我的伴侣也一起来。
-partnerin	A1	n	Partnerin	die	Partnerinnen	（女）伙伴；伴侣					Fragen Sie Ihre Partnerin.	请问问你的（女）搭档。
-party	A1	n	Party	die	Partys	聚会					Am Samstag mache ich eine Party.	周六我办个聚会。
-pass	A1	n	Pass	der	Pässe	护照					Ich brauche einen neuen Pass.	我需要办一本新护照。
-pause	A1	n	Pause	die	Pausen	休息					Wir machen eine kurze Pause.	我们休息一下。
-plan	A1	n	Plan	der	Pläne	计划；（城市）地图					Hast du einen Plan von der Stadt?	你有城市地图吗？
-platz	A1	n	Platz	der	Plätze	座位；广场；地方					Ist hier noch ein Platz frei?	这里还有空座吗？
-polizei	A1	n	Polizei	die		警察					Ruf schnell die Polizei!	快叫警察！
-pommes-frites	A1	n	Pommes frites	die		炸薯条（复数）					Ein Hähnchen mit Pommes frites, bitte.	请来一份鸡肉配薯条。
-post	A1	n	Post	die		邮局；邮件					Ich bringe das Paket zur Post.	我把包裹送到邮局。
-postleitzahl	A1	n	Postleitzahl	die	Postleitzahlen	邮政编码					Wie ist die Postleitzahl von Bonn?	波恩的邮编是多少？
-praktikum	A1	n	Praktikum	das	Praktika	实习					Ich mache ein Praktikum bei einer Bank.	我在一家银行实习。
-praxis	A1	n	Praxis	die	Praxen	诊所					Die Praxis ist am Montag geschlossen.	诊所周一不开门。
-preis	A1	n	Preis	der	Preise	价格					Der Preis ist mir zu hoch.	这个价格对我来说太高了。
-problem	A1	n	Problem	das	Probleme	问题，麻烦					Kein Problem!	没问题！
-prospekt	A1	n	Prospekt	der	Prospekte	宣传册					Haben Sie einen Prospekt über die Stadt?	你们有这座城市的宣传册吗？
-pruefung	A1	n	Prüfung	die	Prüfungen	考试					Morgen habe ich eine Prüfung.	我明天有考试。
-puenktlich	A1	adj	pünktlich			准时的					Der Zug ist pünktlich.	火车准时。
-rad-fahren	A1	v	Rad fahren			骑自行车					Am Wochenende fahre ich gern Rad.	周末我喜欢骑车。
-rauchen	A1	v	rauchen			抽烟	raucht	rauchte	geraucht	haben	Rauchen ist hier verboten.	这里禁止吸烟。
-raum	A1	n	Raum	der	Räume	房间；空间					Der Kurs ist in Raum 12.	课在 12 号教室。
-rechnung	A1	n	Rechnung	die	Rechnungen	账单					Die Rechnung, bitte!	请结账！
-rechts	A1	adv	rechts			在右边					Das Kino ist rechts.	电影院在右边。
-regnen	A1	v	regnen			下雨	regnet	regnete	geregnet	haben	Es regnet schon den ganzen Tag.	已经下了一整天雨了。
-regen	A1	n	Regen	der		雨					Bei Regen bleiben wir zu Hause.	下雨的话我们就待在家里。
-reis	A1	n	Reis	der		米饭；大米					Zum Fisch gibt es Reis.	鱼配米饭。
-reisen	A1	v	reisen			旅行	reist	reiste	gereist	sein	Ich reise gern.	我喜欢旅行。
-reise	A1	n	Reise	die	Reisen	旅行					Gute Reise!	一路顺风！
-reisebuero	A1	n	Reisebüro	das	Reisebüros	旅行社					Wir buchen die Reise im Reisebüro.	我们在旅行社订这次旅行。
-reisefuehrer	A1	n	Reiseführer	der	Reiseführer	导游；旅行指南					Der Reiseführer zeigt uns die Altstadt.	导游带我们参观老城。
-reparieren	A1	v	reparieren			修理	repariert	reparierte	repariert	haben	Kannst du mein Fahrrad reparieren?	你能修我的自行车吗？
-reparatur	A1	n	Reparatur	die	Reparaturen	修理					Die Reparatur kostet 50 Euro.	修理费 50 欧元。
-restaurant	A1	n	Restaurant	das	Restaurants	饭店，餐厅					Das Restaurant ist heute geschlossen.	这家餐厅今天关门。
-rezeption	A1	n	Rezeption	die		（酒店）前台					Den Schlüssel bekommen Sie an der Rezeption.	您在前台领钥匙。
-richtig	A1	adj	richtig			正确的					Ist das richtig?	这对吗？
-riechen	A1	v	riechen			闻；有气味	riecht	roch	gerochen	haben	Hier riecht es gut!	这里好香！
-ruhig	A1	adj	ruhig			安静的					Unsere Straße ist sehr ruhig.	我们这条街很安静。
-saft	A1	n	Saft	der	Säfte	果汁					Ein Orangensaft, bitte.	请来一杯橙汁。
-sagen	A1	v	sagen			说	sagt	sagte	gesagt	haben	Was sagst du?	你说什么？
-salat	A1	n	Salat	der	Salate	沙拉；生菜					Ich nehme einen Salat.	我要一份沙拉。
-salz	A1	n	Salz	das		盐					Kannst du mir bitte das Salz geben?	你能把盐递给我吗？
-satz	A1	n	Satz	der	Sätze	句子					Lesen Sie den Satz laut.	请大声读这个句子。
-s-bahn	A1	n	S-Bahn	die	S-Bahnen	城市快铁					Ich fahre mit der S-Bahn zum Flughafen.	我坐城铁去机场。
-schalter	A1	n	Schalter	der	Schalter	（服务）窗口；开关					Fahrkarten gibt es am Schalter.	车票在窗口买。
-scheinen	A1	v	scheinen			（阳光）照耀；似乎	scheint	schien	geschienen	haben	Heute scheint die Sonne.	今天阳光明媚。
-schicken	A1	v	schicken			寄；发送	schickt	schickte	geschickt	haben	Ich schicke dir ein Foto.	我给你发张照片。
-schild	A1	n	Schild	das	Schilder	牌子，标志					Auf dem Schild steht „Ausgang“.	牌子上写着“出口”。
-schinken	A1	n	Schinken	der	Schinken	火腿					Ein Brötchen mit Schinken, bitte.	请来一个夹火腿的小面包。
-schlafen	A1	v	schlafen			睡觉	schläft	schlief	geschlafen	haben	Hast du gut geschlafen?	你睡得好吗？
-schlecht	A1	adj	schlecht			坏的；差的					Das Wetter ist heute schlecht.	今天天气不好。
-schliessen	A1	v	schließen			关闭	schließt	schloss	geschlossen	haben	Bitte schließen Sie die Tür.	请关门。
-geschlossen	A1	adj	geschlossen			关着的，不营业的					Am Sonntag ist die Bank geschlossen.	银行周日不营业。
-schluss	A1	n	Schluss	der		结束					Zum Schluss singen wir ein Lied.	最后我们唱一首歌。
-schluessel	A1	n	Schlüssel	der	Schlüssel	钥匙					Ich kann meinen Schlüssel nicht finden.	我找不到钥匙了。
-schmecken	A1	v	schmecken			（味道）好吃	schmeckt	schmeckte	geschmeckt	haben	Schmeckt dir die Suppe?	汤好喝吗？
-schnell	A1	adj	schnell			快的					Das Auto fährt sehr schnell.	这辆车开得很快。
-schon	A1	adv	schon			已经					Ich bin schon fertig.	我已经好了。
-schoen	A1	adj	schön			美丽的；好的					Das Wetter ist heute schön.	今天天气很好。
-schrank	A1	n	Schrank	der	Schränke	柜子					Die Teller sind im Schrank.	盘子在柜子里。
-schreiben	A1	v	schreiben			写	schreibt	schrieb	geschrieben	haben	Ich schreibe meiner Mutter eine Karte.	我给妈妈写一张明信片。
-schuh	A1	n	Schuh	der	Schuhe	鞋					Die Schuhe sind zu klein.	这双鞋太小了。
-schule	A1	n	Schule	die	Schulen	学校					Die Schule beginnt um acht Uhr.	学校八点上课。
-schueler	A1	n	Schüler	der	Schüler	（中小学）学生					Die Schüler machen einen Ausflug.	学生们去郊游。
-schwer	A1	adj	schwer			重的；难的					Die Prüfung war sehr schwer.	考试很难。
-schwester	A1	n	Schwester	die	Schwestern	姐妹					Meine Schwester studiert in München.	我姐姐在慕尼黑上大学。
-schwimmen	A1	v	schwimmen			游泳	schwimmt	schwamm	geschwommen	sein	Im Sommer schwimmen wir im See.	夏天我们在湖里游泳。
-schwimmbad	A1	n	Schwimmbad	das	Schwimmbäder	游泳馆					Das Schwimmbad ist heute geschlossen.	游泳馆今天关门。
-see	A1	n	See	der	Seen	湖					Der See ist sehr kalt.	湖水很凉。
-sehen	A1	v	sehen			看；看见	sieht	sah	gesehen	haben	Siehst du das Schiff?	你看到那艘船了吗？
-sehenswuerdigkeit	A1	n	Sehenswürdigkeit	die	Sehenswürdigkeiten	名胜，景点					Berlin hat viele Sehenswürdigkeiten.	柏林有很多名胜古迹。
-sehr	A1	adv	sehr			很，非常					Das ist sehr nett von dir.	你人真好。
-sein	A1	v	sein			是；在	ist	war	gewesen	sein	Ich bin Student.	我是学生。
-weg-sein	A1	v	weg sein			走了；不见了					Mein Schlüssel ist weg!	我的钥匙不见了！
-zu-sein	A1	v	zu sein			（门、商店）关着					Die Apotheke ist schon zu.	药店已经关门了。
-seit	A1	other	seit			自从					Ich wohne seit zwei Jahren hier.	我在这里住了两年了。
-selbststaendig	A1	adj	selbstständig			独立的；自己当老板的					Mein Vater ist selbstständig.	我爸爸是自己做生意的。
-sich	A1	other	sich			自己（反身代词）					Er wäscht sich die Hände.	他在洗手。
-sie	A1	other	sie			她；他们					Sie heißt Anna. Sie sind meine Freunde.	她叫安娜。他们是我的朋友。
-sie-other	A1	other	Sie			您					Kommen Sie aus China?	您来自中国吗？
-sitzen	A1	v	sitzen			坐	sitzt	saß	gesessen	haben	Wir sitzen im Garten.	我们坐在花园里。
-so	A1	adv	so			这样；如此					Das Essen ist so lecker!	饭菜太好吃了！
-sofa	A1	n	Sofa	das	Sofas	沙发					Die Katze schläft auf dem Sofa.	猫在沙发上睡觉。
-sofort	A1	adv	sofort			立刻					Komm bitte sofort!	请马上过来！
-sohn	A1	n	Sohn	der	Söhne	儿子					Unser Sohn ist zehn Jahre alt.	我们的儿子十岁。
-sollen	A1	v	sollen			应该	soll	sollte	gesollt	haben	Du sollst mehr Wasser trinken.	你应该多喝水。
-sonne	A1	n	Sonne	die		太阳					Die Sonne scheint.	太阳出来了。
-spaet	A1	adj	spät			晚的					Es ist schon spät.	已经很晚了。
-spaeter	A1	adv	später			以后，稍后					Ich rufe dich später an.	我晚点给你打电话。
-speisekarte	A1	n	Speisekarte	die	Speisekarten	菜单					Kann ich bitte die Speisekarte haben?	请给我菜单好吗？
-spielen	A1	v	spielen			玩；演奏；（体育）打，踢	spielt	spielte	gespielt	haben	Die Kinder spielen Fußball.	孩子们在踢足球。
-sport	A1	n	Sport	der		体育运动					Ich mache gern Sport.	我喜欢运动。
-sprache	A1	n	Sprache	die	Sprachen	语言					Welche Sprachen sprichst du?	你会说哪些语言？
-sprechen	A1	v	sprechen			说（话）	spricht	sprach	gesprochen	haben	Sprechen Sie Englisch?	您会说英语吗？
-stadt	A1	n	Stadt	die	Städte	城市					Wien ist eine schöne Stadt.	维也纳是一座美丽的城市。
-stehen	A1	v	stehen			站；（竖放）位于；写着	steht	stand	gestanden	haben	Die Flasche steht im Kühlschrank.	瓶子在冰箱里。
-stelle	A1	n	Stelle	die	Stellen	职位；地方					Er sucht eine neue Stelle.	他在找新工作。
-stellen	A1	v	stellen			放（竖放）	stellt	stellte	gestellt	haben	Stell die Blumen bitte auf den Tisch.	请把花放在桌子上。
-stock	A1	n	Stock	der		楼层					Wir wohnen im dritten Stock.	我们住在四楼。
-strasse	A1	n	Straße	die	Straßen	街道					In welcher Straße wohnst du?	你住在哪条街？
-strassenbahn	A1	n	Straßenbahn	die	Straßenbahnen	有轨电车					Die Straßenbahn fährt alle zehn Minuten.	有轨电车每十分钟一班。
-studieren	A1	v	studieren			上大学；学（专业）	studiert	studierte	studiert	haben	Ich studiere Medizin in Heidelberg.	我在海德堡学医。
-studium	A1	n	Studium	das		大学学业					Nach dem Studium möchte ich in Deutschland arbeiten.	毕业后我想在德国工作。
-student	A1	n	Student	der	Studenten	大学生					Viele Studenten wohnen in diesem Haus.	这栋楼里住着很多大学生。
-stunde	A1	n	Stunde	die	Stunden	小时；课时					Der Film dauert zwei Stunden.	这部电影两个小时。
-suchen	A1	v	suchen			找	sucht	suchte	gesucht	haben	Ich suche eine Wohnung.	我在找房子。
-tanzen	A1	v	tanzen			跳舞	tanzt	tanzte	getanzt	haben	Tanzt du gern?	你喜欢跳舞吗？
-tasche	A1	n	Tasche	die	Taschen	包；口袋					Meine Tasche ist sehr schwer.	我的包很重。
-taxi	A1	n	Taxi	das	Taxis	出租车					Wir nehmen ein Taxi.	我们打车吧。
-tee	A1	n	Tee	der		茶					Möchtest du grünen Tee?	你想喝绿茶吗？
-teil	A1	n	Teil	der	Teile	部分					Der erste Teil der Prüfung ist leicht.	考试的第一部分很简单。
-telefonieren	A1	v	telefonieren			打电话	telefoniert	telefonierte	telefoniert	haben	Sie telefoniert gerade mit ihrer Mutter.	她正在和妈妈打电话。
-telefon	A1	n	Telefon	das	Telefone	电话					Das Telefon klingelt.	电话响了。
-termin	A1	n	Termin	der	Termine	预约；约定的时间					Ich habe morgen einen Termin beim Arzt.	我明天约了医生。
-test	A1	n	Test	der	Tests	测试					Der Test ist am Freitag.	测验在周五。
-teuer	A1	adj	teuer			贵的					Das Restaurant ist sehr teuer.	这家餐厅很贵。
-text	A1	n	Text	der	Texte	文章，课文					Lesen Sie den Text.	请读这篇课文。
-thema	A1	n	Thema	das	Themen	题目，话题					Das Thema heute ist „Familie“.	今天的话题是“家庭”。
-ticket	A1	n	Ticket	das	Tickets	票					Hast du die Tickets für das Konzert?	音乐会的票你拿了吗？
-tisch	A1	n	Tisch	der	Tische	桌子					Das Essen steht auf dem Tisch.	饭菜在桌上。
-tochter	A1	n	Tochter	die	Töchter	女儿					Meine Tochter geht zur Schule.	我女儿在上学。
-toilette	A1	n	Toilette	die	Toiletten	厕所					Wo ist die Toilette, bitte?	请问厕所在哪里？
-tomate	A1	n	Tomate	die	Tomaten	西红柿					Für den Salat brauchen wir Tomaten.	做沙拉我们需要西红柿。
-tot	A1	adj	tot			死的					Der Fisch ist tot.	鱼死了。
-treffen	A1	v	treffen			遇见；（sich ~）见面	trifft	traf	getroffen	haben	Wir treffen uns um drei vor dem Kino.	我们三点在电影院门口见。
-treppe	A1	n	Treppe	die	Treppen	楼梯					Der Aufzug ist kaputt, wir nehmen die Treppe.	电梯坏了，我们走楼梯。
-trinken	A1	v	trinken			喝	trinkt	trank	getrunken	haben	Was möchtest du trinken?	你想喝点什么？
-tschuess	A1	other	tschüss			再见（口语）					Tschüss, bis morgen!	再见，明天见！
-tun	A1	v	tun			做	tut	tat	getan	haben	Was kann ich für Sie tun?	我能为您做什么？
-ueber	A1	other	über			在……上方；关于					Die Lampe hängt über dem Tisch.	灯挂在桌子上方。
-uebernachten	A1	v	übernachten			过夜	übernachtet	übernachtete	übernachtet	haben	Wir übernachten im Hotel.	我们在酒店过夜。
-ueberweisen	A1	v	überweisen			转账	überweist	überwies	überwiesen	haben	Ich überweise das Geld morgen.	我明天转账。
-uhr	A1	n	Uhr	die	Uhren	钟表；……点钟					Wie viel Uhr ist es?	几点了？
-um	A1	other	um			在（几点）；围绕					Der Film beginnt um acht Uhr.	电影八点开始。
-umziehen	A1	v	um|ziehen			搬家	zieht um	zog um	umgezogen	sein	Wir ziehen nächsten Monat um.	我们下个月搬家。
-und	A1	other	und			和					Ich trinke Kaffee und esse Kuchen.	我喝咖啡、吃蛋糕。
-unser	A1	other	unser			我们的					Das ist unser Haus.	这是我们的房子。
-unten	A1	adv	unten			在下面					Der Supermarkt ist unten im Haus.	超市在楼下。
-unter	A1	other	unter			在……下面					Die Katze liegt unter dem Tisch.	猫躺在桌子底下。
-unterricht	A1	n	Unterricht	der		课，上课					Der Unterricht beginnt um neun Uhr.	九点开始上课。
-unterschreiben	A1	v	unterschreiben			签名	unterschreibt	unterschrieb	unterschrieben	haben	Bitte unterschreiben Sie hier.	请在这里签名。
-unterschrift	A1	n	Unterschrift	die	Unterschriften	签名					Hier fehlt noch Ihre Unterschrift.	这里还缺您的签名。
-urlaub	A1	n	Urlaub	der	Urlaube	休假，度假					Im August mache ich Urlaub.	我八月休假。
-vater	A1	n	Vater	der	Väter	父亲					Mein Vater kocht sehr gut.	我爸爸做饭很好吃。
-verboten	A1	adj	verboten			禁止的					Parken ist hier verboten.	此处禁止停车。
-verdienen	A1	v	verdienen			挣（钱）	verdient	verdiente	verdient	haben	Er verdient gut.	他收入不错。
-verein	A1	n	Verein	der	Vereine	协会，俱乐部					Ich spiele in einem Fußballverein.	我在一个足球俱乐部踢球。
-verheiratet	A1	adj	verheiratet			已婚的					Sind Sie verheiratet?	您结婚了吗？
-verkaufen	A1	v	verkaufen			卖	verkauft	verkaufte	verkauft	haben	Wir verkaufen unser altes Auto.	我们要把旧车卖掉。
-verkaeufer	A1	n	Verkäufer	der	Verkäufer	售货员					Der Verkäufer ist sehr freundlich.	售货员很友好。
-vermieten	A1	v	vermieten			出租	vermietet	vermietete	vermietet	haben	Sie vermietet ein Zimmer an Studenten.	她把一个房间租给学生。
-vermieter	A1	n	Vermieter	der	Vermieter	房东					Der Vermieter wohnt im Erdgeschoss.	房东住在一楼。
-verstehen	A1	v	verstehen			懂，理解	versteht	verstand	verstanden	haben	Ich verstehe dich nicht.	我听不懂你说的。
-verwandte	A1	n	Verwandte	der	Verwandten	亲戚					Am Wochenende besuchen wir Verwandte.	周末我们去走亲戚。
-viel	A1	other	viel			多					Ich habe heute viel Arbeit.	我今天工作很多。
-vielleicht	A1	adv	vielleicht			也许					Vielleicht komme ich morgen.	我明天也许来。
-von	A1	other	von			从；……的					Das ist ein Geschenk von meiner Freundin.	这是我女朋友送的礼物。
-vor	A1	other	vor			在……前面；……之前					Ich warte vor dem Kino.	我在电影院门口等。
-vorname	A1	n	Vorname	der	Vornamen	名（不含姓）					Mein Vorname ist Mei.	我的名字叫梅。
-vorsicht	A1	n	Vorsicht	die		小心					Vorsicht, der Boden ist nass!	小心，地板是湿的！
-vorstellen	A1	v	vor|stellen			介绍；（sich ~）自我介绍	stellt vor	stellte vor	vorgestellt	haben	Darf ich mich vorstellen? Ich heiße Li.	我来自我介绍一下，我叫李。
-vorwahl	A1	n	Vorwahl	die	Vorwahlen	（电话）区号					Wie ist die Vorwahl von Berlin?	柏林的区号是多少？
-wandern	A1	v	wandern			徒步	wandert	wanderte	gewandert	sein	Am Sonntag wandern wir in den Bergen.	周日我们去山里徒步。
-wann	A1	other	wann			什么时候					Wann kommst du?	你什么时候来？
-warten	A1	v	warten			等	wartet	wartete	gewartet	haben	Ich warte auf den Bus.	我在等公交车。
-warum	A1	other	warum			为什么					Warum lernst du Deutsch?	你为什么学德语？
-was	A1	other	was			什么					Was ist das?	这是什么？
-was-fuer-ein	A1	other	was für ein			什么样的					Was für ein Auto hast du?	你开什么样的车？
-waschen	A1	v	waschen			洗；（sich ~）洗漱	wäscht	wusch	gewaschen	haben	Ich wasche heute die Wäsche.	我今天洗衣服。
-wasser	A1	n	Wasser	das		水					Ein Glas Wasser, bitte.	请来一杯水。
-wehtun	A1	v	weh|tun			疼	tut weh	tat weh	wehgetan	haben	Mein Zahn tut weh.	我牙疼。
-weiblich	A1	adj	weiblich			女性的					Geschlecht: weiblich.	性别：女。
-wein	A1	n	Wein	der	Weine	葡萄酒					Möchten Sie Rotwein oder Weißwein?	您要红酒还是白葡萄酒？
-weit	A1	adj	weit			远的					Ist es weit bis zum Bahnhof?	到火车站远吗？
-weiter	A1	adv	weiter			继续；更远					Bitte lesen Sie weiter.	请继续读。
-welcher	A1	other	welcher			哪个					Welcher Bus fährt zum Zentrum?	哪路车去市中心？
-welt	A1	n	Welt	die		世界					Ich möchte die Welt sehen.	我想去看看世界。
-wenig	A1	other	wenig			少					Ich habe nur wenig Zeit.	我只有一点时间。
-wer	A1	other	wer			谁					Wer ist das?	这是谁？
-werden	A1	v	werden			变成；将会	wird	wurde	geworden	sein	Ich möchte Arzt werden.	我想当医生。
-wetter	A1	n	Wetter	das		天气					Wie ist das Wetter in Berlin?	柏林天气怎么样？
-wichtig	A1	adj	wichtig			重要的					Das ist sehr wichtig.	这很重要。
-wie	A1	other	wie			怎样；如何					Wie geht es Ihnen?	您好吗？
-wiederholen	A1	v	wiederholen			重复	wiederholt	wiederholte	wiederholt	haben	Können Sie das bitte wiederholen?	请您再说一遍好吗？
-wiederhoeren	A1	n	Wiederhören	das		（电话里）再见					Auf Wiederhören!	（电话里）再见！
-wiedersehen	A1	n	Wiedersehen	das		再见					Auf Wiedersehen!	再见！
-wie-viel	A1	other	wie viel			多少					Wie viel kostet das Brot?	面包多少钱？
-willkommen	A1	other	willkommen			欢迎					Willkommen in Hamburg!	欢迎来到汉堡！
-wind	A1	n	Wind	der	Winde	风					Heute ist viel Wind.	今天风很大。
-wir	A1	other	wir			我们					Wir lernen zusammen Deutsch.	我们一起学德语。
-wissen	A1	v	wissen			知道	weiß	wusste	gewusst	haben	Weißt du, wo der Bahnhof ist?	你知道火车站在哪里吗？
-wo	A1	other	wo			在哪里					Wo wohnst du?	你住在哪里？
-woher	A1	other	woher			从哪里					Woher kommst du?	你来自哪里？
-wohin	A1	other	wohin			去哪里					Wohin fährst du im Urlaub?	你度假去哪儿？
-wohnen	A1	v	wohnen			居住	wohnt	wohnte	gewohnt	haben	Ich wohne in Frankfurt.	我住在法兰克福。
-wohnung	A1	n	Wohnung	die	Wohnungen	公寓，住房					Die Wohnung hat zwei Zimmer.	这套公寓有两个房间。
-wollen	A1	v	wollen			想要	will	wollte	gewollt	haben	Wir wollen ein Haus kaufen.	我们想买一栋房子。
-wort	A1	n	Wort	das	Wörter	单词					Wie schreibt man dieses Wort?	这个词怎么写？
-wunderbar	A1	adj	wunderbar			美妙的，好极了					Das Essen war wunderbar!	饭菜太棒了！
-zahlen	A1	v	zahlen			付款	zahlt	zahlte	gezahlt	haben	Ich möchte bitte zahlen.	我想结账。
-zeit	A1	n	Zeit	die	Zeiten	时间					Hast du heute Zeit?	你今天有空吗？
-zurzeit	A1	adv	zurzeit			目前					Zurzeit wohne ich bei Freunden.	我目前住在朋友家。
-zeitung	A1	n	Zeitung	die	Zeitungen	报纸					Mein Vater liest jeden Morgen die Zeitung.	我爸爸每天早上看报纸。
-zigarette	A1	n	Zigarette	die	Zigaretten	香烟					Er raucht zehn Zigaretten am Tag.	他一天抽十根烟。
-zimmer	A1	n	Zimmer	das	Zimmer	房间					Mein Zimmer ist klein, aber hell.	我的房间很小，但很亮。
-zoll	A1	n	Zoll	der		海关					Am Zoll müssen wir den Koffer öffnen.	在海关我们得打开箱子。
-zu	A1	other	zu			去（某处）；太					Ich gehe zu meiner Freundin.	我去女朋友家。
-zufrieden	A1	adj	zufrieden			满意的					Ich bin mit meiner Arbeit zufrieden.	我对我的工作很满意。
-zug	A1	n	Zug	der	Züge	火车					Der Zug hat zehn Minuten Verspätung.	火车晚点十分钟。
-zurueck	A1	adv	zurück			回来；返回					Wann bist du zurück?	你什么时候回来？
-zusammen	A1	adv	zusammen			一起					Wir kochen heute zusammen.	我们今天一起做饭。
-zwischen	A1	other	zwischen			在……之间					Die Bank ist zwischen der Post und dem Café.	银行在邮局和咖啡馆之间。
-null	A1	other	null			零					Die Vorwahl beginnt mit null.	区号以零开头。
-eins	A1	other	eins			一					Eins, zwei, drei – los!	一、二、三，开始！
-zwei	A1	other	zwei			二					Ich habe zwei Brüder.	我有两个哥哥。
-drei	A1	other	drei			三					Wir bleiben drei Tage in Wien.	我们在维也纳待三天。
-vier	A1	other	vier			四					Die Familie hat vier Kinder.	这家有四个孩子。
-fuenf	A1	other	fünf			五					Der Bus kommt in fünf Minuten.	公交车五分钟后到。
-sechs	A1	other	sechs			六					Ich stehe um sechs Uhr auf.	我六点起床。
-sieben	A1	other	sieben			七					Die Woche hat sieben Tage.	一周有七天。
-acht	A1	other	acht			八					Der Kurs beginnt um acht.	课八点开始。
-neun	A1	other	neun			九					Mein Sohn ist neun Jahre alt.	我儿子九岁。
-zehn	A1	other	zehn			十					Das kostet zehn Euro.	这个十欧元。
-elf	A1	other	elf			十一					Wir wohnen in Zimmer elf.	我们住在十一号房间。
-zwoelf	A1	other	zwölf			十二					Ein Jahr hat zwölf Monate.	一年有十二个月。
-zwanzig	A1	other	zwanzig			二十					Ich bin zwanzig Jahre alt.	我二十岁。
-dreissig	A1	other	dreißig			三十					Der Monat hat dreißig Tage.	这个月有三十天。
-hundert	A1	other	hundert			一百					Das Hotel hat hundert Zimmer.	这家酒店有一百个房间。
-tausend	A1	other	tausend			一千					Das Auto kostet fünftausend Euro.	这辆车五千欧元。
-million	A1	n	Million	die	Millionen	百万					In Berlin wohnen fast vier Millionen Menschen.	柏林住着将近四百万人。
-erste	A1	adj	erste			第一					Heute ist der erste Mai.	今天是五月一日。
-halb	A1	adj	halb			一半的；（钟点）半					Es ist halb drei.	现在两点半。
-viertel	A1	n	Viertel	das	Viertel	四分之一；一刻钟					Es ist Viertel nach acht.	现在八点一刻。
-sekunde	A1	n	Sekunde	die	Sekunden	秒					Warte eine Sekunde!	等一秒！
-minute	A1	n	Minute	die	Minuten	分钟					Ich komme in zehn Minuten.	我十分钟后到。
-tag	A1	n	Tag	der	Tage	天；白天					Guten Tag!	你好！（白天问候）
-woche	A1	n	Woche	die	Wochen	星期，周					Ich arbeite fünf Tage pro Woche.	我一周工作五天。
-monat	A1	n	Monat	der	Monate	月					Nächsten Monat fahre ich nach Hause.	下个月我回家。
-jahr	A1	n	Jahr	das	Jahre	年					Ich lerne seit einem Jahr Deutsch.	我学德语一年了。
-wochentag	A1	n	Wochentag	der	Wochentage	工作日；星期几					Welcher Wochentag ist heute?	今天星期几？
-wochenende	A1	n	Wochenende	das	Wochenenden	周末					Schönes Wochenende!	周末愉快！
-montag	A1	n	Montag	der	Montage	星期一					Am Montag beginnt der Kurs.	课程周一开始。
-dienstag	A1	n	Dienstag	der	Dienstage	星期二					Am Dienstag habe ich frei.	我周二休息。
-mittwoch	A1	n	Mittwoch	der	Mittwoche	星期三					Wir sehen uns am Mittwoch.	我们周三见。
-donnerstag	A1	n	Donnerstag	der	Donnerstage	星期四					Am Donnerstag gehe ich schwimmen.	周四我去游泳。
-freitag	A1	n	Freitag	der	Freitage	星期五					Am Freitag gehen wir essen.	周五我们去外面吃饭。
-samstag	A1	n	Samstag	der	Samstage	星期六					Am Samstag schlafe ich lange.	周六我睡懒觉。
-sonntag	A1	n	Sonntag	der	Sonntage	星期日					Am Sonntag sind die Geschäfte zu.	周日商店不开门。
-morgen-n	A1	n	Morgen	der		早晨					Guten Morgen!	早上好！
-vormittag	A1	n	Vormittag	der	Vormittage	上午					Am Vormittag arbeite ich.	我上午工作。
-mittag	A1	n	Mittag	der		中午					Zu Mittag esse ich in der Kantine.	中午我在食堂吃饭。
-nachmittag	A1	n	Nachmittag	der	Nachmittage	下午					Am Nachmittag gehen wir spazieren.	下午我们去散步。
-abend	A1	n	Abend	der	Abende	晚上					Guten Abend!	晚上好！
-nacht	A1	n	Nacht	die	Nächte	夜里					Gute Nacht!	晚安！
-januar	A1	n	Januar	der		一月					Im Januar ist es sehr kalt.	一月很冷。
-februar	A1	n	Februar	der		二月					Mein Geburtstag ist im Februar.	我的生日在二月。
-maerz	A1	n	März	der		三月					Im März beginnt der Frühling.	春天从三月开始。
-april	A1	n	April	der		四月					Im April regnet es oft.	四月经常下雨。
-mai	A1	n	Mai	der		五月					Wir heiraten im Mai.	我们五月结婚。
-juni	A1	n	Juni	der		六月					Der Kurs endet im Juni.	课程六月结束。
-juli	A1	n	Juli	der		七月					Im Juli haben die Kinder Ferien.	孩子们七月放假。
-august	A1	n	August	der		八月					Im August ist es heiß.	八月很热。
-september	A1	n	September	der		九月					Im September beginnt die Schule.	学校九月开学。
-oktober	A1	n	Oktober	der		十月					Im Oktober fahren wir nach Bayern.	十月我们去巴伐利亚。
-november	A1	n	November	der		十一月					Im November ist das Wetter oft schlecht.	十一月天气经常不好。
-dezember	A1	n	Dezember	der		十二月					Im Dezember feiern wir Weihnachten.	十二月我们过圣诞节。
-fruehling	A1	n	Frühling	der		春天					Im Frühling blühen die Blumen.	春天花开了。
-sommer	A1	n	Sommer	der		夏天					Im Sommer fahren wir ans Meer.	夏天我们去海边。
-herbst	A1	n	Herbst	der		秋天					Im Herbst wird es kühl.	秋天天气变凉。
-winter	A1	n	Winter	der		冬天					Im Winter schneit es oft.	冬天经常下雪。
-euro	A1	n	Euro	der		欧元					Das Ticket kostet fünf Euro.	票价五欧元。
-cent	A1	n	Cent	der		欧分					Eine Briefmarke kostet 95 Cent.	一张邮票 95 欧分。
-meter	A1	n	Meter	der	Meter	米					Der Tisch ist zwei Meter lang.	这张桌子两米长。
-kilometer	A1	n	Kilometer	der	Kilometer	公里					Bis Köln sind es zwanzig Kilometer.	到科隆还有二十公里。
-liter	A1	n	Liter	der	Liter	升					Ich kaufe einen Liter Milch.	我买一升牛奶。
-kilo	A1	n	Kilo	das		公斤					Ein Kilo Tomaten, bitte.	请给我一公斤西红柿。
-gramm	A1	n	Gramm	das		克					Ich möchte 200 Gramm Käse.	我要 200 克奶酪。
-prozent	A1	n	Prozent	das		百分比					Heute gibt es 20 Prozent Rabatt.	今天打八折。
-deutschland	A1	other	Deutschland			德国					Ich lebe seit einem Jahr in Deutschland.	我在德国生活了一年。
-deutsche	A1	n	Deutsche	der	Deutschen	德国人					Mein Nachbar ist Deutscher.	我的邻居是德国人。
-deutsch	A1	adj	deutsch			德国的；德语的					Ich lerne die deutsche Sprache.	我在学德语。
-europa	A1	other	Europa			欧洲					Wir machen eine Reise durch Europa.	我们在欧洲旅行。
-europaeer	A1	n	Europäer	der	Europäer	欧洲人					Viele Europäer reisen gern nach Asien.	很多欧洲人喜欢去亚洲旅行。
-europaeisch	A1	adj	europäisch			欧洲的					Berlin ist eine europäische Hauptstadt.	柏林是欧洲的一个首都。
-schwarz	A1	adj	schwarz			黑色的					Ich trinke den Kaffee schwarz.	我喝黑咖啡。
-weiss	A1	adj	weiß			白色的					Im Winter ist alles weiß.	冬天到处一片白。
-grau	A1	adj	grau			灰色的					Heute ist der Himmel grau.	今天天空灰蒙蒙的。
-rot	A1	adj	rot			红色的					Die Ampel ist rot.	红灯了。
-blau	A1	adj	blau			蓝色的					Das Meer ist blau.	大海是蓝色的。
-gelb	A1	adj	gelb			黄色的					Die Bananen sind gelb.	香蕉是黄色的。
-gruen	A1	adj	grün			绿色的					Die Bäume sind wieder grün.	树又绿了。
-braun	A1	adj	braun			棕色的					Sie hat braune Augen.	她有一双棕色的眼睛。
-norden	A1	n	Norden	der		北方					Hamburg liegt im Norden.	汉堡在北部。
-sueden	A1	n	Süden	der		南方					München liegt im Süden.	慕尼黑在南部。
-westen	A1	n	Westen	der		西方					Köln liegt im Westen.	科隆在西部。
-osten	A1	n	Osten	der		东方					Dresden liegt im Osten.	德累斯顿在东部。
-lampe	A1	n	Lampe	die	Lampen	灯					Die Lampe ist kaputt.	灯坏了。
-stuhl	A1	n	Stuhl	der	Stühle	椅子					Der Stuhl steht am Fenster.	椅子在窗边。
-fenster	A1	n	Fenster	das	Fenster	窗户					Mach bitte das Fenster zu.	请把窗户关上。
-tuer	A1	n	Tür	die	Türen	门					Die Tür ist offen.	门开着。
-katze	A1	n	Katze	die	Katzen	猫					Die Katze schläft auf dem Sofa.	猫在沙发上睡觉。
-freundin	A1	n	Freundin	die	Freundinnen	女性朋友；女朋友					Meine Freundin wohnt in Leipzig.	我的女朋友住在莱比锡。
+id	level	pos	lemma	gender	plural	meaning	present3	preterite	participle	aux	example	example_zh	number
+ab	A1	adv	ab			从……起；离开					Ab Montag habe ich Urlaub.	从周一起我休假。	
+aber	A1	other	aber			但是					Das Hotel ist klein, aber sehr schön.	这家酒店很小，但很漂亮。	
+abfahren	A1	v	ab|fahren			（车、人）出发，开走	fährt ab	fuhr ab	abgefahren	sein	Der Bus fährt in fünf Minuten ab.	公交车五分钟后开。	
+abfahrt	A1	n	Abfahrt	die	Abfahrten	出发；发车					Die Abfahrt ist um acht Uhr.	八点出发。	
+abgeben	A1	v	ab|geben			交出，上交	gibt ab	gab ab	abgegeben	haben	Bitte geben Sie den Test jetzt ab.	请现在交卷。	
+abholen	A1	v	ab|holen			接（人）；取（东西）	holt ab	holte ab	abgeholt	haben	Ich hole dich am Bahnhof ab.	我去火车站接你。	
+absender	A1	n	Absender	der	Absender	寄件人					Auf dem Paket steht kein Absender.	包裹上没有写寄件人。	
+achtung	A1	other	Achtung			注意！小心！					Achtung, der Zug fährt ein!	注意，列车进站了！	
+adresse	A1	n	Adresse	die	Adressen	地址					Wie ist Ihre Adresse?	您的地址是什么？	
+alle	A1	other	alle			所有的；大家					Alle Kinder spielen im Garten.	所有孩子都在花园里玩。	
+allein	A1	adv	allein			独自，单独					Sie wohnt allein in Berlin.	她一个人住在柏林。	
+also	A1	adv	also			那么；所以					Also, wir treffen uns um sechs.	那么，我们六点见。	
+alt	A1	adj	alt			老的；旧的；……岁					Wie alt bist du?	你多大了？	
+alter	A1	n	Alter	das		年龄					Bitte schreiben Sie hier Ihr Alter.	请在这里写上您的年龄。	
+an	A1	other	an			在……旁边；在……上					Das Bild hängt an der Wand.	画挂在墙上。	
+anbieten	A1	v	an|bieten			提供；请（人吃喝）	bietet an	bot an	angeboten	haben	Darf ich Ihnen einen Kaffee anbieten?	我可以请您喝杯咖啡吗？	
+angebot	A1	n	Angebot	das	Angebote	优惠；报价；供应					Die Äpfel sind heute im Angebot.	苹果今天特价。	
+andere	A1	other	andere			别的，其他的					Ich möchte eine andere Farbe.	我想要别的颜色。	
+anfangen	A1	v	an|fangen			开始	fängt an	fing an	angefangen	haben	Der Kurs fängt um neun Uhr an.	课程九点开始。	
+anfang	A1	n	Anfang	der	Anfänge	开始，开端					Am Anfang ist alles neu.	一开始一切都是新的。	
+anklicken	A1	v	an|klicken			（用鼠标）点击	klickt an	klickte an	angeklickt	haben	Klicken Sie bitte hier an.	请点击这里。	
+ankommen	A1	v	an|kommen			到达	kommt an	kam an	angekommen	sein	Wann kommst du in Hamburg an?	你什么时候到汉堡？	
+ankunft	A1	n	Ankunft	die	Ankünfte	到达					Die Ankunft ist um 14 Uhr.	到达时间是 14 点。	
+ankreuzen	A1	v	an|kreuzen			打叉（勾选）	kreuzt an	kreuzte an	angekreuzt	haben	Kreuzen Sie die richtige Antwort an.	请勾出正确答案。	
+anmachen	A1	v	an|machen			打开（灯、电器）	macht an	machte an	angemacht	haben	Kannst du bitte das Licht anmachen?	你能把灯打开吗？	
+anmelden	A1	v	an|melden			（sich ~）报名；登记	meldet an	meldete an	angemeldet	haben	Ich melde mich für den Deutschkurs an.	我报名参加德语课。	
+anmeldung	A1	n	Anmeldung	die	Anmeldungen	报名；登记					Die Anmeldung ist im ersten Stock.	报名处在二楼。	
+anrede	A1	n	Anrede	die	Anreden	（信件的）称呼					Die Anrede im Brief ist „Liebe Anna“.	信里的称呼是“亲爱的安娜”。	
+anrufen	A1	v	an|rufen			打电话	ruft an	rief an	angerufen	haben	Ich rufe dich heute Abend an.	我今晚给你打电话。	
+anruf	A1	n	Anruf	der	Anrufe	电话（来电）					Danke für deinen Anruf!	谢谢你打电话来！	
+anrufbeantworter	A1	n	Anrufbeantworter	der	Anrufbeantworter	电话答录机					Sprechen Sie bitte auf den Anrufbeantworter.	请在答录机上留言。	
+ansage	A1	n	Ansage	die	Ansagen	（电话、广播的）通知，提示语					Hören Sie die Ansage am Telefon.	请听电话里的提示语。	
+anschluss	A1	n	Anschluss	der	Anschlüsse	（交通）换乘衔接；（电话、网络）接入					In Köln haben Sie Anschluss nach Bonn.	您在科隆可以换乘去波恩的车。	
+an-sein	A1	v	an sein			（灯、电器）开着					Der Fernseher ist noch an.	电视还开着。	
+antworten	A1	v	antworten			回答	antwortet	antwortete	geantwortet	haben	Bitte antworten Sie schnell.	请尽快回复。	
+antwort	A1	n	Antwort	die	Antworten	回答，答复					Ich warte auf deine Antwort.	我在等你的回复。	
+anzeige	A1	n	Anzeige	die	Anzeigen	广告；启事					Ich lese die Anzeigen in der Zeitung.	我在看报纸上的广告。	
+anziehen	A1	v	an|ziehen			穿（衣服）；（sich ~）穿衣服	zieht an	zog an	angezogen	haben	Zieh bitte eine Jacke an, es ist kalt.	穿件外套吧，天冷。	
+apartment	A1	n	Apartment	das	Apartments	小公寓					Das Apartment hat ein Zimmer und eine Küche.	这套小公寓有一个房间和一个厨房。	
+apfel	A1	n	Apfel	der	Äpfel	苹果					Ich esse jeden Tag einen Apfel.	我每天吃一个苹果。	
+appetit	A1	n	Appetit	der		胃口，食欲					Guten Appetit!	祝你胃口好！（用餐前）	
+arbeiten	A1	v	arbeiten			工作	arbeitet	arbeitete	gearbeitet	haben	Mein Vater arbeitet bei der Post.	我爸爸在邮局工作。	
+arbeit	A1	n	Arbeit	die	Arbeiten	工作；劳动					Die Arbeit macht mir Spaß.	我喜欢这份工作。	
+arbeitslos	A1	adj	arbeitslos			失业的					Er ist seit einem Monat arbeitslos.	他失业一个月了。	
+arbeitsplatz	A1	n	Arbeitsplatz	der	Arbeitsplätze	工作岗位；工位					Mein Arbeitsplatz ist am Fenster.	我的工位在窗边。	
+arm	A1	n	Arm	der	Arme	手臂					Mein Arm tut weh.	我的胳膊疼。	
+arzt	A1	n	Arzt	der	Ärzte	医生					Ich muss heute zum Arzt.	我今天得去看医生。	
+auch	A1	adv	auch			也					Ich komme auch mit.	我也一起去。	
+auf	A1	other	auf			在……上面					Das Buch liegt auf dem Tisch.	书在桌子上。	
+aufgabe	A1	n	Aufgabe	die	Aufgaben	任务；题目					Lesen Sie die Aufgabe genau.	请仔细读题。	
+aufhoeren	A1	v	auf|hören			停止	hört auf	hörte auf	aufgehört	haben	Hör bitte auf, ich muss arbeiten!	别闹了，我得工作！	
+auf-sein	A1	v	auf sein			（门、商店）开着					Die Tür ist auf.	门开着。	
+aufstehen	A1	v	auf|stehen			起床；站起来	steht auf	stand auf	aufgestanden	sein	Ich stehe jeden Tag um sieben Uhr auf.	我每天七点起床。	
+aufzug	A1	n	Aufzug	der	Aufzüge	电梯					Der Aufzug ist leider kaputt.	电梯坏了。	
+auge	A1	n	Auge	das	Augen	眼睛					Sie hat blaue Augen.	她有一双蓝眼睛。	
+aus	A1	other	aus			从……出来；来自					Ich komme aus China.	我来自中国。	
+ausflug	A1	n	Ausflug	der	Ausflüge	郊游，短途旅行					Am Sonntag machen wir einen Ausflug.	周日我们去郊游。	
+ausfuellen	A1	v	aus|füllen			填写（表格）	füllt aus	füllte aus	ausgefüllt	haben	Bitte füllen Sie das Formular aus.	请填写这张表。	
+ausgang	A1	n	Ausgang	der	Ausgänge	出口					Wo ist der Ausgang?	出口在哪里？	
+auskunft	A1	n	Auskunft	die	Auskünfte	问讯；问讯处					Fragen Sie bitte an der Auskunft.	请到问讯处问一下。	
+ausland	A1	n	Ausland	das		国外					Mein Bruder arbeitet im Ausland.	我哥哥在国外工作。	
+auslaender	A1	n	Ausländer	der	Ausländer	外国人					In der Stadt wohnen viele Ausländer.	这个城市住着很多外国人。	
+auslaendisch	A1	adj	ausländisch			外国的					Wir haben viele ausländische Studenten.	我们有很多外国学生。	
+ausmachen	A1	v	aus|machen			关掉（灯、电器）；约定	macht aus	machte aus	ausgemacht	haben	Mach bitte den Computer aus.	请把电脑关了。	
+aussage	A1	n	Aussage	die	Aussagen	说法；陈述					Ist die Aussage richtig oder falsch?	这个说法是对还是错？	
+aussehen	A1	v	aus|sehen			看起来	sieht aus	sah aus	ausgesehen	haben	Du siehst heute sehr gut aus.	你今天看起来气色很好。	
+aus-sein	A1	v	aus sein			（灯、电器）关着；结束了					Das Licht ist aus.	灯关着。	
+aussteigen	A1	v	aus|steigen			下车	steigt aus	stieg aus	ausgestiegen	sein	Wir steigen an der nächsten Haltestelle aus.	我们下一站下车。	
+ausweis	A1	n	Ausweis	der	Ausweise	证件，身份证					Haben Sie Ihren Ausweis dabei?	您带证件了吗？	
+ausziehen	A1	v	aus|ziehen			脱（衣服）；搬出去	zieht aus	zog aus	ausgezogen	haben	Bitte ziehen Sie die Schuhe aus.	请把鞋脱掉。	
+auto	A1	n	Auto	das	Autos	汽车					Wir fahren mit dem Auto nach München.	我们开车去慕尼黑。	
+autobahn	A1	n	Autobahn	die	Autobahnen	高速公路					Auf der Autobahn ist heute viel Verkehr.	今天高速上车很多。	
+automat	A1	n	Automat	der	Automaten	自动售货机					Die Fahrkarte kaufe ich am Automaten.	我在自动售票机买车票。	
+automatisch	A1	adj	automatisch			自动的					Die Tür öffnet automatisch.	门会自动打开。	
+baby	A1	n	Baby	das	Babys	婴儿					Das Baby schläft.	宝宝在睡觉。	
+baeckerei	A1	n	Bäckerei	die	Bäckereien	面包店					Ich kaufe Brötchen in der Bäckerei.	我在面包店买小面包。	
+bad	A1	n	Bad	das	Bäder	浴室					Die Wohnung hat ein großes Bad.	这套公寓有一个大浴室。	
+baden	A1	v	baden			洗澡（泡澡）；游泳	badet	badete	gebadet	haben	Die Kinder baden gern im See.	孩子们喜欢在湖里游泳。	
+bahn	A1	n	Bahn	die	Bahnen	铁路；火车					Ich fahre mit der Bahn zur Arbeit.	我坐火车上班。	
+bahnhof	A1	n	Bahnhof	der	Bahnhöfe	火车站					Der Bahnhof ist nicht weit.	火车站不远。	
+bahnsteig	A1	n	Bahnsteig	der	Bahnsteige	站台					Der Zug fährt von Bahnsteig drei.	火车从三号站台出发。	
+bald	A1	adv	bald			不久，很快					Bis bald!	回头见！	
+balkon	A1	n	Balkon	der	Balkone	阳台					Wir frühstücken auf dem Balkon.	我们在阳台上吃早饭。	
+banane	A1	n	Banane	die	Bananen	香蕉					Die Bananen sind noch grün.	香蕉还是绿的。	
+bank	A1	n	Bank	die	Banken	银行；长椅					Ich gehe zur Bank und hole Geld.	我去银行取钱。	
+bar	A1	adv	bar			用现金					Kann ich bar bezahlen?	我可以付现金吗？	
+bauch	A1	n	Bauch	der	Bäuche	肚子					Ich habe Bauchschmerzen, mein Bauch tut weh.	我肚子疼。	
+baum	A1	n	Baum	der	Bäume	树					Vor dem Haus steht ein großer Baum.	房子前面有一棵大树。	
+beamte	A1	n	Beamte	der	Beamten	公务员					Der Beamte prüft meinen Pass.	工作人员在检查我的护照。	
+bedeuten	A1	v	bedeuten			意思是	bedeutet	bedeutete	bedeutet	haben	Was bedeutet dieses Wort?	这个词是什么意思？	
+beginnen	A1	v	beginnen			开始	beginnt	begann	begonnen	haben	Der Film beginnt um acht Uhr.	电影八点开始。	
+bei	A1	other	bei			在……那里；在……时候					Ich wohne bei meinen Eltern.	我住在父母家。	
+beide	A1	other	beide			两个都					Beide Zimmer sind frei.	两个房间都空着。	
+bein	A1	n	Bein	das	Beine	腿					Er hat sich das Bein gebrochen.	他把腿摔断了。	
+beispiel	A1	n	Beispiel	das	Beispiele	例子					Hier ist ein Beispiel.	这里有一个例子。	
+zum-beispiel	A1	other	zum Beispiel			例如（z. B.）					Ich esse gern Obst, zum Beispiel Äpfel.	我喜欢吃水果，比如苹果。	
+bekannt	A1	adj	bekannt			有名的；认识的					Der Kölner Dom ist sehr bekannt.	科隆大教堂非常有名。	
+bekannte	A1	n	Bekannte	der	Bekannten	熟人					Er ist ein Bekannter von mir.	他是我的一个熟人。	
+bekommen	A1	v	bekommen			得到，收到	bekommt	bekam	bekommen	haben	Ich habe einen Brief bekommen.	我收到了一封信。	
+benutzen	A1	v	benutzen			使用	benutzt	benutzte	benutzt	haben	Darf ich dein Handy benutzen?	我可以用一下你的手机吗？	
+beruf	A1	n	Beruf	der	Berufe	职业					Was sind Sie von Beruf?	您是做什么工作的？	
+besetzt	A1	adj	besetzt			（座位、电话）占用的；占线的					Ist der Platz hier besetzt?	这个座位有人吗？	
+besichtigen	A1	v	besichtigen			参观	besichtigt	besichtigte	besichtigt	haben	Morgen besichtigen wir das Schloss.	明天我们参观城堡。	
+besser	A1	adj	besser			更好的					Heute geht es mir besser.	我今天好些了。	
+beste	A1	adj	beste			最好的					Das ist der beste Kuchen in der Stadt.	这是城里最好吃的蛋糕。	
+bestellen	A1	v	bestellen			点（菜）；订购	bestellt	bestellte	bestellt	haben	Ich bestelle eine Pizza.	我点一份披萨。	
+besuchen	A1	v	besuchen			拜访；参观；上（学）	besucht	besuchte	besucht	haben	Am Wochenende besuche ich meine Oma.	周末我去看奶奶。	
+bett	A1	n	Bett	das	Betten	床					Das Bett ist sehr bequem.	这张床很舒服。	
+bezahlen	A1	v	bezahlen			付款	bezahlt	bezahlte	bezahlt	haben	Kann ich mit Karte bezahlen?	我可以刷卡吗？	
+bier	A1	n	Bier	das		啤酒					Ein Bier, bitte!	请来一杯啤酒！	
+bild	A1	n	Bild	das	Bilder	图片；画					Sehen Sie sich das Bild an.	请看这张图。	
+billig	A1	adj	billig			便宜的					Das T-Shirt ist sehr billig.	这件 T 恤很便宜。	
+birne	A1	n	Birne	die	Birnen	梨；灯泡					Ich kaufe ein Kilo Birnen.	我买一公斤梨。	
+bis	A1	other	bis			直到					Ich arbeite bis fünf Uhr.	我工作到五点。	
+ein-bisschen	A1	other	ein bisschen			一点儿					Ich spreche ein bisschen Deutsch.	我会说一点德语。	
+bitte	A1	other	bitte			请；不客气					Ein Wasser, bitte.	请来一杯水。	
+bitte-n	A1	n	Bitte	die	Bitten	请求					Ich habe eine Bitte an dich.	我想请你帮个忙。	
+bitten	A1	v	bitten			请求	bittet	bat	gebeten	haben	Ich bitte Sie um Hilfe.	我请您帮忙。	
+bitter	A1	adj	bitter			苦的					Der Kaffee ist sehr bitter.	这咖啡很苦。	
+bleiben	A1	v	bleiben			留下，停留	bleibt	blieb	geblieben	sein	Wie lange bleibst du in Wien?	你在维也纳待多久？	
+bleistift	A1	n	Bleistift	der	Bleistifte	铅笔					Schreiben Sie bitte mit Bleistift.	请用铅笔写。	
+blick	A1	n	Blick	der	Blicke	视线；景色					Das Zimmer hat einen schönen Blick auf das Meer.	这个房间能看到美丽的海景。	
+blume	A1	n	Blume	die	Blumen	花					Ich schenke meiner Mutter Blumen.	我送妈妈花。	
+bogen	A1	n	Bogen	der	Bögen	（一张）纸；答题纸					Schreiben Sie die Lösungen auf den Antwortbogen.	请把答案写在答题纸上。	
+boese	A1	adj	böse			生气的；坏的					Bist du mir böse?	你生我的气吗？	
+brauchen	A1	v	brauchen			需要	braucht	brauchte	gebraucht	haben	Ich brauche einen neuen Computer.	我需要一台新电脑。	
+breit	A1	adj	breit			宽的					Die Straße ist sehr breit.	这条街很宽。	
+brief	A1	n	Brief	der	Briefe	信					Ich schreibe einen Brief an meine Freundin.	我给女朋友写信。	
+briefmarke	A1	n	Briefmarke	die	Briefmarken	邮票					Ich brauche eine Briefmarke für die Karte.	这张明信片我需要一张邮票。	
+bringen	A1	v	bringen			带来；送去	bringt	brachte	gebracht	haben	Kannst du mir ein Glas Wasser bringen?	你能给我拿一杯水吗？	
+brot	A1	n	Brot	das	Brote	面包					Wir essen abends Brot mit Käse.	我们晚上吃面包配奶酪。	
+broetchen	A1	n	Brötchen	das	Brötchen	小面包					Zum Frühstück esse ich zwei Brötchen.	早饭我吃两个小面包。	
+bruder	A1	n	Bruder	der	Brüder	兄弟					Mein Bruder ist zwanzig Jahre alt.	我哥哥二十岁。	
+buch	A1	n	Buch	das	Bücher	书					Das Buch ist sehr interessant.	这本书很有意思。	
+buchstabe	A1	n	Buchstabe	der	Buchstaben	字母					Das Wort hat fünf Buchstaben.	这个词有五个字母。	
+buchstabieren	A1	v	buchstabieren			拼读（字母）	buchstabiert	buchstabierte	buchstabiert	haben	Können Sie Ihren Namen bitte buchstabieren?	请您拼一下您的名字好吗？	
+bus	A1	n	Bus	der	Busse	公交车					Ich fahre mit dem Bus in die Stadt.	我坐公交车进城。	
+butter	A1	n	Butter	die		黄油					Möchtest du Butter aufs Brot?	面包上要抹黄油吗？	
+café	A1	n	Café	das	Cafés	咖啡馆					Wir treffen uns im Café am Markt.	我们在集市旁的咖啡馆见面。	
+cd	A1	n	CD	die	CDs	光盘，CD					Ich höre gern diese CD.	我喜欢听这张 CD。	
+chef	A1	n	Chef	der	Chefs	老板，上司					Mein Chef ist heute nicht im Büro.	我的老板今天不在办公室。	
+circa	A1	adv	circa			大约（ca.）					Die Fahrt dauert circa zwei Stunden.	路上大约要两个小时。	
+computer	A1	n	Computer	der	Computer	电脑					Mein Computer ist zu langsam.	我的电脑太慢了。	
+da	A1	adv	da			那里；那时					Da ist der Bahnhof.	火车站在那儿。	
+dame	A1	n	Dame	die	Damen	女士					Meine Damen und Herren, willkommen!	女士们先生们，欢迎！	
+daneben	A1	adv	daneben			在旁边					Die Post ist im Zentrum, die Bank ist gleich daneben.	邮局在市中心，银行就在旁边。	
+danken	A1	v	danken			感谢	dankt	dankte	gedankt	haben	Ich danke Ihnen für Ihre Hilfe.	谢谢您的帮助。	
+dank	A1	n	Dank	der		感谢					Vielen Dank!	非常感谢！	
+danke	A1	other	danke			谢谢					Danke, das ist sehr nett.	谢谢，你真好。	
+dann	A1	adv	dann			然后；那么					Zuerst essen wir, dann gehen wir ins Kino.	我们先吃饭，然后去看电影。	
+datum	A1	n	Datum	das	Daten	日期					Welches Datum ist heute?	今天几号？	
+dauern	A1	v	dauern			持续，花（时间）	dauert	dauerte	gedauert	haben	Wie lange dauert der Kurs?	这门课要上多久？	
+dein	A1	other	dein			你的					Ist das dein Fahrrad?	这是你的自行车吗？	
+denn	A1	other	denn			因为；（语气词）到底					Ich bleibe zu Hause, denn ich bin krank.	我待在家里，因为我病了。	
+der-die-das	A1	other	der, die, das			定冠词（阳性、阴性、中性）					Der Mann, die Frau und das Kind warten.	那个男人、女人和孩子在等着。	
+dich	A1	other	dich			你（第四格）					Ich liebe dich.	我爱你。	
+dieser	A1	other	dieser			这个					Dieser Zug fährt nach Berlin.	这趟车开往柏林。	
+dir	A1	other	dir			你（第三格）					Ich helfe dir gern.	我很乐意帮你。	
+disco	A1	n	Disco	die	Discos	迪斯科舞厅					Am Samstag gehen wir in die Disco.	周六我们去迪厅。	
+doktor	A1	n	Doktor	der	Doktoren	医生；博士					Der Doktor sagt, ich muss im Bett bleiben.	医生说我得卧床休息。	
+doppelzimmer	A1	n	Doppelzimmer	das	Doppelzimmer	双人间					Wir möchten ein Doppelzimmer für zwei Nächte.	我们想订一间双人房，住两晚。	
+dorf	A1	n	Dorf	das	Dörfer	村庄					Meine Großeltern wohnen in einem kleinen Dorf.	我的祖父母住在一个小村子里。	
+dort	A1	adv	dort			那里					Siehst du das Haus dort?	你看到那边那座房子了吗？	
+draussen	A1	adv	draußen			在外面					Die Kinder spielen draußen.	孩子们在外面玩。	
+drucken	A1	v	drucken			打印	druckt	druckte	gedruckt	haben	Kannst du mir die Fahrkarte drucken?	你能帮我把车票打印出来吗？	
+drucker	A1	n	Drucker	der	Drucker	打印机					Der Drucker hat kein Papier mehr.	打印机没纸了。	
+druecken	A1	v	drücken			按；推	drückt	drückte	gedrückt	haben	Drücken Sie bitte auf den Knopf.	请按一下按钮。	
+durch	A1	other	durch			穿过；通过					Wir gehen durch den Park.	我们穿过公园。	
+durchsage	A1	n	Durchsage	die	Durchsagen	（广播）通知					Achtung, eine Durchsage für alle Reisenden.	请注意，下面是给所有旅客的广播。	
+duerfen	A1	v	dürfen			可以，被允许	darf	durfte	gedurft	haben	Darf ich hier rauchen?	我可以在这儿抽烟吗？	
+durst	A1	n	Durst	der		口渴					Ich habe Durst.	我渴了。	
+duschen	A1	v	duschen			淋浴，冲澡	duscht	duschte	geduscht	haben	Ich dusche jeden Morgen.	我每天早上洗澡。	
+dusche	A1	n	Dusche	die	Duschen	淋浴（间）					Das Zimmer hat eine Dusche.	这个房间有淋浴。	
+ecke	A1	n	Ecke	die	Ecken	角落；拐角					Die Apotheke ist gleich um die Ecke.	药店就在拐角处。	
+ehefrau	A1	n	Ehefrau	die	Ehefrauen	妻子					Das ist meine Ehefrau.	这是我妻子。	
+ehemann	A1	n	Ehemann	der	Ehemänner	丈夫					Ihr Ehemann ist Arzt.	她丈夫是医生。	
+ei	A1	n	Ei	das	Eier	鸡蛋					Ich esse zum Frühstück ein Ei.	我早饭吃一个鸡蛋。	
+eilig	A1	adj	eilig			匆忙的；紧急的					Ich habe es eilig.	我赶时间。	
+ein	A1	other	ein			一个（不定冠词）；一					Ich habe einen Bruder und eine Schwester.	我有一个哥哥和一个姐姐。	
+einfach	A1	adj	einfach			简单的；单程的					Die Aufgabe ist ganz einfach.	这道题很简单。	
+eingang	A1	n	Eingang	der	Eingänge	入口					Der Eingang ist hinten.	入口在后面。	
+einkaufen	A1	v	ein|kaufen			购物，买东西	kauft ein	kaufte ein	eingekauft	haben	Ich kaufe im Supermarkt ein.	我在超市买东西。	
+einladen	A1	v	ein|laden			邀请	lädt ein	lud ein	eingeladen	haben	Ich lade dich zu meinem Geburtstag ein.	我邀请你来我的生日会。	
+einladung	A1	n	Einladung	die	Einladungen	邀请					Danke für die Einladung!	谢谢你的邀请！	
+einmal	A1	adv	einmal			一次；有一次					Ich war einmal in Paris.	我去过一次巴黎。	
+einsteigen	A1	v	ein|steigen			上车	steigt ein	stieg ein	eingestiegen	sein	Bitte schnell einsteigen!	请赶快上车！	
+eintritt	A1	n	Eintritt	der		入场；门票					Der Eintritt kostet zehn Euro.	门票十欧元。	
+einzelzimmer	A1	n	Einzelzimmer	das	Einzelzimmer	单人间					Haben Sie noch ein Einzelzimmer frei?	你们还有空的单人间吗？	
+eltern	A1	n	Eltern	die		父母（复数）					Meine Eltern wohnen in Shanghai.	我父母住在上海。	pl
+e-mail	A1	n	E-Mail	die	E-Mails	电子邮件					Ich schreibe dir eine E-Mail.	我给你发一封邮件。	
+empfaenger	A1	n	Empfänger	der	Empfänger	收件人					Schreiben Sie den Empfänger auf den Brief.	请在信上写上收件人。	
+empfehlen	A1	v	empfehlen			推荐	empfiehlt	empfahl	empfohlen	haben	Was können Sie mir empfehlen?	您能给我推荐什么？	
+enden	A1	v	enden			结束	endet	endete	geendet	haben	Der Kurs endet im Juni.	课程六月结束。	
+ende	A1	n	Ende	das	Enden	结尾，结束					Am Ende der Straße ist ein Park.	街的尽头有个公园。	
+entschuldigen	A1	v	entschuldigen			原谅；（sich ~）道歉	entschuldigt	entschuldigte	entschuldigt	haben	Entschuldigen Sie, wo ist die Toilette?	打扰一下，厕所在哪里？	
+entschuldigung	A1	n	Entschuldigung	die	Entschuldigungen	道歉；对不起					Entschuldigung, ich bin zu spät.	对不起，我来晚了。	
+er	A1	other	er			他					Er kommt aus Spanien.	他来自西班牙。	
+ergebnis	A1	n	Ergebnis	das	Ergebnisse	结果					Das Ergebnis vom Test ist gut.	考试成绩不错。	
+erklaeren	A1	v	erklären			解释	erklärt	erklärte	erklärt	haben	Können Sie das bitte noch einmal erklären?	您能再解释一遍吗？	
+erlauben	A1	v	erlauben			允许	erlaubt	erlaubte	erlaubt	haben	Rauchen ist hier nicht erlaubt.	这里不许吸烟。	
+erwachsene	A1	n	Erwachsene	der	Erwachsenen	成年人					Für Erwachsene kostet der Eintritt acht Euro.	成人门票八欧元。	
+erzaehlen	A1	v	erzählen			讲述	erzählt	erzählte	erzählt	haben	Erzähl mal, wie war dein Urlaub?	说说看，你的假期怎么样？	
+es	A1	other	es			它；（无人称主语）					Es regnet.	下雨了。	
+essen	A1	v	essen			吃	isst	aß	gegessen	haben	Was isst du gern?	你喜欢吃什么？	
+essen-n	A1	n	Essen	das		饭菜；吃饭					Das Essen ist fertig!	饭好了！	
+euer	A1	other	euer			你们的					Ist das euer Auto?	这是你们的车吗？	
+fahren	A1	v	fahren			乘（车）；开（车）	fährt	fuhr	gefahren	sein	Ich fahre morgen nach Berlin.	我明天去柏林。	
+fahrer	A1	n	Fahrer	der	Fahrer	司机					Der Fahrer wartet vor dem Hotel.	司机在酒店门口等着。	
+fahrkarte	A1	n	Fahrkarte	die	Fahrkarten	车票					Ich brauche eine Fahrkarte nach Hamburg.	我需要一张去汉堡的车票。	
+fahrrad	A1	n	Fahrrad	das	Fahrräder	自行车					Ich fahre mit dem Fahrrad zur Schule.	我骑自行车上学。	
+falsch	A1	adj	falsch			错误的					Die Antwort ist falsch.	这个答案是错的。	
+familie	A1	n	Familie	die	Familien	家庭；家人					Meine Familie ist groß.	我家人很多。	
+familienname	A1	n	Familienname	der	Familiennamen	姓					Wie ist Ihr Familienname?	您姓什么？	
+familienstand	A1	n	Familienstand	der		婚姻状况					Familienstand: ledig.	婚姻状况：未婚。	
+farbe	A1	n	Farbe	die	Farben	颜色					Welche Farbe hat dein Auto?	你的车是什么颜色的？	
+fax	A1	n	Fax	das	Faxe	传真					Bitte schicken Sie mir ein Fax.	请给我发一份传真。	
+feiertag	A1	n	Feiertag	der	Feiertage	节假日					Am Feiertag sind die Geschäfte geschlossen.	节假日商店关门。	
+feiern	A1	v	feiern			庆祝	feiert	feierte	gefeiert	haben	Wir feiern heute meinen Geburtstag.	我们今天庆祝我的生日。	
+fehlen	A1	v	fehlen			缺少；缺席	fehlt	fehlte	gefehlt	haben	Wer fehlt heute?	今天谁没来？	
+fehler	A1	n	Fehler	der	Fehler	错误					Im Text sind drei Fehler.	这篇文章里有三个错误。	
+fernsehen	A1	v	fern|sehen			看电视	sieht fern	sah fern	ferngesehen	haben	Abends sehen wir oft fern.	我们晚上经常看电视。	
+fertig	A1	adj	fertig			完成的；准备好的					Ich bin gleich fertig.	我马上就好。	
+feuer	A1	n	Feuer	das		火					Haben Sie Feuer?	您有火吗？	
+fieber	A1	n	Fieber	das		发烧					Das Kind hat Fieber.	孩子发烧了。	
+film	A1	n	Film	der	Filme	电影					Der Film war sehr lustig.	那部电影很好笑。	
+finden	A1	v	finden			找到；认为	findet	fand	gefunden	haben	Ich finde meinen Schlüssel nicht.	我找不到钥匙了。	
+firma	A1	n	Firma	die	Firmen	公司					Ich arbeite bei einer kleinen Firma.	我在一家小公司工作。	
+fisch	A1	n	Fisch	der	Fische	鱼					Heute gibt es Fisch mit Reis.	今天吃鱼配米饭。	
+flasche	A1	n	Flasche	die	Flaschen	瓶子					Eine Flasche Wasser, bitte.	请来一瓶水。	
+fleisch	A1	n	Fleisch	das		肉					Ich esse kein Fleisch.	我不吃肉。	
+fliegen	A1	v	fliegen			飞；坐飞机	fliegt	flog	geflogen	sein	Wir fliegen im Sommer nach China.	我们夏天坐飞机去中国。	
+abfliegen	A1	v	ab|fliegen			（飞机）起飞	fliegt ab	flog ab	abgeflogen	sein	Das Flugzeug fliegt um zehn Uhr ab.	飞机十点起飞。	
+abflug	A1	n	Abflug	der	Abflüge	起飞					Der Abflug ist um 9:30 Uhr.	起飞时间是 9:30。	
+flughafen	A1	n	Flughafen	der	Flughäfen	机场					Wie komme ich zum Flughafen?	去机场怎么走？	
+flugzeug	A1	n	Flugzeug	das	Flugzeuge	飞机					Das Flugzeug ist pünktlich.	飞机准点。	
+formular	A1	n	Formular	das	Formulare	表格					Bitte unterschreiben Sie das Formular.	请在表格上签字。	
+foto	A1	n	Foto	das	Fotos	照片					Ich zeige dir ein Foto von meiner Familie.	我给你看一张我的全家福。	
+fragen	A1	v	fragen			问	fragt	fragte	gefragt	haben	Darf ich Sie etwas fragen?	我可以问您一件事吗？	
+frage	A1	n	Frage	die	Fragen	问题					Haben Sie noch Fragen?	您还有问题吗？	
+frau	A1	n	Frau	die	Frauen	女人；妻子；（称呼）……女士					Frau Müller ist meine Lehrerin.	米勒女士是我的老师。	
+frei	A1	adj	frei			空闲的；免费的					Ist der Platz noch frei?	这个座位还空着吗？	
+freizeit	A1	n	Freizeit	die		业余时间					Was machst du in deiner Freizeit?	你业余时间做什么？	
+fremd	A1	adj	fremd			陌生的；外地的					Ich bin hier fremd.	我不是本地人。	
+freuen	A1	v	freuen			（sich ~）高兴	freut	freute	gefreut	haben	Ich freue mich auf das Wochenende.	我盼着周末。	
+freund	A1	n	Freund	der	Freunde	朋友；男朋友					Das ist mein Freund Paul.	这是我的朋友保罗。	
+frueher	A1	adv	früher			以前					Früher habe ich in Köln gewohnt.	我以前住在科隆。	
+fruehstuecken	A1	v	frühstücken			吃早饭	frühstückt	frühstückte	gefrühstückt	haben	Wir frühstücken um acht Uhr.	我们八点吃早饭。	
+fruehstueck	A1	n	Frühstück	das		早餐					Das Frühstück ist im Preis inklusive.	房价含早餐。	
+fuehrung	A1	n	Führung	die	Führungen	（参观）导览					Die Führung durch das Museum beginnt um zwei.	博物馆导览两点开始。	
+fuer	A1	other	für			为了；给					Das Geschenk ist für dich.	这个礼物是给你的。	
+fuss	A1	n	Fuß	der	Füße	脚					Wir gehen zu Fuß.	我们走路去。	
+fussball	A1	n	Fußball	der	Fußbälle	足球					Am Samstag spielen wir Fußball.	周六我们踢足球。	
+garten	A1	n	Garten	der	Gärten	花园					Im Garten stehen viele Blumen.	花园里有很多花。	
+gast	A1	n	Gast	der	Gäste	客人					Heute Abend kommen Gäste.	今晚有客人来。	
+geben	A1	v	geben			给	gibt	gab	gegeben	haben	Gib mir bitte das Salz.	请把盐递给我。	
+geboren	A1	adj	geboren			出生的					Ich bin 1995 in Peking geboren.	我 1995 年出生在北京。	
+geburtsjahr	A1	n	Geburtsjahr	das	Geburtsjahre	出生年份					Schreiben Sie bitte Ihr Geburtsjahr auf.	请写下您的出生年份。	
+geburtsort	A1	n	Geburtsort	der	Geburtsorte	出生地					Mein Geburtsort ist Nanjing.	我的出生地是南京。	
+geburtstag	A1	n	Geburtstag	der	Geburtstage	生日					Herzlichen Glückwunsch zum Geburtstag!	生日快乐！	
+gefallen	A1	v	gefallen			使喜欢	gefällt	gefiel	gefallen	haben	Die Wohnung gefällt mir sehr.	我很喜欢这套公寓。	
+gegen	A1	other	gegen			对着；反对；（时间）大约					Ich komme gegen sieben Uhr.	我七点左右到。	
+gehen	A1	v	gehen			走；去	geht	ging	gegangen	sein	Wir gehen ins Kino.	我们去看电影。	
+gehoeren	A1	v	gehören			属于	gehört	gehörte	gehört	haben	Gehört das Handy dir?	这部手机是你的吗？	
+geld	A1	n	Geld	das		钱					Ich habe kein Geld mehr.	我没钱了。	
+gemuese	A1	n	Gemüse	das		蔬菜					Kinder sollen viel Gemüse essen.	孩子应该多吃蔬菜。	
+gepaeck	A1	n	Gepäck	das		行李					Wo kann ich mein Gepäck lassen?	我可以把行李放在哪里？	
+gerade	A1	adv	gerade			正在；刚才					Ich koche gerade.	我正在做饭。	
+geradeaus	A1	adv	geradeaus			一直往前					Gehen Sie geradeaus und dann links.	一直往前走，然后左转。	
+gern	A1	adv	gern			乐意，喜欢					Ich trinke gern Tee.	我喜欢喝茶。	
+geschaeft	A1	n	Geschäft	das	Geschäfte	商店；生意					Das Geschäft öffnet um neun Uhr.	这家店九点开门。	
+geschenk	A1	n	Geschenk	das	Geschenke	礼物					Das ist ein Geschenk für dich.	这是给你的礼物。	
+geschwister	A1	n	Geschwister	die		兄弟姐妹（复数）					Hast du Geschwister?	你有兄弟姐妹吗？	pl
+gespraech	A1	n	Gespräch	das	Gespräche	谈话					Wir haben ein langes Gespräch.	我们聊了很久。	
+gestern	A1	adv	gestern			昨天					Gestern war ich im Kino.	我昨天去看了电影。	
+gestorben	A1	adj	gestorben			去世的					Mein Opa ist letztes Jahr gestorben.	我爷爷去年去世了。	
+getraenk	A1	n	Getränk	das	Getränke	饮料					Was für Getränke haben Sie?	你们有什么饮料？	
+gewicht	A1	n	Gewicht	das		重量；体重					Wie ist das Gewicht vom Koffer?	这个箱子多重？	
+gewinnen	A1	v	gewinnen			赢；获得	gewinnt	gewann	gewonnen	haben	Wer hat das Spiel gewonnen?	谁赢了比赛？	
+glas	A1	n	Glas	das	Gläser	玻璃杯；玻璃					Ein Glas Wein, bitte.	请来一杯葡萄酒。	
+glauben	A1	v	glauben			相信；认为	glaubt	glaubte	geglaubt	haben	Ich glaube, er kommt heute nicht.	我觉得他今天不来了。	
+gleich	A1	adv	gleich			马上；相同的					Ich komme gleich.	我马上来。	
+gleis	A1	n	Gleis	das	Gleise	（火车）轨道，站台号					Der Zug fährt von Gleis fünf ab.	火车从五号站台发车。	
+glueck	A1	n	Glück	das		幸运；幸福					Viel Glück bei der Prüfung!	祝考试顺利！	
+gluecklich	A1	adj	glücklich			幸福的；快乐的					Wir sind sehr glücklich.	我们很幸福。	
+glueckwunsch	A1	n	Glückwunsch	der	Glückwünsche	祝贺					Herzlichen Glückwunsch!	衷心祝贺！	
+grad	A1	n	Grad	der		度（温度）					Heute sind es zwanzig Grad.	今天二十度。	
+gratulieren	A1	v	gratulieren			祝贺	gratuliert	gratulierte	gratuliert	haben	Ich gratuliere dir zum Geburtstag.	祝你生日快乐。	
+grillen	A1	v	grillen			烧烤	grillt	grillte	gegrillt	haben	Am Sonntag grillen wir im Garten.	周日我们在花园里烧烤。	
+gross	A1	adj	groß			大的；高的					Mein Bruder ist sehr groß.	我哥哥个子很高。	
+groesse	A1	n	Größe	die	Größen	尺码；大小					Haben Sie die Hose in Größe 40?	这条裤子有 40 码的吗？	
+grosseltern	A1	n	Großeltern	die		祖父母，外祖父母（复数）					Meine Großeltern sind schon alt.	我的祖父母已经老了。	pl
+grossmutter	A1	n	Großmutter	die	Großmütter	祖母，外祖母					Meine Großmutter backt gern Kuchen.	我奶奶喜欢烤蛋糕。	
+grossvater	A1	n	Großvater	der	Großväter	祖父，外祖父					Mein Großvater war Lehrer.	我爷爷以前是老师。	
+gruppe	A1	n	Gruppe	die	Gruppen	组；团体					Wir arbeiten in Gruppen.	我们分组练习。	
+gruss	A1	n	Gruß	der	Grüße	问候					Viele Grüße an deine Eltern!	代我向你父母问好！	
+gueltig	A1	adj	gültig			有效的					Ihr Pass ist nicht mehr gültig.	您的护照已经过期了。	
+guenstig	A1	adj	günstig			便宜的；划算的					Das Hotel ist sehr günstig.	这家酒店很实惠。	
+gut	A1	adj	gut			好的					Das Essen ist sehr gut.	饭菜很好吃。	
+haar	A1	n	Haar	das	Haare	头发					Sie hat lange Haare.	她留着长发。	
+haben	A1	v	haben			有	hat	hatte	gehabt	haben	Ich habe zwei Kinder.	我有两个孩子。	
+haehnchen	A1	n	Hähnchen	das	Hähnchen	鸡肉；（烤）鸡					Ich nehme das Hähnchen mit Pommes.	我要鸡肉配薯条。	
+halbpension	A1	n	Halbpension	die		（酒店）半膳					Das Zimmer mit Halbpension kostet 80 Euro.	带早晚餐的房间 80 欧元。	
+halle	A1	n	Halle	die	Hallen	大厅					Wir warten in der Halle.	我们在大厅等。	
+hallo	A1	other	hallo			你好					Hallo, wie geht's?	你好，最近怎么样？	
+halten	A1	v	halten			停；拿着	hält	hielt	gehalten	haben	Der Bus hält vor dem Rathaus.	公交车停在市政厅前。	
+haltestelle	A1	n	Haltestelle	die	Haltestellen	车站（公交、电车）					Wo ist die nächste Haltestelle?	最近的车站在哪儿？	
+hand	A1	n	Hand	die	Hände	手					Wasch dir bitte die Hände.	请洗手。	
+handy	A1	n	Handy	das	Handys	手机					Mein Handy ist kaputt.	我的手机坏了。	
+haus	A1	n	Haus	das	Häuser	房子					Wir wohnen in einem alten Haus.	我们住在一栋老房子里。	
+hausaufgabe	A1	n	Hausaufgabe	die	Hausaufgaben	家庭作业					Hast du deine Hausaufgaben gemacht?	你写完作业了吗？	
+hausfrau	A1	n	Hausfrau	die	Hausfrauen	家庭主妇					Meine Mutter ist Hausfrau.	我妈妈是家庭主妇。	
+hausmann	A1	n	Hausmann	der	Hausmänner	家庭主夫					Er ist zurzeit Hausmann.	他现在在家带孩子做家务。	
+heimat	A1	n	Heimat	die		家乡					Meine Heimat ist China.	我的家乡在中国。	
+heiraten	A1	v	heiraten			结婚	heiratet	heiratete	geheiratet	haben	Wir heiraten im Mai.	我们五月结婚。	
+heissen	A1	v	heißen			叫（名字）	heißt	hieß	geheißen	haben	Wie heißen Sie?	您叫什么名字？	
+helfen	A1	v	helfen			帮助	hilft	half	geholfen	haben	Kannst du mir helfen?	你能帮我吗？	
+hell	A1	adj	hell			明亮的；浅色的					Das Zimmer ist schön hell.	这个房间很亮堂。	
+herd	A1	n	Herd	der	Herde	炉灶					Das Essen steht auf dem Herd.	饭在灶上。	
+herr	A1	n	Herr	der	Herren	先生					Herr Schmidt ist nicht da.	施密特先生不在。	
+herzlich	A1	adj	herzlich			衷心的；热情的					Herzlich willkommen!	热烈欢迎！	
+heute	A1	adv	heute			今天					Heute ist Montag.	今天星期一。	
+hier	A1	adv	hier			这里					Hier ist mein Ausweis.	这是我的证件。	
+hilfe	A1	n	Hilfe	die		帮助					Danke für deine Hilfe!	谢谢你的帮助！	
+hinten	A1	adv	hinten			在后面					Die Toiletten sind hinten links.	厕所在后面左边。	
+hobby	A1	n	Hobby	das	Hobbys	爱好					Mein Hobby ist Lesen.	我的爱好是读书。	
+hoch	A1	adj	hoch			高的					Der Berg ist sehr hoch.	这座山很高。	
+hochzeit	A1	n	Hochzeit	die	Hochzeiten	婚礼					Die Hochzeit ist im Juni.	婚礼在六月。	
+holen	A1	v	holen			去拿；去叫	holt	holte	geholt	haben	Ich hole schnell meine Jacke.	我去拿一下外套。	
+hoeren	A1	v	hören			听；听见	hört	hörte	gehört	haben	Ich höre gern Musik.	我喜欢听音乐。	
+hotel	A1	n	Hotel	das	Hotels	酒店					Unser Hotel ist direkt am Bahnhof.	我们的酒店就在火车站旁边。	
+hund	A1	n	Hund	der	Hunde	狗					Der Hund spielt im Garten.	狗在花园里玩。	
+hunger	A1	n	Hunger	der		饥饿					Ich habe großen Hunger.	我很饿。	
+ich	A1	other	ich			我					Ich heiße Lin.	我叫林。	
+ihr	A1	other	ihr			你们；她的；他们的					Kommt ihr heute Abend?	你们今晚来吗？	
+ihm--ihn	A1	other	ihm / ihn			他（第三格 / 第四格）					Ich gebe ihm das Buch. Ich sehe ihn morgen.	我把书给他。我明天见他。	
+immer	A1	adv	immer			总是					Er kommt immer zu spät.	他总是迟到。	
+in	A1	other	in			在……里面					Ich wohne in Berlin.	我住在柏林。	
+information	A1	n	Information	die	Informationen	信息；问讯处					Ich brauche mehr Informationen.	我需要更多信息。	
+international	A1	adj	international			国际的					Das ist eine internationale Schule.	这是一所国际学校。	
+internet	A1	n	Internet	das		互联网					Ich suche die Adresse im Internet.	我在网上查地址。	
+ja	A1	other	ja			是，对					Ja, das stimmt.	是的，没错。	
+jacke	A1	n	Jacke	die	Jacken	外套，夹克					Die Jacke ist zu klein.	这件外套太小了。	
+jeder	A1	other	jeder			每个					Ich lerne jeden Tag Deutsch.	我每天学德语。	
+jetzt	A1	adv	jetzt			现在					Ich habe jetzt keine Zeit.	我现在没空。	
+job	A1	n	Job	der	Jobs	工作（口语）					Sie sucht einen neuen Job.	她在找新工作。	
+jugendliche	A1	n	Jugendliche	der	Jugendlichen	青少年					Das Café ist bei Jugendlichen sehr beliebt.	这家咖啡馆很受年轻人欢迎。	
+jung	A1	adj	jung			年轻的					Meine Lehrerin ist noch sehr jung.	我的老师还很年轻。	
+junge	A1	n	Junge	der	Jungen	男孩					Der Junge heißt Max.	这个男孩叫马克斯。	
+kaffee	A1	n	Kaffee	der		咖啡					Möchten Sie einen Kaffee?	您要来杯咖啡吗？	
+kaputt	A1	adj	kaputt			坏了的					Die Waschmaschine ist kaputt.	洗衣机坏了。	
+karte	A1	n	Karte	die	Karten	卡片；票；地图					Hast du eine Karte für das Konzert?	你有音乐会的票吗？	
+kreditkarte	A1	n	Kreditkarte	die	Kreditkarten	信用卡					Kann ich mit Kreditkarte bezahlen?	可以用信用卡付款吗？	
+kartoffel	A1	n	Kartoffel	die	Kartoffeln	土豆					Zum Fleisch gibt es Kartoffeln.	肉配土豆。	
+kasse	A1	n	Kasse	die	Kassen	收银台					Bitte bezahlen Sie an der Kasse.	请到收银台付款。	
+kaufen	A1	v	kaufen			买	kauft	kaufte	gekauft	haben	Ich kaufe ein neues Handy.	我要买一部新手机。	
+kein	A1	other	kein			没有，不是（否定冠词）					Ich habe keine Zeit.	我没有时间。	
+kennen	A1	v	kennen			认识；了解	kennt	kannte	gekannt	haben	Kennst du meinen Bruder?	你认识我哥哥吗？	
+kennenlernen	A1	v	kennen|lernen			结识	lernt kennen	lernte kennen	kennengelernt	haben	Ich möchte dich gern kennenlernen.	我很想认识你。	
+kind	A1	n	Kind	das	Kinder	孩子					Die Kinder sind in der Schule.	孩子们在学校。	
+kindergarten	A1	n	Kindergarten	der	Kindergärten	幼儿园					Meine Tochter geht in den Kindergarten.	我女儿上幼儿园。	
+kino	A1	n	Kino	das	Kinos	电影院					Gehen wir heute ins Kino?	我们今天去看电影吗？	
+kiosk	A1	n	Kiosk	der	Kioske	售货亭，报亭					Ich kaufe die Zeitung am Kiosk.	我在报亭买报纸。	
+klar	A1	adj	klar			清楚的；当然					Alles klar!	明白了！	
+klasse	A1	n	Klasse	die	Klassen	班级；等级					In meiner Klasse sind zwanzig Schüler.	我班上有二十个学生。	
+kleidung	A1	n	Kleidung	die		衣服					Im Winter brauchst du warme Kleidung.	冬天你需要保暖的衣服。	
+klein	A1	adj	klein			小的					Die Wohnung ist zu klein für uns.	这套公寓对我们来说太小了。	
+kochen	A1	v	kochen			做饭；煮	kocht	kochte	gekocht	haben	Heute koche ich Nudeln.	今天我煮面条。	
+koffer	A1	n	Koffer	der	Koffer	行李箱					Mein Koffer ist sehr schwer.	我的箱子很重。	
+kollege	A1	n	Kollege	der	Kollegen	同事					Meine Kollegen sind sehr nett.	我的同事人都很好。	
+kommen	A1	v	kommen			来	kommt	kam	gekommen	sein	Woher kommen Sie?	您是哪里人？	
+koennen	A1	v	können			能，会	kann	konnte	gekonnt	haben	Kannst du schwimmen?	你会游泳吗？	
+konto	A1	n	Konto	das	Konten	银行账户					Ich möchte ein Konto eröffnen.	我想开一个银行账户。	
+kopf	A1	n	Kopf	der	Köpfe	头					Mein Kopf tut weh.	我头疼。	
+kosten	A1	v	kosten			花费，值（多少钱）	kostet	kostete	gekostet	haben	Was kostet das?	这个多少钱？	
+krank	A1	adj	krank			生病的					Ich bin krank und bleibe im Bett.	我病了，在床上躺着。	
+kriegen	A1	v	kriegen			得到（口语）	kriegt	kriegte	gekriegt	haben	Ich kriege oft Post von meiner Freundin.	我经常收到女朋友寄来的信。	
+kueche	A1	n	Küche	die	Küchen	厨房；菜肴					Die Küche ist sehr modern.	厨房很现代。	
+kuchen	A1	n	Kuchen	der	Kuchen	蛋糕					Möchtest du ein Stück Kuchen?	你要来一块蛋糕吗？	
+kugelschreiber	A1	n	Kugelschreiber	der	Kugelschreiber	圆珠笔					Hast du einen Kugelschreiber für mich?	你有圆珠笔借我吗？	
+kuehlschrank	A1	n	Kühlschrank	der	Kühlschränke	冰箱					Die Milch ist im Kühlschrank.	牛奶在冰箱里。	
+kulturell	A1	adj	kulturell			文化的					Die Stadt hat ein großes kulturelles Angebot.	这座城市的文化活动很丰富。	
+kuemmern	A1	v	kümmern			（sich ~ um）照顾，关心	kümmert	kümmerte	gekümmert	haben	Wer kümmert sich um den Hund?	谁来照顾狗？	
+kunde	A1	n	Kunde	der	Kunden	顾客					Der Kunde möchte bezahlen.	这位顾客要结账。	
+kurs	A1	n	Kurs	der	Kurse	课程					Der Deutschkurs beginnt im September.	德语课九月开始。	
+kurz	A1	adj	kurz			短的					Die Pause ist nur kurz.	休息时间很短。	
+lachen	A1	v	lachen			笑	lacht	lachte	gelacht	haben	Warum lachst du?	你笑什么？	
+laden	A1	n	Laden	der	Läden	商店					Der Laden an der Ecke ist sehr klein.	拐角那家小店很小。	
+land	A1	n	Land	das	Länder	国家；农村					China ist ein großes Land.	中国是一个大国。	
+lang	A1	adj	lang			长的					Der Rock ist zu lang.	这条裙子太长了。	
+lange	A1	adv	lange			（时间）长久					Ich warte schon lange.	我已经等了很久。	
+langsam	A1	adj	langsam			慢的					Sprechen Sie bitte langsam.	请您说慢一点。	
+laufen	A1	v	laufen			跑；走路	läuft	lief	gelaufen	sein	Ich laufe jeden Morgen im Park.	我每天早上在公园跑步。	
+laut	A1	adj	laut			大声的；吵闹的					Die Musik ist zu laut.	音乐太吵了。	
+leben	A1	v	leben			生活；活着	lebt	lebte	gelebt	haben	Meine Schwester lebt in Australien.	我姐姐生活在澳大利亚。	
+leben-n	A1	n	Leben	das		生活；生命					Das Leben in der Stadt ist teuer.	城里的生活很贵。	
+lebensmittel	A1	n	Lebensmittel	die		食品（复数）					Lebensmittel kaufe ich im Supermarkt.	我在超市买食品。	pl
+ledig	A1	adj	ledig			未婚的					Ich bin ledig.	我未婚。	
+legen	A1	v	legen			放（平放）	legt	legte	gelegt	haben	Leg das Buch bitte auf den Tisch.	请把书放在桌子上。	
+lehrer	A1	n	Lehrer	der	Lehrer	老师					Unser Lehrer kommt aus Österreich.	我们的老师来自奥地利。	
+leicht	A1	adj	leicht			容易的；轻的					Die Übung ist leicht.	这个练习很简单。	
+leider	A1	adv	leider			可惜，遗憾					Ich kann leider nicht kommen.	很遗憾我来不了。	
+leise	A1	adj	leise			小声的；安静的					Bitte sprich leise, das Baby schläft.	请小声说话，宝宝在睡觉。	
+lernen	A1	v	lernen			学习	lernt	lernte	gelernt	haben	Ich lerne seit drei Monaten Deutsch.	我学德语三个月了。	
+lesen	A1	v	lesen			读，阅读	liest	las	gelesen	haben	Ich lese gern Zeitung.	我喜欢看报纸。	
+letzte	A1	adj	letzte			最后的；上一个					Letzte Woche war ich krank.	上周我病了。	
+leute	A1	n	Leute	die		人们（复数）					Im Park sind viele Leute.	公园里人很多。	pl
+licht	A1	n	Licht	das	Lichter	光；灯					Mach bitte das Licht aus.	请把灯关掉。	
+lieb	A1	adj	lieb			亲爱的；可爱的					Liebe Maria, vielen Dank für deinen Brief.	亲爱的玛丽亚，谢谢你的来信。	
+lieben	A1	v	lieben			爱	liebt	liebte	geliebt	haben	Ich liebe dich.	我爱你。	
+lieber	A1	adv	lieber			更喜欢；宁愿					Ich trinke lieber Tee als Kaffee.	比起咖啡我更喜欢喝茶。	
+lieblings	A1	other	Lieblings-			最喜欢的……					Pizza ist mein Lieblingsessen.	披萨是我最爱吃的。	
+lied	A1	n	Lied	das	Lieder	歌曲					Wir singen ein Lied.	我们唱一首歌。	
+liegen	A1	v	liegen			躺；（平放）位于	liegt	lag	gelegen	haben	Das Handy liegt auf dem Tisch.	手机在桌子上。	
+links	A1	adv	links			在左边					Die Bank ist links.	银行在左边。	
+lkw	A1	n	Lkw	der	Lkws	卡车					Auf der Autobahn fahren viele Lkws.	高速上有很多卡车。	
+lokal	A1	n	Lokal	das	Lokale	饭馆，酒馆					Wir essen heute in einem italienischen Lokal.	我们今天在一家意大利餐馆吃饭。	
+loesung	A1	n	Lösung	die	Lösungen	答案；解决办法					Die Lösungen stehen auf Seite 20.	答案在第 20 页。	
+lustig	A1	adj	lustig			有趣的，好笑的					Der Film ist sehr lustig.	这部电影很好笑。	
+machen	A1	v	machen			做	macht	machte	gemacht	haben	Was machst du am Wochenende?	你周末做什么？	
+maedchen	A1	n	Mädchen	das	Mädchen	女孩					Das Mädchen heißt Lena.	这个女孩叫莉娜。	
+man	A1	other	man			人们（泛指）					Hier darf man nicht parken.	这里不能停车。	
+mann	A1	n	Mann	der	Männer	男人；丈夫					Der Mann dort ist mein Lehrer.	那边那个男人是我的老师。	
+maennlich	A1	adj	männlich			男性的					Geschlecht: männlich.	性别：男。	
+maschine	A1	n	Maschine	die	Maschinen	机器；飞机					Die Maschine aus Frankfurt landet um elf.	从法兰克福来的飞机十一点降落。	
+meer	A1	n	Meer	das	Meere	大海					Im Sommer fahren wir ans Meer.	夏天我们去海边。	
+mehr	A1	other	mehr			更多					Ich möchte mehr Zeit für meine Familie.	我想多陪陪家人。	
+mein	A1	other	mein			我的					Das ist mein Bruder.	这是我哥哥。	
+meiste	A1	other	meiste			大多数的					Die meisten Leute fahren mit dem Bus.	大多数人坐公交车。	
+mensch	A1	n	Mensch	der	Menschen	人					Hier wohnen nur wenige Menschen.	这里住的人很少。	
+mieten	A1	v	mieten			租（房、车）	mietet	mietete	gemietet	haben	Wir mieten im Urlaub ein Auto.	我们度假时租一辆车。	
+miete	A1	n	Miete	die	Mieten	房租					Die Miete ist sehr hoch.	房租很高。	
+milch	A1	n	Milch	die		牛奶					Trinkst du Kaffee mit Milch?	你的咖啡要加牛奶吗？	
+mit	A1	other	mit			和……一起；用					Ich fahre mit dem Zug.	我坐火车去。	
+mitbringen	A1	v	mit|bringen			带来	bringt mit	brachte mit	mitgebracht	haben	Soll ich etwas mitbringen?	要我带点什么吗？	
+mitkommen	A1	v	mit|kommen			一起来	kommt mit	kam mit	mitgekommen	sein	Kommst du mit ins Kino?	你跟我们一起去看电影吗？	
+mitmachen	A1	v	mit|machen			参加，一起做	macht mit	machte mit	mitgemacht	haben	Machst du beim Spiel mit?	你也来玩吗？	
+mitnehmen	A1	v	mit|nehmen			带走	nimmt mit	nahm mit	mitgenommen	haben	Nimm einen Regenschirm mit!	带上雨伞！	
+mitte	A1	n	Mitte	die		中间					Das Hotel liegt in der Mitte der Stadt.	酒店在市中心。	
+moebel	A1	n	Möbel	die		家具（复数）					Die Möbel sind neu.	家具是新的。	pl
+moechten	A1	v	möchten			想要					Ich möchte einen Tee.	我想要一杯茶。	
+moegen	A1	v	mögen			喜欢	mag	mochte	gemocht	haben	Ich mag Schokolade.	我喜欢巧克力。	
+moeglich	A1	adj	möglich			可能的					Ist das möglich?	这有可能吗？	
+moment	A1	n	Moment	der	Momente	片刻；时刻					Einen Moment, bitte!	请稍等！	
+morgen	A1	adv	morgen			明天					Morgen habe ich frei.	我明天休息。	
+muede	A1	adj	müde			疲倦的					Ich bin sehr müde.	我很累。	
+mund	A1	n	Mund	der	Münder	嘴					Mach bitte den Mund auf.	请张开嘴。	
+muessen	A1	v	müssen			必须	muss	musste	gemusst	haben	Ich muss jetzt gehen.	我现在得走了。	
+mutter	A1	n	Mutter	die	Mütter	母亲					Meine Mutter ist Lehrerin.	我妈妈是老师。	
+nach	A1	other	nach			去（地名）；在……之后					Nach dem Essen gehen wir spazieren.	饭后我们去散步。	
+naechste	A1	adj	nächste			下一个；最近的					Wir steigen an der nächsten Haltestelle aus.	我们下一站下车。	
+name	A1	n	Name	der	Namen	名字					Mein Name ist Wang.	我姓王。	
+nehmen	A1	v	nehmen			拿；乘坐；要（点菜）	nimmt	nahm	genommen	haben	Ich nehme die Suppe.	我要汤。	
+nein	A1	other	nein			不，不是					Nein, danke.	不用了，谢谢。	
+neu	A1	adj	neu			新的					Ist dein Handy neu?	你的手机是新的吗？	
+nicht	A1	other	nicht			不					Ich verstehe das nicht.	我不明白。	
+nichts	A1	other	nichts			什么也没有					Ich habe heute nichts gegessen.	我今天什么都没吃。	
+nie	A1	adv	nie			从不					Ich trinke nie Alkohol.	我从不喝酒。	
+noch	A1	adv	noch			还；仍然					Hast du noch Fragen?	你还有问题吗？	
+normal	A1	adj	normal			正常的；普通的					Das ist ganz normal.	这很正常。	
+nummer	A1	n	Nummer	die	Nummern	号码					Wie ist deine Telefonnummer?	你的电话号码是多少？	
+nur	A1	adv	nur			只，仅仅					Ich habe nur zehn Euro.	我只有十欧元。	
+oben	A1	adv	oben			在上面					Das Bad ist oben.	浴室在楼上。	
+obst	A1	n	Obst	das		水果					Ich esse jeden Tag Obst.	我每天吃水果。	
+oder	A1	other	oder			或者					Möchtest du Tee oder Kaffee?	你要茶还是咖啡？	
+oeffnen	A1	v	öffnen			打开	öffnet	öffnete	geöffnet	haben	Kannst du bitte das Fenster öffnen?	你能把窗户打开吗？	
+geoeffnet	A1	adj	geöffnet			开着的，营业的					Das Museum ist bis 18 Uhr geöffnet.	博物馆开到 18 点。	
+oft	A1	adv	oft			经常					Ich gehe oft schwimmen.	我经常去游泳。	
+ohne	A1	other	ohne			没有，不带					Ich trinke Kaffee ohne Zucker.	我喝咖啡不加糖。	
+oel	A1	n	Öl	das	Öle	油					Für den Salat brauche ich Öl.	做沙拉我需要油。	
+oma	A1	n	Oma	die	Omas	奶奶，外婆					Meine Oma ist 80 Jahre alt.	我奶奶 80 岁了。	
+opa	A1	n	Opa	der	Opas	爷爷，外公					Mein Opa erzählt gern Geschichten.	我爷爷喜欢讲故事。	
+ordnung	A1	n	Ordnung	die		秩序；整齐					Ist alles in Ordnung?	一切都好吗？	
+ort	A1	n	Ort	der	Orte	地方					Das ist ein schöner Ort für ein Picknick.	这是野餐的好地方。	
+papier	A1	n	Papier	das		纸					Hast du ein Blatt Papier für mich?	你有张纸给我吗？	
+papiere	A1	n	Papiere	die		证件（复数）					Bitte zeigen Sie Ihre Papiere.	请出示您的证件。	pl
+partner	A1	n	Partner	der	Partner	伙伴；伴侣					Mein Partner kommt auch mit.	我的伴侣也一起来。	
+partnerin	A1	n	Partnerin	die	Partnerinnen	（女）伙伴；伴侣					Fragen Sie Ihre Partnerin.	请问问你的（女）搭档。	
+party	A1	n	Party	die	Partys	聚会					Am Samstag mache ich eine Party.	周六我办个聚会。	
+pass	A1	n	Pass	der	Pässe	护照					Ich brauche einen neuen Pass.	我需要办一本新护照。	
+pause	A1	n	Pause	die	Pausen	休息					Wir machen eine kurze Pause.	我们休息一下。	
+plan	A1	n	Plan	der	Pläne	计划；（城市）地图					Hast du einen Plan von der Stadt?	你有城市地图吗？	
+platz	A1	n	Platz	der	Plätze	座位；广场；地方					Ist hier noch ein Platz frei?	这里还有空座吗？	
+polizei	A1	n	Polizei	die		警察					Ruf schnell die Polizei!	快叫警察！	
+pommes-frites	A1	n	Pommes frites	die		炸薯条（复数）					Ein Hähnchen mit Pommes frites, bitte.	请来一份鸡肉配薯条。	pl
+post	A1	n	Post	die		邮局；邮件					Ich bringe das Paket zur Post.	我把包裹送到邮局。	
+postleitzahl	A1	n	Postleitzahl	die	Postleitzahlen	邮政编码					Wie ist die Postleitzahl von Bonn?	波恩的邮编是多少？	
+praktikum	A1	n	Praktikum	das	Praktika	实习					Ich mache ein Praktikum bei einer Bank.	我在一家银行实习。	
+praxis	A1	n	Praxis	die	Praxen	诊所					Die Praxis ist am Montag geschlossen.	诊所周一不开门。	
+preis	A1	n	Preis	der	Preise	价格					Der Preis ist mir zu hoch.	这个价格对我来说太高了。	
+problem	A1	n	Problem	das	Probleme	问题，麻烦					Kein Problem!	没问题！	
+prospekt	A1	n	Prospekt	der	Prospekte	宣传册					Haben Sie einen Prospekt über die Stadt?	你们有这座城市的宣传册吗？	
+pruefung	A1	n	Prüfung	die	Prüfungen	考试					Morgen habe ich eine Prüfung.	我明天有考试。	
+puenktlich	A1	adj	pünktlich			准时的					Der Zug ist pünktlich.	火车准时。	
+rad-fahren	A1	v	Rad fahren			骑自行车					Am Wochenende fahre ich gern Rad.	周末我喜欢骑车。	
+rauchen	A1	v	rauchen			抽烟	raucht	rauchte	geraucht	haben	Rauchen ist hier verboten.	这里禁止吸烟。	
+raum	A1	n	Raum	der	Räume	房间；空间					Der Kurs ist in Raum 12.	课在 12 号教室。	
+rechnung	A1	n	Rechnung	die	Rechnungen	账单					Die Rechnung, bitte!	请结账！	
+rechts	A1	adv	rechts			在右边					Das Kino ist rechts.	电影院在右边。	
+regnen	A1	v	regnen			下雨	regnet	regnete	geregnet	haben	Es regnet schon den ganzen Tag.	已经下了一整天雨了。	
+regen	A1	n	Regen	der		雨					Bei Regen bleiben wir zu Hause.	下雨的话我们就待在家里。	
+reis	A1	n	Reis	der		米饭；大米					Zum Fisch gibt es Reis.	鱼配米饭。	
+reisen	A1	v	reisen			旅行	reist	reiste	gereist	sein	Ich reise gern.	我喜欢旅行。	
+reise	A1	n	Reise	die	Reisen	旅行					Gute Reise!	一路顺风！	
+reisebuero	A1	n	Reisebüro	das	Reisebüros	旅行社					Wir buchen die Reise im Reisebüro.	我们在旅行社订这次旅行。	
+reisefuehrer	A1	n	Reiseführer	der	Reiseführer	导游；旅行指南					Der Reiseführer zeigt uns die Altstadt.	导游带我们参观老城。	
+reparieren	A1	v	reparieren			修理	repariert	reparierte	repariert	haben	Kannst du mein Fahrrad reparieren?	你能修我的自行车吗？	
+reparatur	A1	n	Reparatur	die	Reparaturen	修理					Die Reparatur kostet 50 Euro.	修理费 50 欧元。	
+restaurant	A1	n	Restaurant	das	Restaurants	饭店，餐厅					Das Restaurant ist heute geschlossen.	这家餐厅今天关门。	
+rezeption	A1	n	Rezeption	die		（酒店）前台					Den Schlüssel bekommen Sie an der Rezeption.	您在前台领钥匙。	
+richtig	A1	adj	richtig			正确的					Ist das richtig?	这对吗？	
+riechen	A1	v	riechen			闻；有气味	riecht	roch	gerochen	haben	Hier riecht es gut!	这里好香！	
+ruhig	A1	adj	ruhig			安静的					Unsere Straße ist sehr ruhig.	我们这条街很安静。	
+saft	A1	n	Saft	der	Säfte	果汁					Ein Orangensaft, bitte.	请来一杯橙汁。	
+sagen	A1	v	sagen			说	sagt	sagte	gesagt	haben	Was sagst du?	你说什么？	
+salat	A1	n	Salat	der	Salate	沙拉；生菜					Ich nehme einen Salat.	我要一份沙拉。	
+salz	A1	n	Salz	das		盐					Kannst du mir bitte das Salz geben?	你能把盐递给我吗？	
+satz	A1	n	Satz	der	Sätze	句子					Lesen Sie den Satz laut.	请大声读这个句子。	
+s-bahn	A1	n	S-Bahn	die	S-Bahnen	城市快铁					Ich fahre mit der S-Bahn zum Flughafen.	我坐城铁去机场。	
+schalter	A1	n	Schalter	der	Schalter	（服务）窗口；开关					Fahrkarten gibt es am Schalter.	车票在窗口买。	
+scheinen	A1	v	scheinen			（阳光）照耀；似乎	scheint	schien	geschienen	haben	Heute scheint die Sonne.	今天阳光明媚。	
+schicken	A1	v	schicken			寄；发送	schickt	schickte	geschickt	haben	Ich schicke dir ein Foto.	我给你发张照片。	
+schild	A1	n	Schild	das	Schilder	牌子，标志					Auf dem Schild steht „Ausgang“.	牌子上写着“出口”。	
+schinken	A1	n	Schinken	der	Schinken	火腿					Ein Brötchen mit Schinken, bitte.	请来一个夹火腿的小面包。	
+schlafen	A1	v	schlafen			睡觉	schläft	schlief	geschlafen	haben	Hast du gut geschlafen?	你睡得好吗？	
+schlecht	A1	adj	schlecht			坏的；差的					Das Wetter ist heute schlecht.	今天天气不好。	
+schliessen	A1	v	schließen			关闭	schließt	schloss	geschlossen	haben	Bitte schließen Sie die Tür.	请关门。	
+geschlossen	A1	adj	geschlossen			关着的，不营业的					Am Sonntag ist die Bank geschlossen.	银行周日不营业。	
+schluss	A1	n	Schluss	der		结束					Zum Schluss singen wir ein Lied.	最后我们唱一首歌。	
+schluessel	A1	n	Schlüssel	der	Schlüssel	钥匙					Ich kann meinen Schlüssel nicht finden.	我找不到钥匙了。	
+schmecken	A1	v	schmecken			（味道）好吃	schmeckt	schmeckte	geschmeckt	haben	Schmeckt dir die Suppe?	汤好喝吗？	
+schnell	A1	adj	schnell			快的					Das Auto fährt sehr schnell.	这辆车开得很快。	
+schon	A1	adv	schon			已经					Ich bin schon fertig.	我已经好了。	
+schoen	A1	adj	schön			美丽的；好的					Das Wetter ist heute schön.	今天天气很好。	
+schrank	A1	n	Schrank	der	Schränke	柜子					Die Teller sind im Schrank.	盘子在柜子里。	
+schreiben	A1	v	schreiben			写	schreibt	schrieb	geschrieben	haben	Ich schreibe meiner Mutter eine Karte.	我给妈妈写一张明信片。	
+schuh	A1	n	Schuh	der	Schuhe	鞋					Die Schuhe sind zu klein.	这双鞋太小了。	
+schule	A1	n	Schule	die	Schulen	学校					Die Schule beginnt um acht Uhr.	学校八点上课。	
+schueler	A1	n	Schüler	der	Schüler	（中小学）学生					Die Schüler machen einen Ausflug.	学生们去郊游。	
+schwer	A1	adj	schwer			重的；难的					Die Prüfung war sehr schwer.	考试很难。	
+schwester	A1	n	Schwester	die	Schwestern	姐妹					Meine Schwester studiert in München.	我姐姐在慕尼黑上大学。	
+schwimmen	A1	v	schwimmen			游泳	schwimmt	schwamm	geschwommen	sein	Im Sommer schwimmen wir im See.	夏天我们在湖里游泳。	
+schwimmbad	A1	n	Schwimmbad	das	Schwimmbäder	游泳馆					Das Schwimmbad ist heute geschlossen.	游泳馆今天关门。	
+see	A1	n	See	der	Seen	湖					Der See ist sehr kalt.	湖水很凉。	
+sehen	A1	v	sehen			看；看见	sieht	sah	gesehen	haben	Siehst du das Schiff?	你看到那艘船了吗？	
+sehenswuerdigkeit	A1	n	Sehenswürdigkeit	die	Sehenswürdigkeiten	名胜，景点					Berlin hat viele Sehenswürdigkeiten.	柏林有很多名胜古迹。	
+sehr	A1	adv	sehr			很，非常					Das ist sehr nett von dir.	你人真好。	
+sein	A1	v	sein			是；在	ist	war	gewesen	sein	Ich bin Student.	我是学生。	
+weg-sein	A1	v	weg sein			走了；不见了					Mein Schlüssel ist weg!	我的钥匙不见了！	
+zu-sein	A1	v	zu sein			（门、商店）关着					Die Apotheke ist schon zu.	药店已经关门了。	
+seit	A1	other	seit			自从					Ich wohne seit zwei Jahren hier.	我在这里住了两年了。	
+selbststaendig	A1	adj	selbstständig			独立的；自己当老板的					Mein Vater ist selbstständig.	我爸爸是自己做生意的。	
+sich	A1	other	sich			自己（反身代词）					Er wäscht sich die Hände.	他在洗手。	
+sie	A1	other	sie			她；他们					Sie heißt Anna. Sie sind meine Freunde.	她叫安娜。他们是我的朋友。	
+sie-other	A1	other	Sie			您					Kommen Sie aus China?	您来自中国吗？	
+sitzen	A1	v	sitzen			坐	sitzt	saß	gesessen	haben	Wir sitzen im Garten.	我们坐在花园里。	
+so	A1	adv	so			这样；如此					Das Essen ist so lecker!	饭菜太好吃了！	
+sofa	A1	n	Sofa	das	Sofas	沙发					Die Katze schläft auf dem Sofa.	猫在沙发上睡觉。	
+sofort	A1	adv	sofort			立刻					Komm bitte sofort!	请马上过来！	
+sohn	A1	n	Sohn	der	Söhne	儿子					Unser Sohn ist zehn Jahre alt.	我们的儿子十岁。	
+sollen	A1	v	sollen			应该	soll	sollte	gesollt	haben	Du sollst mehr Wasser trinken.	你应该多喝水。	
+sonne	A1	n	Sonne	die		太阳					Die Sonne scheint.	太阳出来了。	
+spaet	A1	adj	spät			晚的					Es ist schon spät.	已经很晚了。	
+spaeter	A1	adv	später			以后，稍后					Ich rufe dich später an.	我晚点给你打电话。	
+speisekarte	A1	n	Speisekarte	die	Speisekarten	菜单					Kann ich bitte die Speisekarte haben?	请给我菜单好吗？	
+spielen	A1	v	spielen			玩；演奏；（体育）打，踢	spielt	spielte	gespielt	haben	Die Kinder spielen Fußball.	孩子们在踢足球。	
+sport	A1	n	Sport	der		体育运动					Ich mache gern Sport.	我喜欢运动。	
+sprache	A1	n	Sprache	die	Sprachen	语言					Welche Sprachen sprichst du?	你会说哪些语言？	
+sprechen	A1	v	sprechen			说（话）	spricht	sprach	gesprochen	haben	Sprechen Sie Englisch?	您会说英语吗？	
+stadt	A1	n	Stadt	die	Städte	城市					Wien ist eine schöne Stadt.	维也纳是一座美丽的城市。	
+stehen	A1	v	stehen			站；（竖放）位于；写着	steht	stand	gestanden	haben	Die Flasche steht im Kühlschrank.	瓶子在冰箱里。	
+stelle	A1	n	Stelle	die	Stellen	职位；地方					Er sucht eine neue Stelle.	他在找新工作。	
+stellen	A1	v	stellen			放（竖放）	stellt	stellte	gestellt	haben	Stell die Blumen bitte auf den Tisch.	请把花放在桌子上。	
+stock	A1	n	Stock	der		楼层					Wir wohnen im dritten Stock.	我们住在四楼。	
+strasse	A1	n	Straße	die	Straßen	街道					In welcher Straße wohnst du?	你住在哪条街？	
+strassenbahn	A1	n	Straßenbahn	die	Straßenbahnen	有轨电车					Die Straßenbahn fährt alle zehn Minuten.	有轨电车每十分钟一班。	
+studieren	A1	v	studieren			上大学；学（专业）	studiert	studierte	studiert	haben	Ich studiere Medizin in Heidelberg.	我在海德堡学医。	
+studium	A1	n	Studium	das		大学学业					Nach dem Studium möchte ich in Deutschland arbeiten.	毕业后我想在德国工作。	
+student	A1	n	Student	der	Studenten	大学生					Viele Studenten wohnen in diesem Haus.	这栋楼里住着很多大学生。	
+stunde	A1	n	Stunde	die	Stunden	小时；课时					Der Film dauert zwei Stunden.	这部电影两个小时。	
+suchen	A1	v	suchen			找	sucht	suchte	gesucht	haben	Ich suche eine Wohnung.	我在找房子。	
+tanzen	A1	v	tanzen			跳舞	tanzt	tanzte	getanzt	haben	Tanzt du gern?	你喜欢跳舞吗？	
+tasche	A1	n	Tasche	die	Taschen	包；口袋					Meine Tasche ist sehr schwer.	我的包很重。	
+taxi	A1	n	Taxi	das	Taxis	出租车					Wir nehmen ein Taxi.	我们打车吧。	
+tee	A1	n	Tee	der		茶					Möchtest du grünen Tee?	你想喝绿茶吗？	
+teil	A1	n	Teil	der	Teile	部分					Der erste Teil der Prüfung ist leicht.	考试的第一部分很简单。	
+telefonieren	A1	v	telefonieren			打电话	telefoniert	telefonierte	telefoniert	haben	Sie telefoniert gerade mit ihrer Mutter.	她正在和妈妈打电话。	
+telefon	A1	n	Telefon	das	Telefone	电话					Das Telefon klingelt.	电话响了。	
+termin	A1	n	Termin	der	Termine	预约；约定的时间					Ich habe morgen einen Termin beim Arzt.	我明天约了医生。	
+test	A1	n	Test	der	Tests	测试					Der Test ist am Freitag.	测验在周五。	
+teuer	A1	adj	teuer			贵的					Das Restaurant ist sehr teuer.	这家餐厅很贵。	
+text	A1	n	Text	der	Texte	文章，课文					Lesen Sie den Text.	请读这篇课文。	
+thema	A1	n	Thema	das	Themen	题目，话题					Das Thema heute ist „Familie“.	今天的话题是“家庭”。	
+ticket	A1	n	Ticket	das	Tickets	票					Hast du die Tickets für das Konzert?	音乐会的票你拿了吗？	
+tisch	A1	n	Tisch	der	Tische	桌子					Das Essen steht auf dem Tisch.	饭菜在桌上。	
+tochter	A1	n	Tochter	die	Töchter	女儿					Meine Tochter geht zur Schule.	我女儿在上学。	
+toilette	A1	n	Toilette	die	Toiletten	厕所					Wo ist die Toilette, bitte?	请问厕所在哪里？	
+tomate	A1	n	Tomate	die	Tomaten	西红柿					Für den Salat brauchen wir Tomaten.	做沙拉我们需要西红柿。	
+tot	A1	adj	tot			死的					Der Fisch ist tot.	鱼死了。	
+treffen	A1	v	treffen			遇见；（sich ~）见面	trifft	traf	getroffen	haben	Wir treffen uns um drei vor dem Kino.	我们三点在电影院门口见。	
+treppe	A1	n	Treppe	die	Treppen	楼梯					Der Aufzug ist kaputt, wir nehmen die Treppe.	电梯坏了，我们走楼梯。	
+trinken	A1	v	trinken			喝	trinkt	trank	getrunken	haben	Was möchtest du trinken?	你想喝点什么？	
+tschuess	A1	other	tschüss			再见（口语）					Tschüss, bis morgen!	再见，明天见！	
+tun	A1	v	tun			做	tut	tat	getan	haben	Was kann ich für Sie tun?	我能为您做什么？	
+ueber	A1	other	über			在……上方；关于					Die Lampe hängt über dem Tisch.	灯挂在桌子上方。	
+uebernachten	A1	v	übernachten			过夜	übernachtet	übernachtete	übernachtet	haben	Wir übernachten im Hotel.	我们在酒店过夜。	
+ueberweisen	A1	v	überweisen			转账	überweist	überwies	überwiesen	haben	Ich überweise das Geld morgen.	我明天转账。	
+uhr	A1	n	Uhr	die	Uhren	钟表；……点钟					Wie viel Uhr ist es?	几点了？	
+um	A1	other	um			在（几点）；围绕					Der Film beginnt um acht Uhr.	电影八点开始。	
+umziehen	A1	v	um|ziehen			搬家	zieht um	zog um	umgezogen	sein	Wir ziehen nächsten Monat um.	我们下个月搬家。	
+und	A1	other	und			和					Ich trinke Kaffee und esse Kuchen.	我喝咖啡、吃蛋糕。	
+unser	A1	other	unser			我们的					Das ist unser Haus.	这是我们的房子。	
+unten	A1	adv	unten			在下面					Der Supermarkt ist unten im Haus.	超市在楼下。	
+unter	A1	other	unter			在……下面					Die Katze liegt unter dem Tisch.	猫躺在桌子底下。	
+unterricht	A1	n	Unterricht	der		课，上课					Der Unterricht beginnt um neun Uhr.	九点开始上课。	
+unterschreiben	A1	v	unterschreiben			签名	unterschreibt	unterschrieb	unterschrieben	haben	Bitte unterschreiben Sie hier.	请在这里签名。	
+unterschrift	A1	n	Unterschrift	die	Unterschriften	签名					Hier fehlt noch Ihre Unterschrift.	这里还缺您的签名。	
+urlaub	A1	n	Urlaub	der	Urlaube	休假，度假					Im August mache ich Urlaub.	我八月休假。	
+vater	A1	n	Vater	der	Väter	父亲					Mein Vater kocht sehr gut.	我爸爸做饭很好吃。	
+verboten	A1	adj	verboten			禁止的					Parken ist hier verboten.	此处禁止停车。	
+verdienen	A1	v	verdienen			挣（钱）	verdient	verdiente	verdient	haben	Er verdient gut.	他收入不错。	
+verein	A1	n	Verein	der	Vereine	协会，俱乐部					Ich spiele in einem Fußballverein.	我在一个足球俱乐部踢球。	
+verheiratet	A1	adj	verheiratet			已婚的					Sind Sie verheiratet?	您结婚了吗？	
+verkaufen	A1	v	verkaufen			卖	verkauft	verkaufte	verkauft	haben	Wir verkaufen unser altes Auto.	我们要把旧车卖掉。	
+verkaeufer	A1	n	Verkäufer	der	Verkäufer	售货员					Der Verkäufer ist sehr freundlich.	售货员很友好。	
+vermieten	A1	v	vermieten			出租	vermietet	vermietete	vermietet	haben	Sie vermietet ein Zimmer an Studenten.	她把一个房间租给学生。	
+vermieter	A1	n	Vermieter	der	Vermieter	房东					Der Vermieter wohnt im Erdgeschoss.	房东住在一楼。	
+verstehen	A1	v	verstehen			懂，理解	versteht	verstand	verstanden	haben	Ich verstehe dich nicht.	我听不懂你说的。	
+verwandte	A1	n	Verwandte	der	Verwandten	亲戚					Am Wochenende besuchen wir Verwandte.	周末我们去走亲戚。	
+viel	A1	other	viel			多					Ich habe heute viel Arbeit.	我今天工作很多。	
+vielleicht	A1	adv	vielleicht			也许					Vielleicht komme ich morgen.	我明天也许来。	
+von	A1	other	von			从；……的					Das ist ein Geschenk von meiner Freundin.	这是我女朋友送的礼物。	
+vor	A1	other	vor			在……前面；……之前					Ich warte vor dem Kino.	我在电影院门口等。	
+vorname	A1	n	Vorname	der	Vornamen	名（不含姓）					Mein Vorname ist Mei.	我的名字叫梅。	
+vorsicht	A1	n	Vorsicht	die		小心					Vorsicht, der Boden ist nass!	小心，地板是湿的！	
+vorstellen	A1	v	vor|stellen			介绍；（sich ~）自我介绍	stellt vor	stellte vor	vorgestellt	haben	Darf ich mich vorstellen? Ich heiße Li.	我来自我介绍一下，我叫李。	
+vorwahl	A1	n	Vorwahl	die	Vorwahlen	（电话）区号					Wie ist die Vorwahl von Berlin?	柏林的区号是多少？	
+wandern	A1	v	wandern			徒步	wandert	wanderte	gewandert	sein	Am Sonntag wandern wir in den Bergen.	周日我们去山里徒步。	
+wann	A1	other	wann			什么时候					Wann kommst du?	你什么时候来？	
+warten	A1	v	warten			等	wartet	wartete	gewartet	haben	Ich warte auf den Bus.	我在等公交车。	
+warum	A1	other	warum			为什么					Warum lernst du Deutsch?	你为什么学德语？	
+was	A1	other	was			什么					Was ist das?	这是什么？	
+was-fuer-ein	A1	other	was für ein			什么样的					Was für ein Auto hast du?	你开什么样的车？	
+waschen	A1	v	waschen			洗；（sich ~）洗漱	wäscht	wusch	gewaschen	haben	Ich wasche heute die Wäsche.	我今天洗衣服。	
+wasser	A1	n	Wasser	das		水					Ein Glas Wasser, bitte.	请来一杯水。	
+wehtun	A1	v	weh|tun			疼	tut weh	tat weh	wehgetan	haben	Mein Zahn tut weh.	我牙疼。	
+weiblich	A1	adj	weiblich			女性的					Geschlecht: weiblich.	性别：女。	
+wein	A1	n	Wein	der	Weine	葡萄酒					Möchten Sie Rotwein oder Weißwein?	您要红酒还是白葡萄酒？	
+weit	A1	adj	weit			远的					Ist es weit bis zum Bahnhof?	到火车站远吗？	
+weiter	A1	adv	weiter			继续；更远					Bitte lesen Sie weiter.	请继续读。	
+welcher	A1	other	welcher			哪个					Welcher Bus fährt zum Zentrum?	哪路车去市中心？	
+welt	A1	n	Welt	die		世界					Ich möchte die Welt sehen.	我想去看看世界。	
+wenig	A1	other	wenig			少					Ich habe nur wenig Zeit.	我只有一点时间。	
+wer	A1	other	wer			谁					Wer ist das?	这是谁？	
+werden	A1	v	werden			变成；将会	wird	wurde	geworden	sein	Ich möchte Arzt werden.	我想当医生。	
+wetter	A1	n	Wetter	das		天气					Wie ist das Wetter in Berlin?	柏林天气怎么样？	
+wichtig	A1	adj	wichtig			重要的					Das ist sehr wichtig.	这很重要。	
+wie	A1	other	wie			怎样；如何					Wie geht es Ihnen?	您好吗？	
+wiederholen	A1	v	wiederholen			重复	wiederholt	wiederholte	wiederholt	haben	Können Sie das bitte wiederholen?	请您再说一遍好吗？	
+wiederhoeren	A1	n	Wiederhören	das		（电话里）再见					Auf Wiederhören!	（电话里）再见！	
+wiedersehen	A1	n	Wiedersehen	das		再见					Auf Wiedersehen!	再见！	
+wie-viel	A1	other	wie viel			多少					Wie viel kostet das Brot?	面包多少钱？	
+willkommen	A1	other	willkommen			欢迎					Willkommen in Hamburg!	欢迎来到汉堡！	
+wind	A1	n	Wind	der	Winde	风					Heute ist viel Wind.	今天风很大。	
+wir	A1	other	wir			我们					Wir lernen zusammen Deutsch.	我们一起学德语。	
+wissen	A1	v	wissen			知道	weiß	wusste	gewusst	haben	Weißt du, wo der Bahnhof ist?	你知道火车站在哪里吗？	
+wo	A1	other	wo			在哪里					Wo wohnst du?	你住在哪里？	
+woher	A1	other	woher			从哪里					Woher kommst du?	你来自哪里？	
+wohin	A1	other	wohin			去哪里					Wohin fährst du im Urlaub?	你度假去哪儿？	
+wohnen	A1	v	wohnen			居住	wohnt	wohnte	gewohnt	haben	Ich wohne in Frankfurt.	我住在法兰克福。	
+wohnung	A1	n	Wohnung	die	Wohnungen	公寓，住房					Die Wohnung hat zwei Zimmer.	这套公寓有两个房间。	
+wollen	A1	v	wollen			想要	will	wollte	gewollt	haben	Wir wollen ein Haus kaufen.	我们想买一栋房子。	
+wort	A1	n	Wort	das	Wörter	单词					Wie schreibt man dieses Wort?	这个词怎么写？	
+wunderbar	A1	adj	wunderbar			美妙的，好极了					Das Essen war wunderbar!	饭菜太棒了！	
+zahlen	A1	v	zahlen			付款	zahlt	zahlte	gezahlt	haben	Ich möchte bitte zahlen.	我想结账。	
+zeit	A1	n	Zeit	die	Zeiten	时间					Hast du heute Zeit?	你今天有空吗？	
+zurzeit	A1	adv	zurzeit			目前					Zurzeit wohne ich bei Freunden.	我目前住在朋友家。	
+zeitung	A1	n	Zeitung	die	Zeitungen	报纸					Mein Vater liest jeden Morgen die Zeitung.	我爸爸每天早上看报纸。	
+zigarette	A1	n	Zigarette	die	Zigaretten	香烟					Er raucht zehn Zigaretten am Tag.	他一天抽十根烟。	
+zimmer	A1	n	Zimmer	das	Zimmer	房间					Mein Zimmer ist klein, aber hell.	我的房间很小，但很亮。	
+zoll	A1	n	Zoll	der		海关					Am Zoll müssen wir den Koffer öffnen.	在海关我们得打开箱子。	
+zu	A1	other	zu			去（某处）；太					Ich gehe zu meiner Freundin.	我去女朋友家。	
+zufrieden	A1	adj	zufrieden			满意的					Ich bin mit meiner Arbeit zufrieden.	我对我的工作很满意。	
+zug	A1	n	Zug	der	Züge	火车					Der Zug hat zehn Minuten Verspätung.	火车晚点十分钟。	
+zurueck	A1	adv	zurück			回来；返回					Wann bist du zurück?	你什么时候回来？	
+zusammen	A1	adv	zusammen			一起					Wir kochen heute zusammen.	我们今天一起做饭。	
+zwischen	A1	other	zwischen			在……之间					Die Bank ist zwischen der Post und dem Café.	银行在邮局和咖啡馆之间。	
+null	A1	other	null			零					Die Vorwahl beginnt mit null.	区号以零开头。	
+eins	A1	other	eins			一					Eins, zwei, drei – los!	一、二、三，开始！	
+zwei	A1	other	zwei			二					Ich habe zwei Brüder.	我有两个哥哥。	
+drei	A1	other	drei			三					Wir bleiben drei Tage in Wien.	我们在维也纳待三天。	
+vier	A1	other	vier			四					Die Familie hat vier Kinder.	这家有四个孩子。	
+fuenf	A1	other	fünf			五					Der Bus kommt in fünf Minuten.	公交车五分钟后到。	
+sechs	A1	other	sechs			六					Ich stehe um sechs Uhr auf.	我六点起床。	
+sieben	A1	other	sieben			七					Die Woche hat sieben Tage.	一周有七天。	
+acht	A1	other	acht			八					Der Kurs beginnt um acht.	课八点开始。	
+neun	A1	other	neun			九					Mein Sohn ist neun Jahre alt.	我儿子九岁。	
+zehn	A1	other	zehn			十					Das kostet zehn Euro.	这个十欧元。	
+elf	A1	other	elf			十一					Wir wohnen in Zimmer elf.	我们住在十一号房间。	
+zwoelf	A1	other	zwölf			十二					Ein Jahr hat zwölf Monate.	一年有十二个月。	
+zwanzig	A1	other	zwanzig			二十					Ich bin zwanzig Jahre alt.	我二十岁。	
+dreissig	A1	other	dreißig			三十					Der Monat hat dreißig Tage.	这个月有三十天。	
+hundert	A1	other	hundert			一百					Das Hotel hat hundert Zimmer.	这家酒店有一百个房间。	
+tausend	A1	other	tausend			一千					Das Auto kostet fünftausend Euro.	这辆车五千欧元。	
+million	A1	n	Million	die	Millionen	百万					In Berlin wohnen fast vier Millionen Menschen.	柏林住着将近四百万人。	
+erste	A1	adj	erste			第一					Heute ist der erste Mai.	今天是五月一日。	
+halb	A1	adj	halb			一半的；（钟点）半					Es ist halb drei.	现在两点半。	
+viertel	A1	n	Viertel	das	Viertel	四分之一；一刻钟					Es ist Viertel nach acht.	现在八点一刻。	
+sekunde	A1	n	Sekunde	die	Sekunden	秒					Warte eine Sekunde!	等一秒！	
+minute	A1	n	Minute	die	Minuten	分钟					Ich komme in zehn Minuten.	我十分钟后到。	
+tag	A1	n	Tag	der	Tage	天；白天					Guten Tag!	你好！（白天问候）	
+woche	A1	n	Woche	die	Wochen	星期，周					Ich arbeite fünf Tage pro Woche.	我一周工作五天。	
+monat	A1	n	Monat	der	Monate	月					Nächsten Monat fahre ich nach Hause.	下个月我回家。	
+jahr	A1	n	Jahr	das	Jahre	年					Ich lerne seit einem Jahr Deutsch.	我学德语一年了。	
+wochentag	A1	n	Wochentag	der	Wochentage	工作日；星期几					Welcher Wochentag ist heute?	今天星期几？	
+wochenende	A1	n	Wochenende	das	Wochenenden	周末					Schönes Wochenende!	周末愉快！	
+montag	A1	n	Montag	der	Montage	星期一					Am Montag beginnt der Kurs.	课程周一开始。	
+dienstag	A1	n	Dienstag	der	Dienstage	星期二					Am Dienstag habe ich frei.	我周二休息。	
+mittwoch	A1	n	Mittwoch	der	Mittwoche	星期三					Wir sehen uns am Mittwoch.	我们周三见。	
+donnerstag	A1	n	Donnerstag	der	Donnerstage	星期四					Am Donnerstag gehe ich schwimmen.	周四我去游泳。	
+freitag	A1	n	Freitag	der	Freitage	星期五					Am Freitag gehen wir essen.	周五我们去外面吃饭。	
+samstag	A1	n	Samstag	der	Samstage	星期六					Am Samstag schlafe ich lange.	周六我睡懒觉。	
+sonntag	A1	n	Sonntag	der	Sonntage	星期日					Am Sonntag sind die Geschäfte zu.	周日商店不开门。	
+morgen-n	A1	n	Morgen	der		早晨					Guten Morgen!	早上好！	
+vormittag	A1	n	Vormittag	der	Vormittage	上午					Am Vormittag arbeite ich.	我上午工作。	
+mittag	A1	n	Mittag	der		中午					Zu Mittag esse ich in der Kantine.	中午我在食堂吃饭。	
+nachmittag	A1	n	Nachmittag	der	Nachmittage	下午					Am Nachmittag gehen wir spazieren.	下午我们去散步。	
+abend	A1	n	Abend	der	Abende	晚上					Guten Abend!	晚上好！	
+nacht	A1	n	Nacht	die	Nächte	夜里					Gute Nacht!	晚安！	
+januar	A1	n	Januar	der		一月					Im Januar ist es sehr kalt.	一月很冷。	
+februar	A1	n	Februar	der		二月					Mein Geburtstag ist im Februar.	我的生日在二月。	
+maerz	A1	n	März	der		三月					Im März beginnt der Frühling.	春天从三月开始。	
+april	A1	n	April	der		四月					Im April regnet es oft.	四月经常下雨。	
+mai	A1	n	Mai	der		五月					Wir heiraten im Mai.	我们五月结婚。	
+juni	A1	n	Juni	der		六月					Der Kurs endet im Juni.	课程六月结束。	
+juli	A1	n	Juli	der		七月					Im Juli haben die Kinder Ferien.	孩子们七月放假。	
+august	A1	n	August	der		八月					Im August ist es heiß.	八月很热。	
+september	A1	n	September	der		九月					Im September beginnt die Schule.	学校九月开学。	
+oktober	A1	n	Oktober	der		十月					Im Oktober fahren wir nach Bayern.	十月我们去巴伐利亚。	
+november	A1	n	November	der		十一月					Im November ist das Wetter oft schlecht.	十一月天气经常不好。	
+dezember	A1	n	Dezember	der		十二月					Im Dezember feiern wir Weihnachten.	十二月我们过圣诞节。	
+fruehling	A1	n	Frühling	der		春天					Im Frühling blühen die Blumen.	春天花开了。	
+sommer	A1	n	Sommer	der		夏天					Im Sommer fahren wir ans Meer.	夏天我们去海边。	
+herbst	A1	n	Herbst	der		秋天					Im Herbst wird es kühl.	秋天天气变凉。	
+winter	A1	n	Winter	der		冬天					Im Winter schneit es oft.	冬天经常下雪。	
+euro	A1	n	Euro	der		欧元					Das Ticket kostet fünf Euro.	票价五欧元。	
+cent	A1	n	Cent	der		欧分					Eine Briefmarke kostet 95 Cent.	一张邮票 95 欧分。	
+meter	A1	n	Meter	der	Meter	米					Der Tisch ist zwei Meter lang.	这张桌子两米长。	
+kilometer	A1	n	Kilometer	der	Kilometer	公里					Bis Köln sind es zwanzig Kilometer.	到科隆还有二十公里。	
+liter	A1	n	Liter	der	Liter	升					Ich kaufe einen Liter Milch.	我买一升牛奶。	
+kilo	A1	n	Kilo	das		公斤					Ein Kilo Tomaten, bitte.	请给我一公斤西红柿。	
+gramm	A1	n	Gramm	das		克					Ich möchte 200 Gramm Käse.	我要 200 克奶酪。	
+prozent	A1	n	Prozent	das		百分比					Heute gibt es 20 Prozent Rabatt.	今天打八折。	
+deutschland	A1	other	Deutschland			德国					Ich lebe seit einem Jahr in Deutschland.	我在德国生活了一年。	
+deutsche	A1	n	Deutsche	der	Deutschen	德国人					Mein Nachbar ist Deutscher.	我的邻居是德国人。	
+deutsch	A1	adj	deutsch			德国的；德语的					Ich lerne die deutsche Sprache.	我在学德语。	
+europa	A1	other	Europa			欧洲					Wir machen eine Reise durch Europa.	我们在欧洲旅行。	
+europaeer	A1	n	Europäer	der	Europäer	欧洲人					Viele Europäer reisen gern nach Asien.	很多欧洲人喜欢去亚洲旅行。	
+europaeisch	A1	adj	europäisch			欧洲的					Berlin ist eine europäische Hauptstadt.	柏林是欧洲的一个首都。	
+schwarz	A1	adj	schwarz			黑色的					Ich trinke den Kaffee schwarz.	我喝黑咖啡。	
+weiss	A1	adj	weiß			白色的					Im Winter ist alles weiß.	冬天到处一片白。	
+grau	A1	adj	grau			灰色的					Heute ist der Himmel grau.	今天天空灰蒙蒙的。	
+rot	A1	adj	rot			红色的					Die Ampel ist rot.	红灯了。	
+blau	A1	adj	blau			蓝色的					Das Meer ist blau.	大海是蓝色的。	
+gelb	A1	adj	gelb			黄色的					Die Bananen sind gelb.	香蕉是黄色的。	
+gruen	A1	adj	grün			绿色的					Die Bäume sind wieder grün.	树又绿了。	
+braun	A1	adj	braun			棕色的					Sie hat braune Augen.	她有一双棕色的眼睛。	
+norden	A1	n	Norden	der		北方					Hamburg liegt im Norden.	汉堡在北部。	
+sueden	A1	n	Süden	der		南方					München liegt im Süden.	慕尼黑在南部。	
+westen	A1	n	Westen	der		西方					Köln liegt im Westen.	科隆在西部。	
+osten	A1	n	Osten	der		东方					Dresden liegt im Osten.	德累斯顿在东部。	
+lampe	A1	n	Lampe	die	Lampen	灯					Die Lampe ist kaputt.	灯坏了。	
+stuhl	A1	n	Stuhl	der	Stühle	椅子					Der Stuhl steht am Fenster.	椅子在窗边。	
+fenster	A1	n	Fenster	das	Fenster	窗户					Mach bitte das Fenster zu.	请把窗户关上。	
+tuer	A1	n	Tür	die	Türen	门					Die Tür ist offen.	门开着。	
+katze	A1	n	Katze	die	Katzen	猫					Die Katze schläft auf dem Sofa.	猫在沙发上睡觉。	
+freundin	A1	n	Freundin	die	Freundinnen	女性朋友；女朋友					Meine Freundin wohnt in Leipzig.	我的女朋友住在莱比锡。	

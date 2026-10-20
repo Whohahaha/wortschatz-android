@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -243,18 +245,20 @@ private fun SettingRow(title: String, subtitle: String, card: Boolean = true, tr
     if (card) Card(Modifier.fillMaxWidth()) { row() } else row()
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun NewWordOrderPicker(selected: NewWordOrder, onSelect: (NewWordOrder) -> Unit) {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().padding(16.dp)) {
             Text("新词顺序")
-            Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 NewWordOrder.entries.forEach { order ->
                     FilterChip(selected = order == selected, onClick = { onSelect(order) }, label = { Text(order.label) })
                 }
             }
             Text(
-                "只影响还没学的新词，已学的词照常按记忆曲线复习。",
+                (if (selected == NewWordOrder.FAMILY) "同一个词根的词连着出，比如 fahren、abfahren、Fahrer、Abfahrt。" else "") +
+                    "只影响还没学的新词，已学的词照常按记忆曲线复习。",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

@@ -7,7 +7,8 @@ meanings and all example sentences are written for this project. Plurals and ver
 given in the sources come from the Wiktionary lexicon (tools/lexicon/build_lexicon.py).
 
 Source columns: pos, headword, meaning, example, example_zh, [plural or auxiliary]
-  - nouns are written with their article ("der Tisch"); plural "-" means none
+  - nouns are written with their article ("der Tisch"); plural "-" means none, "pl" marks a
+    noun used only in the plural ("die Eltern"; written with "die", no plural)
   - for verbs the last column overrides the perfect auxiliary (haben / sein)
   - separable verbs mark the prefix with "|" ("an|rufen")
 """
@@ -18,7 +19,7 @@ import sys
 UMLAUTS = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 ARTICLES = {"der", "die", "das"}
 COLUMNS = ["id", "level", "pos", "lemma", "gender", "plural", "meaning",
-           "present3", "preterite", "participle", "aux", "example", "example_zh"]
+           "present3", "preterite", "participle", "aux", "example", "example_zh", "number"]
 
 
 def slug(text: str) -> str:
@@ -53,14 +54,17 @@ def main() -> None:
             assert len(cells) in (5, 6), f"{path}:{n}: {len(cells)} columns"
             pos, head, meaning, example, example_zh = cells[:5]
             plural_override = cells[5] if len(cells) == 6 else None
-            gender = plural = ""
+            gender = plural = number = ""
             forms = ["", "", "", ""]
             lemma = head
             if pos == "n":
                 article, lemma = head.split(" ", 1)
                 assert article in ARTICLES, f"{path}:{n}: noun without article: {head}"
                 gender = article
-                if plural_override is not None:
+                if plural_override == "pl":
+                    assert article == "die", f"{path}:{n}: plural-only noun must be written with die: {head}"
+                    number = "pl"
+                elif plural_override is not None:
                     plural = "" if plural_override == "-" else plural_override
                 else:
                     plural = nouns.get((lemma, gender), "")
@@ -80,7 +84,7 @@ def main() -> None:
             entry_id = base if base not in ids else f"{base}-{pos}"
             assert entry_id not in ids, f"duplicate id {entry_id}"
             ids.add(entry_id)
-            rows.append([entry_id, "A1", pos, lemma, gender, plural, meaning, *forms, example, example_zh])
+            rows.append([entry_id, "A1", pos, lemma, gender, plural, meaning, *forms, example, example_zh, number])
 
     with open(out_path, "w", encoding="utf-8") as out:
         out.write("# title: 歌德 A1 词书\n")

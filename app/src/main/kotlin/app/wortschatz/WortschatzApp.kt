@@ -3,6 +3,7 @@ package app.wortschatz
 import android.app.Application
 import android.content.Context
 import app.wortschatz.core.CardType
+import app.wortschatz.core.ConfusableNotes
 import app.wortschatz.core.Entry
 import app.wortschatz.core.NewWordOrder
 import app.wortschatz.core.StudySettings
@@ -34,6 +35,15 @@ class WortschatzApp : Application() {
             }
         }
         stream?.bufferedReader()?.useLines { Lexicon.parse(it) } ?: Lexicon.EMPTY
+    }
+
+    /** Notes on easily confused words (kennen / wissen …); they apply to every word book. */
+    val confusableNotes: ConfusableNotes by lazy {
+        try {
+            assets.open("confusables.tsv").bufferedReader().use { ConfusableNotes.parse(it.readText()) }
+        } catch (e: IOException) {
+            ConfusableNotes.EMPTY
+        }
     }
 
     var activeBookId: String

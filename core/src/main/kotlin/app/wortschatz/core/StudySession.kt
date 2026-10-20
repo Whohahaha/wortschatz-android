@@ -46,6 +46,8 @@ enum class NewWordOrder(val label: String) {
     RANDOM("随机"),
     ALPHABETICAL("从 A 开始"),
     BOOK("词书顺序"),
+    /** Book order, but each word family (fahren, abfahren, Fahrer …) is learned in a row. */
+    FAMILY("同根词一起"),
 }
 
 /** German dictionary order: case and umlauts folded (ä sorts with a), ß as ss, separable marks ignored. */
@@ -79,10 +81,14 @@ class StudySession(
     val fsrs = Fsrs(desiredRetention = settings.desiredRetention)
 
     private val entryById = entries.associateBy { it.id }
+    // A word book update can take card types away (a noun found to be plural-only loses its
+    // article and plural cards); such cards stay in the database but are no longer asked.
+    private val cardTypes = entries.associate { it.id to cardTypesFor(it).toSet() }
     private val order: Map<String, Int> = when (settings.newWordOrder) {
         NewWordOrder.BOOK -> entries
         NewWordOrder.ALPHABETICAL -> entries.sortedWith(compareBy({ germanSortKey(it.lemma) }, { it.lemma }))
         NewWordOrder.RANDOM -> entries.shuffled(kotlin.random.Random(settings.shuffleSeed))
+        NewWordOrder.FAMILY -> WordFamilies(entries).grouped(entries)
     }.withIndex().associate { (i, e) -> e.id to i }
     private val cards = LinkedHashMap<String, Card>()
     private var todayStart = 0L
@@ -209,7 +215,9 @@ class StudySession(
         return (due + fresh).distinct().map(entryById::getValue)
     }
 
-    private fun activeCards() = cards.values.filter { it.entryId in entryById && it.entryId !in known && it.type !in settings.disabledCardTypes }
+    private fun activeCards() = cards.values.filter {
+        it.entryId !in known && it.type !in settings.disabledCardTypes && cardTypes[it.entryId]?.contains(it.type) == true
+    }
 
     /** Words whose meaning card has been seen at least once, or that were marked as known. */
     fun learnedWords(): Int = cards.values.count {
@@ -221,7 +229,7 @@ class StudySession(
      * next new nouns in book order. Practice only; it does not touch the schedule.
      */
     fun drillNouns(count: Int, random: kotlin.random.Random = kotlin.random.Random.Default): List<Entry> {
-        val nouns = entryById.values.filter { it.gender != null }
+        val nouns = entryById.values.filter { it.gender != null && !it.pluralOnly }
         val meaning = cards.values.filter { it.type == CardType.MEANING }.associateBy { it.entryId }
         val (met, fresh) = nouns.partition { meaning[it.id]?.memory?.phase != Phase.NEW || it.id in known }
         return (met.shuffled(random) + fresh.sortedBy { order.getValue(it.id) }).take(count).shuffled(random)
@@ -240,7 +248,7 @@ class StudySession(
     fun wordProgress(): List<WordProgress> {
         val byEntry = cards.values.groupBy { it.entryId }
         return entryById.values.map { e ->
-            val own = byEntry[e.id].orEmpty().filter { it.type !in settings.disabledCardTypes }
+            val own = byEntry[e.id].orEmpty().filter { it.type !in settings.disabledCardTypes && it.type in cardTypes.getValue(e.id) }
             val meaning = own.firstOrNull { it.type == CardType.MEANING }?.memory
             val status = when {
                 e.id in known -> WordStatus.KNOWN

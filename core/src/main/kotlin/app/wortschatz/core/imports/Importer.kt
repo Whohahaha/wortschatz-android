@@ -2,6 +2,7 @@ package app.wortschatz.core.imports
 
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
+import app.wortschatz.core.PLURAL_ONLY_NOUNS
 import app.wortschatz.core.PartOfSpeech
 import app.wortschatz.core.VerbForms
 
@@ -168,9 +169,14 @@ object Importer {
             var verbForms = head.verbForms
             var prefix = head.separablePrefix
             var filled = false
+            val pluralOnly = head.pluralOnly || (head.lemma in PLURAL_ONLY_NOUNS && (gender == null || gender == Gender.DIE))
+            if (pluralOnly) {
+                gender = Gender.DIE
+                plural = null
+            }
 
             if (options.autoComplete) {
-                val noun = if (head.lemma.firstOrNull()?.isUpperCase() == true) lexicon.noun(head.lemma) else null
+                val noun = if (!pluralOnly && head.lemma.firstOrNull()?.isUpperCase() == true) lexicon.noun(head.lemma) else null
                 if (noun != null) {
                     if (gender == null) { gender = noun.first; filled = true }
                     if (plural == null && noun.second.isNotEmpty()) { plural = noun.second; filled = true }
@@ -206,6 +212,7 @@ object Importer {
                 separablePrefix = prefix,
                 example = AnkiText.clean(table.cell(row, m[ColumnRole.EXAMPLE])),
                 exampleZh = AnkiText.clean(table.cell(row, m[ColumnRole.EXAMPLE_ZH])),
+                pluralOnly = pluralOnly,
             )
         }
         return ImportResult(entries, duplicates, skipped, completed)
