@@ -1,0 +1,27 @@
+name: Temporary APK transfer
+
+# One-off: copies the APK built for this branch into a commit, so it can be fetched with git.
+on:
+  push:
+    branches: [claude/project-thread-uhvzbm]
+    paths: [".github/workflows/apk-transfer.yml"]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 39401621224 -R "$GITHUB_REPOSITORY" -n wortschatz-arm64-v8a-debug-apk -D .apk-transfer
+          ls -la .apk-transfer
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -f .apk-transfer
+          git commit -m "Temporary: APK"
+          git push
