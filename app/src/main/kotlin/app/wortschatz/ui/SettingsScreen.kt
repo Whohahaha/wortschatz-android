@@ -71,6 +71,11 @@ fun SettingsScreen(
 
             Section("学习计划")
             NewWordsPerDay(home, vm::setNewWordsPerDay)
+            Text(
+                "每天 10～20 分钟就够。觉得吃力时先调低新词，复习照常做，积压会慢慢消化。",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             NewWordOrderPicker(home.newWordOrder, vm::setNewWordOrder)
             Forecast(home.forecast)
             Text(
@@ -81,6 +86,11 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+
+            Section("发音")
+            SettingRow("慢速朗读", "单词和例句放慢到 0.75 倍") {
+                Switch(checked = home.slowSpeech, onCheckedChange = vm::setSlowSpeech)
+            }
 
             Section("卡片类型")
             Card(Modifier.fillMaxWidth()) {

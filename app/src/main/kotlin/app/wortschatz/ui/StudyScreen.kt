@@ -98,7 +98,7 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 @Composable
-fun StudyScreen(state: UiState, vm: StudyViewModel) {
+fun StudyScreen(state: UiState, vm: StudyViewModel, onShadow: (String) -> Unit) {
     val current = state.current ?: return
     val type = current.card.type
     Scaffold { padding ->
@@ -128,8 +128,8 @@ fun StudyScreen(state: UiState, vm: StudyViewModel) {
                 modifier = Modifier.weight(1f).padding(vertical = 12.dp),
             ) {
                 CardFace(
-                    current, state.revealed, state.articleChoice, state.typed,
-                    onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord,
+                    current, state.revealed, state.articleChoice, state.typed, state.recording,
+                    onSpeak = vm::speakCurrent, onSpeakText = vm::speakText, onLookup = vm::lookupWord, onShadow = onShadow,
                 )
             }
 
@@ -382,9 +382,11 @@ private fun CardFace(
     revealed: Boolean,
     articleChoice: Gender?,
     typed: TypedAnswer?,
+    recording: Boolean,
     onSpeak: () -> Unit,
     onSpeakText: (String) -> Unit,
     onLookup: (String) -> Unit,
+    onShadow: (String) -> Unit,
 ) {
     val entry = current.entry
     Column(
@@ -401,10 +403,11 @@ private fun CardFace(
         when (current.card.type) {
             CardType.MEANING -> {
                 Headword(entry)
-                SpeakButton(onSpeak)
+                if (revealed) SpeakRow(onSpeak, recording) { onShadow(entry.spoken) } else SpeakButton(onSpeak)
                 if (revealed) {
                     Answer(entry.meaning)
                     Details(entry, onSpeakText, onLookup)
+                    Confusables(current.confusables)
                 }
             }
             CardType.ARTICLE -> {
@@ -485,6 +488,33 @@ private fun Headword(entry: Entry) {
         },
         fontSize = 40.sp,
         fontWeight = FontWeight.SemiBold,
+        textAlign = TextAlign.Center,
+    )
+}
+
+/** Listen, plus shadowing: record yourself, then hear your take and the reference. */
+@Composable
+private fun SpeakRow(onSpeak: () -> Unit, recording: Boolean, onShadow: () -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        SpeakButton(onSpeak)
+        Text(
+            if (recording) "⏺ 录音中，点此停止" else "🎙 跟读",
+            Modifier.tapTarget(onShadow).padding(horizontal = 16.dp, vertical = 10.dp),
+            color = if (recording) CountColors.Learning else MaterialTheme.colorScheme.primary,
+            fontWeight = if (recording) FontWeight.Bold else null,
+        )
+    }
+}
+
+/** Words in the book with the same Chinese meaning, so the difference gets noticed. */
+@Composable
+private fun Confusables(words: List<Entry>) {
+    if (words.isEmpty()) return
+    Spacer(Modifier.height(12.dp))
+    Text(
+        "易混：" + words.joinToString("；") { "${it.spoken} ${it.meaning}" },
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center,
     )
 }

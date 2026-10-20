@@ -108,6 +108,11 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel, onRestore: () -> Unit) {
                 FilledTonalButton(onClick = vm::startDrill, modifier = Modifier.weight(1f).height(52.dp)) { Text("冠词快练") }
                 FilledTonalButton(onClick = vm::openNumbers, modifier = Modifier.weight(1f).height(52.dp)) { Text("听数字") }
             }
+            Spacer(Modifier.height(12.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                FilledTonalButton(onClick = vm::openWords, modifier = Modifier.weight(1f).height(52.dp)) { Text("词表") }
+                FilledTonalButton(onClick = vm::openStats, modifier = Modifier.weight(1f).height(52.dp)) { Text("统计") }
+            }
         }
     }
 }

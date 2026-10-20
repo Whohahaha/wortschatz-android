@@ -31,6 +31,10 @@ class Speaker(context: Context) {
     private var warned = false
     private lateinit var tts: TextToSpeech
 
+    /** Playback speed: 1 normally, below 1 for the slow-speech setting. */
+    @Volatile
+    var rate: Float = 1f
+
     init {
         tts = TextToSpeech(appContext) { status ->
             ttsReady = status == TextToSpeech.SUCCESS
@@ -50,6 +54,7 @@ class Speaker(context: Context) {
     private fun speakNow(text: String) {
         if (playRecorded(text)) return
         if (ttsReady && ttsHasGerman) {
+            tts.setSpeechRate(rate)
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text)
         } else if (ttsInitDone && !warned) {
             warned = true
@@ -64,6 +69,16 @@ class Speaker(context: Context) {
             null
         }
         val prepared = if (afd == null) files.prepared(text) ?: return false else null
+        play(afd = afd, path = prepared?.path, speed = rate)
+        return true
+    }
+
+    /** Plays a recording made on the phone (shadowing), then [then] when it has finished. */
+    fun playFile(path: String, then: (() -> Unit)? = null) {
+        main.post { play(afd = null, path = path, speed = 1f, then = then) }
+    }
+
+    private fun play(afd: android.content.res.AssetFileDescriptor?, path: String?, speed: Float, then: (() -> Unit)? = null) {
         tts.stop()
         player?.release()
         player = MediaPlayer().apply {
@@ -74,12 +89,15 @@ class Speaker(context: Context) {
                     .build()
             )
             if (afd != null) afd.use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
-            else setDataSource(prepared!!.path)
-            setOnPreparedListener { it.start() }
-            setOnErrorListener { _, _, _ -> true }
+            else setDataSource(path!!)
+            setOnPreparedListener {
+                if (speed != 1f) it.playbackParams = it.playbackParams.setSpeed(speed)
+                it.start()
+            }
+            setOnCompletionListener { then?.invoke() }
+            setOnErrorListener { _, _, _ -> then?.invoke(); true }
             prepareAsync()
         }
-        return true
     }
 
     fun shutdown() {

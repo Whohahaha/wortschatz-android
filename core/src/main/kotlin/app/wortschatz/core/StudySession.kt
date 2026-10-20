@@ -224,6 +224,58 @@ class StudySession(
 
     fun knownWords(): Int = entryById.keys.count { it in known }
 
+    /** Brings back a word marked as known; its cards continue where they were. */
+    fun unmarkKnown(entryId: String) {
+        store.setKnown(entryId, false)
+        known -= entryId
+        undoStack.removeAll { it is Undoable.Known && it.card.entryId == entryId }
+    }
+
+    /** Every word of the book with its status, in book order. */
+    fun wordProgress(): List<WordProgress> {
+        val byEntry = cards.values.groupBy { it.entryId }
+        return entryById.values.map { e ->
+            val own = byEntry[e.id].orEmpty().filter { it.type !in settings.disabledCardTypes }
+            val meaning = own.firstOrNull { it.type == CardType.MEANING }?.memory
+            val status = when {
+                e.id in known -> WordStatus.KNOWN
+                meaning == null || meaning.phase == Phase.NEW -> WordStatus.NEW
+                meaning.phase == Phase.REVIEW && meaning.stability >= WordProgress.MASTERED_DAYS -> WordStatus.MASTERED
+                else -> WordStatus.LEARNING
+            }
+            val hardest = own.maxByOrNull { it.memory.lapses }?.takeIf { it.memory.lapses > 0 }
+            WordProgress(e, status, hardest?.memory?.lapses ?: 0, hardest?.type)
+        }
+    }
+
+    /** Figures for the statistics page; [days] study days of history for the calendar. */
+    fun stats(days: Int = 119): Stats {
+        refreshDay(clock())
+        val since = todayStart - (days - 1) * Fsrs.DAY
+        val times = store.reviewTimesSince(todayStart - 400 * Fsrs.DAY)
+        val daily = IntArray(days)
+        val dayIndex = HashSet<Long>()
+        for (t in times) {
+            val back = (todayStart - dayStart(t)) / Fsrs.DAY
+            dayIndex += back
+            if (t >= since) daily[(days - 1 - back).toInt()]++
+        }
+        var longest = 0
+        var run = 0
+        for (back in 400L downTo 0L) {
+            if (back in dayIndex) { run++; longest = maxOf(longest, run) } else run = 0
+        }
+        val recentReviews = store.logsSince(todayStart - 29 * Fsrs.DAY).filter { it.before.phase == Phase.REVIEW }
+        val retention = recentReviews.takeIf { it.isNotEmpty() }?.let { logs -> logs.count { it.rating != Rating.AGAIN }.toDouble() / logs.size }
+        return Stats(
+            daily = daily,
+            retention = retention,
+            byStatus = wordProgress().groupingBy { it.status }.eachCount(),
+            totalAnswers = times.size,
+            longestStreak = longest,
+        )
+    }
+
     /** Reviews due today beyond the daily limit; they wait, most-at-risk first, for later days. */
     fun backlog(): Int {
         refreshDay(clock())
