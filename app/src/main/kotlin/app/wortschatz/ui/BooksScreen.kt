@@ -303,8 +303,8 @@ private fun PreviewRow(entry: Entry) {
     Column {
         Row(verticalAlignment = Alignment.Bottom) {
             entry.gender?.let { Text("${it.article} ", color = genderColor(it), fontWeight = FontWeight.Bold) }
-            Text(entry.display, fontWeight = FontWeight.SemiBold)
-            entry.plural?.let { Text("  · die $it", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            Text(entry.display.removePrefix(entry.gender?.article?.plus(" ") ?: ""), fontWeight = FontWeight.SemiBold)
+            entry.pluralLabel?.let { Text("  · $it", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         }
         entry.verbForms?.let {
             Text("${it.present3}, ${it.preterite}, ${it.participle}", style = MaterialTheme.typography.bodySmall)

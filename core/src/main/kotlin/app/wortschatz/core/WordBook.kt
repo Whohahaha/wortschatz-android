@@ -5,7 +5,10 @@ package app.wortschatz.core
  * spreadsheet. Lines starting with '#' are comments. Columns:
  *
  * id, level, pos (n/v/adj/adv/other), lemma, gender (der/die/das), plural, meaning,
- * present3, preterite, participle, aux, example, example_zh
+ * present3, preterite, participle, aux, example, example_zh, number
+ *
+ * number is "pl" for a noun used only in the plural (die Eltern); such a noun keeps "die" as its
+ * gender and an empty plural, so older versions of the app still read it as a feminine noun.
  *
  * A separable verb marks its prefix with '|' in the lemma: "an|rufen".
  */
@@ -56,13 +59,14 @@ object WordBook {
                 separablePrefix = prefix,
                 example = col("example"),
                 exampleZh = col("example_zh"),
+                pluralOnly = pos == PartOfSpeech.NOUN && col("number").lowercase() == "pl",
             )
         }
     }
 
     private val columns = listOf(
         "id", "level", "pos", "lemma", "gender", "plural", "meaning",
-        "present3", "preterite", "participle", "aux", "example", "example_zh",
+        "present3", "preterite", "participle", "aux", "example", "example_zh", "number",
     )
 
     /** Inverse of [parse]; [title] goes into a leading comment line. */
@@ -74,7 +78,7 @@ object WordBook {
             val cells = listOf(
                 e.id, e.level, e.pos.code, lemma, e.gender?.article.orEmpty(), e.plural.orEmpty(), e.meaning,
                 e.verbForms?.present3.orEmpty(), e.verbForms?.preterite.orEmpty(), e.verbForms?.participle.orEmpty(),
-                e.verbForms?.auxiliary.orEmpty(), e.example, e.exampleZh,
+                e.verbForms?.auxiliary.orEmpty(), e.example, e.exampleZh, if (e.pluralOnly) "pl" else "",
             )
             append(cells.joinToString("\t") { it.replace('\t', ' ').replace('\n', ' ') }).append('\n')
         }

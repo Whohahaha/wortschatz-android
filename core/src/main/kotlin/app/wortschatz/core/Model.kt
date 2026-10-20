@@ -42,6 +42,11 @@ data class Entry(
     val separablePrefix: String? = null,
     val example: String = "",
     val exampleZh: String = "",
+    /**
+     * A noun used only in the plural (die Eltern, die Leute). Its [gender] is DIE, the plural
+     * article, but there is no singular: no article question and no plural question.
+     */
+    val pluralOnly: Boolean = false,
 ) {
     /** "der Tisch", "an·rufen" */
     val display: String
@@ -52,7 +57,31 @@ data class Entry(
 
     /** What text-to-speech should read: nouns always together with their article. */
     val spoken: String get() = gender?.let { "${it.article} $lemma" } ?: lemma
+
+    /** The plural is spelled like the singular: der Lehrer, die Lehrer. */
+    val pluralSameAsSingular: Boolean get() = plural == lemma
+
+    /** "复数：die Tische", "复数：die Lehrer（单复同形）", "只有复数", "无复数"; null if not a noun. */
+    val pluralLabel: String?
+        get() = when {
+            pos != PartOfSpeech.NOUN -> null
+            pluralOnly -> "只有复数形式"
+            plural.isNullOrEmpty() -> "无复数"
+            pluralSameAsSingular -> "复数：die $plural（单复同形）"
+            else -> "复数：die $plural"
+        }
 }
+
+/**
+ * Everyday nouns used only in the plural. Dictionaries often list a technical singular
+ * ("das Elter") that a learner should never be shown or asked about.
+ */
+val PLURAL_ONLY_NOUNS: Set<String> = setOf(
+    "Abgase", "Alpen", "Daten", "Eltern", "Fachleute", "Ferien", "Finanzen", "Fundsachen", "Geschwister",
+    "Großeltern", "Kenntnisse", "Kosten", "Lebensmittel", "Leute", "Medien", "Möbel", "Personalien",
+    "Pommes", "Schulden", "Senioren", "Shorts", "Spaghetti", "Süßigkeiten", "Trümmer", "Unterlagen",
+    "Urlaubstage", "Zinsen", "Zutaten",
+)
 
 enum class CardType(val label: String) {
     MEANING("释义"), ARTICLE("冠词"), PLURAL("复数"), VERB_FORMS("变位"), SPELLING("拼写"), CLOZE("填空");
@@ -66,8 +95,8 @@ enum class CardType(val label: String) {
 
 fun cardTypesFor(entry: Entry): List<CardType> = buildList {
     add(CardType.MEANING)
-    if (entry.gender != null) add(CardType.ARTICLE)
-    if (entry.pos == PartOfSpeech.NOUN && !entry.plural.isNullOrEmpty()) add(CardType.PLURAL)
+    if (entry.gender != null && !entry.pluralOnly) add(CardType.ARTICLE)
+    if (entry.pos == PartOfSpeech.NOUN && !entry.pluralOnly && !entry.plural.isNullOrEmpty()) add(CardType.PLURAL)
     if (entry.verbForms != null) add(CardType.VERB_FORMS)
     if (Typing.spellable(entry)) add(CardType.SPELLING)
     if (Cloze.of(entry) != null) add(CardType.CLOZE)

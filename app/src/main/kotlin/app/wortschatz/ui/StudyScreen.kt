@@ -5,6 +5,9 @@ import app.wortschatz.core.Conjugation
 import app.wortschatz.core.QuizMode
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.imePadding
@@ -94,6 +97,9 @@ import app.wortschatz.core.GestureScheme
 import app.wortschatz.core.resolve
 import app.wortschatz.core.Entry
 import app.wortschatz.core.Gender
+import app.wortschatz.FamilyMember
+import app.wortschatz.core.Swap
+import app.wortschatz.core.ConfusableGroup
 import app.wortschatz.core.Hints
 import app.wortschatz.core.PartOfSpeech
 import app.wortschatz.core.fsrs.Rating
@@ -442,7 +448,8 @@ private fun CardFace(
                 if (revealed) {
                     Answer(entry.meaning)
                     Details(entry, onSpeakText, onLookup)
-                    Confusables(current.confusables)
+                    Confusables(current.confusables, current.notes, onSpeakText)
+                    Family(entry, current.family, onSpeakText)
                 } else {
                     // While the card is being swiped the meaning fades in, so the learner sees
                     // whether they remembered it before letting go.
@@ -496,6 +503,9 @@ private fun CardFace(
                         Modifier.fillMaxWidth(),
                         maxSize = 36.sp,
                     )
+                    if (entry.pluralSameAsSingular) {
+                        Text("单复同形：复数只把冠词换成 die", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium)
+                    }
                     Spacer(Modifier.height(8.dp))
                     Text(entry.meaning, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
@@ -653,16 +663,119 @@ private fun SpeakRow(onSpeak: () -> Unit, recording: Boolean, onShadow: () -> Un
     }
 }
 
-/** Words in the book with the same Chinese meaning, so the difference gets noticed. */
+/**
+ * Notes on the words this one is easily mixed up with (tap one for what tells them apart and
+ * whether they can replace each other), then other words of the book with the same meaning.
+ */
 @Composable
-private fun Confusables(words: List<Entry>) {
-    if (words.isEmpty()) return
-    Spacer(Modifier.height(12.dp))
+private fun Confusables(words: List<Entry>, notes: List<ConfusableGroup>, onSpeakText: (String) -> Unit) {
+    var open by remember(notes) { mutableStateOf<ConfusableGroup?>(null) }
+    notes.forEach { group ->
+        Spacer(Modifier.height(10.dp))
+        OutlinedButton(onClick = { open = group }) {
+            Text("易混：" + group.words.joinToString(" / "), maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f, fill = false))
+            Spacer(Modifier.width(8.dp))
+            SwapTag(group.swap)
+            Text("  ›")
+        }
+    }
+    if (words.isNotEmpty()) {
+        Spacer(Modifier.height(12.dp))
+        Text(
+            "易混：" + words.joinToString("；") { "${it.spoken} ${it.meaning}" },
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+    }
+    open?.let { ConfusableDialog(it, onSpeakText) { open = null } }
+}
+
+/** The word's family (fahren, abfahren, Fahrer …); tap to see every member and what its prefix adds. */
+@Composable
+private fun Family(entry: Entry, family: List<FamilyMember>, onSpeakText: (String) -> Unit) {
+    if (family.isEmpty()) return
+    var open by remember(family) { mutableStateOf(false) }
+    Spacer(Modifier.height(10.dp))
+    OutlinedButton(onClick = { open = true }) {
+        Text(
+            "同根词：" + family.filter { it.entry.id != entry.id }.joinToString(" · ") { it.entry.lemma },
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f, fill = false),
+        )
+        Text("  ›")
+    }
+    if (open) {
+        AlertDialog(
+            onDismissRequest = { open = false },
+            confirmButton = { TextButton(onClick = { open = false }) { Text("好") } },
+            title = { Text("同根词 · ${family.size} 个") },
+            text = {
+                Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    family.forEach { m ->
+                        Column(Modifier.fillMaxWidth().tapTarget { onSpeakText(m.entry.spoken) }.padding(vertical = 4.dp)) {
+                            Text(
+                                "🔊 " + m.entry.display,
+                                fontWeight = if (m.entry.id == entry.id) FontWeight.Bold else FontWeight.Medium,
+                                color = if (m.entry.id == entry.id) MaterialTheme.colorScheme.primary else Color.Unspecified,
+                            )
+                            Text(m.entry.meaning, style = MaterialTheme.typography.bodyMedium)
+                            m.prefixMeaning?.let {
+                                Text(
+                                    "${m.prefix}-：$it",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+                    }
+                    Text(
+                        "同根词按拼写自动归组，元音变化的词（kommen / Ankunft）暂时找不出来；前缀含义是常见规律，不是每个词都适用。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            },
+        )
+    }
+}
+
+@Composable
+private fun SwapTag(swap: Swap) {
+    val color = when (swap) {
+        Swap.YES -> Color(0xFF2E7D32)
+        Swap.PARTLY -> Color(0xFFE09B2D)
+        Swap.NO -> Color(0xFFC62828)
+    }
     Text(
-        "易混：" + words.joinToString("；") { "${it.spoken} ${it.meaning}" },
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        textAlign = TextAlign.Center,
+        swap.label,
+        Modifier.background(color.copy(alpha = 0.15f), RoundedCornerShape(50)).padding(horizontal = 8.dp, vertical = 2.dp),
+        color = color,
+        style = MaterialTheme.typography.labelMedium,
+        fontWeight = FontWeight.Bold,
+    )
+}
+
+/** What tells the words of a group apart, with examples that are read aloud when tapped. */
+@Composable
+private fun ConfusableDialog(group: ConfusableGroup, onSpeakText: (String) -> Unit, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = { TextButton(onClick = onDismiss) { Text("好") } },
+        title = { Text(group.words.joinToString(" / ")) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                SwapTag(group.swap)
+                Text(group.difference)
+                group.examples.forEach { ex ->
+                    Column(Modifier.fillMaxWidth().tapTarget { onSpeakText(ex.german) }.padding(vertical = 4.dp)) {
+                        Text("🔊 " + ex.german, fontWeight = FontWeight.Medium)
+                        Text(ex.chinese, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+            }
+        },
     )
 }
 
@@ -699,7 +812,7 @@ private fun Details(entry: Entry, onSpeakText: (String) -> Unit, onLookup: (Stri
     Spacer(Modifier.height(16.dp))
     val muted = MaterialTheme.colorScheme.onSurfaceVariant
     if (entry.pos == PartOfSpeech.NOUN) {
-        Text(entry.plural?.let { "复数：die $it" } ?: "无复数", color = muted)
+        entry.pluralLabel?.let { Text(it, color = muted) }
         GenderTip(entry)
     }
     entry.verbForms?.let {
@@ -889,6 +1002,7 @@ private fun TypedAnswerBar(key: String, typed: TypedAnswer?, vm: StudyViewModel)
 private fun LookupDialog(result: LookupResult, onSpeak: (String) -> Unit, onDismiss: () -> Unit) {
     val headword = result.entry?.spoken
         ?: result.noun?.let { "${it.first.article} ${result.nounLemma}" }
+        ?: if (result.pluralOnly) "die ${result.word.replaceFirstChar { it.uppercase() }}" else null
         ?: result.verbLemma
         ?: result.word
     AlertDialog(
@@ -902,6 +1016,7 @@ private fun LookupDialog(result: LookupResult, onSpeak: (String) -> Unit, onDism
                     Text("句中形式：${result.word}", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 result.entry?.let { Text(it.meaning, fontSize = 20.sp) }
+                if (result.pluralOnly) Text("只有复数形式", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 result.noun?.let { (gender, plural) ->
                     Text(
                         buildAnnotatedString {

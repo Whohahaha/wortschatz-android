@@ -33,6 +33,9 @@ import app.wortschatz.core.Milestones
 import app.wortschatz.core.Stats
 import app.wortschatz.core.WordProgress
 import app.wortschatz.core.WordStatus
+import app.wortschatz.core.ConfusableGroup
+import app.wortschatz.core.PREFIX_MEANINGS
+import app.wortschatz.core.WordFamilies
 import app.wortschatz.core.confusables
 import app.wortschatz.core.StudySession
 import app.wortschatz.core.StudySettings
@@ -129,12 +132,21 @@ data class NumberDrillState(
     val spoken: String get() = if (range.year) GermanNumbers.year(target) else GermanNumbers.words(target)
 }
 
+/** A word of a family, with the prefix that sets it apart from the root (ab in abfahren), if any. */
+data class FamilyMember(val entry: Entry, val prefix: String?) {
+    val prefixMeaning: String? get() = prefix?.let { PREFIX_MEANINGS[it] }
+}
+
 data class StudyCard(
     val card: Card,
     val entry: Entry,
     val intervals: Map<Rating, String>,
     /** Words in the book with the same Chinese meaning, shown with the answer. */
     val confusables: List<Entry> = emptyList(),
+    /** Written notes on how this word differs from words it is mixed up with. */
+    val notes: List<ConfusableGroup> = emptyList(),
+    /** Words of the book with the same root, this one included; empty when it has none. */
+    val family: List<FamilyMember> = emptyList(),
     /** How a meaning card is asked this time; see [Quiz.modeFor]. */
     val mode: QuizMode = QuizMode.FLIP,
     /** The four options of a multiple-choice question, the answer among them. */
@@ -947,18 +959,28 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private var wordFamilies: Pair<String, WordFamilies>? = null
+
     private fun show(s: StudySession, card: Card) {
         answerToken++
         stopShadowing()
         val entry = s.entry(card)
         val intervals = s.preview(card).mapValues { formatInterval(it.value) }
         val mode = Quiz.modeFor(card)
+        val notes = app.confusableNotes.groupsFor(entry)
+        val families = wordFamilies?.takeIf { it.first == app.activeBookId }?.second
+            ?: WordFamilies(app.entries).also { wordFamilies = app.activeBookId to it }
+        val family = families.familyOf(entry).map { FamilyMember(it, families.prefixOf(it)) }
         shownAt = System.currentTimeMillis()
         _state.update {
             it.copy(
                 screen = Screen.STUDY,
                 current = StudyCard(
-                    card, entry, intervals, confusables(entry, app.entries),
+                    card, entry, intervals,
+                    // Words a note already covers are not listed again as a bare hint.
+                    confusables(entry, app.entries).filter { e -> notes.none { e.lemma in it.words } },
+                    notes = notes,
+                    family = family,
                     mode = mode,
                     options = if (mode.isChoice) Quiz.options(entry, app.entries, seed = card.id.hashCode() * 31L + card.memory.reps) else emptyList(),
                 ),

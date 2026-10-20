@@ -18,7 +18,7 @@ object Hints {
     )
 
     fun gender(entry: Entry): GenderHint? {
-        val gender = entry.gender ?: return null
+        val gender = entry.gender?.takeUnless { entry.pluralOnly } ?: return null
         val word = entry.lemma.lowercase()
         endings.firstOrNull { (ending, _) -> word.endsWith(ending) && word.length > ending.length + 1 }?.let { (ending, rule) ->
             return GenderHint("以 -$ending 结尾的名词一般是 ${rule.article}", rule == gender)

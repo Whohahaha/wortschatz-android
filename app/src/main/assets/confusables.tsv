@@ -1,0 +1,71 @@
+# 易混词说明。每行一组：词（逗号分隔，写词头，不带冠词和 |）、能否互换（yes 可以互换 / partly 部分可换 / no 不能互换）、
+# 区别（中文）、例句 1–3（德语｜中文）。说明和例句为本项目自编。
+words	swap	difference	example1	example2	example3
+kennen,wissen	no	kennen 后面接人、地方、东西，意思是“认识、熟悉”；wissen 后面接一件事实，常跟从句（dass / wo / wie …）或 es、das、etwas，意思是“知道”。	Ich kenne Berlin sehr gut.｜我很熟悉柏林。	Ich weiß, wo er wohnt.｜我知道他住在哪儿。	Weißt du das?｜你知道这件事吗？
+sehen,schauen,ansehen,anschauen,gucken	partly	sehen 是“看见”，眼睛感知到；schauen、gucken 是有意去看（schauen 南德、奥地利常用，gucken 很口语）；ansehen / anschauen 是仔细看某样东西，看电影、照片都用它们，常带 sich（Ich sehe mir … an）。	Ich sehe dich nicht.｜我看不见你。	Schau mal, da ist Anna!｜你看，安娜在那儿！	Wir sehen uns heute einen Film an.｜我们今天看一部电影。
+sagen,sprechen,reden,erzählen	partly	sagen 说出具体内容（etwas sagen，后面常接引语或从句）；sprechen 说话、讲某种语言、和人交谈（Deutsch sprechen, mit jemandem sprechen）；reden 口语里的“聊、谈”，强调说话这件事；erzählen 讲述经历或故事。和人谈某事时 sprechen 和 reden 常可互换。	Er sagt, dass er müde ist.｜他说他累了。	Sprechen Sie Englisch?｜您会说英语吗？	Erzähl mal von deinem Urlaub!｜讲讲你的假期吧！
+machen,tun	partly	machen 用得最广：做、制作、搞（Hausaufgaben machen, Kaffee machen）；tun 偏“做（某种行为）”，多见于固定说法：Was kann ich für Sie tun? / Das tut mir leid. / Der Kopf tut weh。“做饭、做蛋糕”这类制作只能用 machen。	Ich mache einen Kuchen.｜我做一个蛋糕。	Was kann ich für Sie tun?｜我能为您做什么？	Mein Bein tut weh.｜我的腿疼。
+gehen,fahren,laufen	no	gehen 是步行、去（不坐车）；fahren 是坐交通工具或开车、骑车去；laufen 是跑，口语里也常指走路。坐车去不能用 gehen。	Ich gehe zu Fuß zur Schule.｜我走路去学校。	Wir fahren mit dem Bus in die Stadt.｜我们坐公交车进城。	Er läuft jeden Morgen fünf Kilometer.｜他每天早上跑五公里。
+lernen,studieren	partly	lernen 是学、背、练，学任何东西都行（Vokabeln lernen, für die Prüfung lernen）；studieren 是上大学读某个专业，也可指仔细研究。中学生、语言班学生不说 studieren。	Ich lerne jeden Tag Deutsch.｜我每天学德语。	Sie studiert Medizin in München.｜她在慕尼黑读医学。
+wohnen,leben	partly	wohnen 是住在某个住址、房子里；leben 是生活、活着，也指长期在某个国家或城市生活。说住址只用 wohnen；说住在某城市时两个都可以。	Ich wohne in der Goethestraße 5.｜我住在歌德街 5 号。	Er lebt seit zehn Jahren in Deutschland.｜他在德国生活了十年。	Meine Oma lebt noch.｜我奶奶还健在。
+fragen,bitten	no	fragen 是问问题（jemanden etwas fragen）；bitten 是请求、恳请某人做某事（jemanden um etwas bitten）。	Darf ich Sie etwas fragen?｜我能问您一件事吗？	Ich bitte dich um Hilfe.｜我请你帮忙。
+bringen,holen,nehmen,mitbringen	no	bringen 是把东西带到、送到某处；holen 是去某处把东西取回来；nehmen 是拿、拿走，也指乘坐、选定（den Bus nehmen, das Steak nehmen）；mitbringen 是随身带来（去做客时带礼物）。	Kannst du mir ein Glas Wasser bringen?｜你能给我拿杯水来吗？	Ich hole schnell Brot vom Bäcker.｜我去面包店取点面包。	Ich nehme den Zug um acht.｜我坐八点的火车。
+legen,liegen	no	legen 是“放（平放）”，有宾语，地点用第四格（wohin?）；liegen 是“平放着、躺着在某处”，没有宾语，地点用第三格（wo?）。legen 是动作，liegen 是状态。	Ich lege das Buch auf den Tisch.｜我把书放到桌上。	Das Buch liegt auf dem Tisch.｜书在桌子上。
+stellen,stehen	no	stellen 是“立着放、摆”，有宾语，第四格；stehen 是“立着、站着在某处”，没有宾语，第三格。瓶子、杯子、家具一般是竖放，用 stellen / stehen。	Ich stelle die Flasche in den Kühlschrank.｜我把瓶子放进冰箱。	Die Flasche steht im Kühlschrank.｜瓶子在冰箱里。
+setzen,sitzen	no	sich setzen 是“坐下”这个动作，第四格；sitzen 是“坐着”的状态，第三格。	Setz dich bitte auf den Stuhl.｜请坐到椅子上。	Er sitzt schon im Auto.｜他已经坐在车里了。
+hängen	partly	hängen 一个词两种用法：“挂上”（有宾语，第四格，过去分词 gehängt）和“挂着”（没有宾语，第三格，过去分词 gehangen）。	Ich hänge das Bild an die Wand.｜我把画挂到墙上。	Das Bild hängt an der Wand.｜画挂在墙上。
+kaufen,einkaufen	partly	kaufen 后面要有买的东西（etwas kaufen）；einkaufen 是去购物、采购日常用品，常不带宾语（einkaufen gehen）。	Ich kaufe ein neues Handy.｜我买一部新手机。	Am Samstag gehe ich einkaufen.｜周六我去购物。
+mögen,gefallen,lieben,gern	partly	mögen 是“喜欢”（人、食物、东西）；gefallen 是某物“让某人喜欢”，喜欢的东西作主语，人用第三格（Das Kleid gefällt mir）；gern 放在动词旁表示“喜欢做”；lieben 是“爱”，比 mögen 强得多。	Ich mag Schokolade.｜我喜欢巧克力。	Die Wohnung gefällt mir sehr.｜我很喜欢这套房子。	Ich schwimme gern.｜我喜欢游泳。
+Stunde,Uhr,Zeit	no	Stunde 是“小时”（时长）；Uhr 是钟表，也表示“几点钟”；Zeit 是“时间、空闲”。问几点：Wie spät ist es? / Wie viel Uhr ist es?	Der Film dauert zwei Stunden.｜电影长两个小时。	Es ist acht Uhr.｜现在八点。	Hast du heute Zeit?｜你今天有空吗？
+Mal,Zeit	no	das Mal 是“次、回”（zum ersten Mal, dreimal）；die Zeit 是“时间”。中文“第一次”不能说 die erste Zeit。	Ich bin zum ersten Mal in Wien.｜我第一次来维也纳。	Ich habe keine Zeit.｜我没有时间。
+wenn,wann,als,ob	no	wann 是疑问词“什么时候”；wenn 是“当……时”（现在、将来或反复发生）和“如果”；als 是过去某一次“当……时”；ob 是“是否”。	Wann kommst du?｜你什么时候来？	Wenn ich Zeit habe, rufe ich dich an.｜我有空就给你打电话。	Als ich klein war, wohnten wir in Köln.｜我小时候我们住在科隆。
+aber,sondern	no	aber 是“但是”；sondern 只用在否定之后，意思是“而是”，纠正前面的说法。	Das Hotel ist klein, aber schön.｜酒店小，但是漂亮。	Das ist nicht Tee, sondern Kaffee.｜这不是茶，而是咖啡。
+nicht,kein	no	kein 否定名词，用在本来该用 ein 或不带冠词的名词前；nicht 否定动词、形容词、带定冠词的名词和整句。	Ich habe kein Auto.｜我没有车。	Ich komme heute nicht.｜我今天不来。	Das ist nicht mein Auto.｜这不是我的车。
+viel,sehr	no	sehr 修饰形容词、副词和某些动词（“很、非常”）；viel 修饰名词（“多”），或表示做某事的量多。“我很忙”是 sehr beschäftigt，“我工作很多”是 viel arbeiten。	Das Essen ist sehr gut.｜饭菜很好吃。	Ich habe viel Arbeit.｜我工作很多。	Danke sehr! / Vielen Dank!｜非常感谢！
+hören,zuhören	partly	hören 是“听到”，也指听音乐、广播；zuhören 是“专心听（某人说话）”，人用第三格。	Hörst du die Musik?｜你听到音乐了吗？	Bitte hör mir zu!｜请听我说！
+warten,erwarten	no	warten 是“等待”（auf jemanden / etwas warten）；erwarten 是“期待、预计”，也指等候某个预约好的人。	Ich warte auf den Bus.｜我在等公交车。	Wir erwarten viele Gäste.｜我们预计会来很多客人。
+bekommen,werden	no	bekommen 是“得到、收到”，不是英语的 become；“变成、成为”是 werden。	Ich habe einen Brief bekommen.｜我收到了一封信。	Er will Arzt werden.｜他想当医生。
+arbeiten,funktionieren	no	arbeiten 指人工作；机器、方法“运转、管用”要说 funktionieren。	Mein Vater arbeitet bei der Post.｜我爸爸在邮局工作。	Der Drucker funktioniert nicht.｜打印机坏了。
+öffnen,aufmachen	yes	意思都是“打开”；aufmachen 更口语，öffnen 稍正式，商店营业时间等书面通知多用 öffnen。	Kannst du bitte das Fenster aufmachen?｜你能打开窗户吗？	Die Bank öffnet um neun Uhr.｜银行九点开门。
+schließen,zumachen	yes	意思都是“关上”；zumachen 更口语，schließen 稍正式，也指“结束、关门（营业）”。	Mach bitte die Tür zu!｜请把门关上！	Das Geschäft schließt um 20 Uhr.｜商店晚上八点关门。
+anfangen,beginnen	yes	意思都是“开始”，大多数句子可以互换；beginnen 稍正式。	Der Kurs fängt um neun an.｜课程九点开始。	Der Film beginnt gleich.｜电影马上开始。
+aufhören,enden,beenden	partly	aufhören 是人“停止做某事”（mit etwas aufhören）或雨等停下；enden 是事情“结束”，没有宾语；beenden 是“结束某事”，有宾语。	Hör auf zu rauchen!｜别抽烟了！	Der Kurs endet im Juni.｜课程六月结束。	Er beendet sein Studium.｜他完成学业。
+ändern,wechseln,verändern	partly	ändern 是修改、改动（einen Termin ändern）；wechseln 是换成另一个（Geld, Thema, Arbeitsstelle wechseln）；verändern / sich verändern 是变化、改变面貌。	Können wir den Termin ändern?｜我们能改一下约的时间吗？	Ich möchte Geld wechseln.｜我想换钱。	Die Stadt hat sich sehr verändert.｜这座城市变化很大。
+Geschäft,Laden	partly	两个都是“商店”，Laden 更口语；Geschäft 还指“生意、买卖”。	Der Laden an der Ecke ist billig.｜街角那家店便宜。	Die Geschäfte gehen gut.｜生意很好。
+Straße,Weg	partly	Straße 是“街道、马路”；Weg 是“路、小路”，也指“路线、去某处的路”。问路用 Weg。	Ich wohne in dieser Straße.｜我住在这条街上。	Können Sie mir den Weg zum Bahnhof zeigen?｜您能告诉我去火车站怎么走吗？
+Ende,Schluss	partly	都有“结束、结尾”的意思；am Ende 表示“最后、在……末尾”，zum Schluss 表示“最后（作为收尾）”，Schluss machen 是“结束、分手”。	Am Ende des Films weinen alle.｜电影结尾大家都哭了。	Zum Schluss noch eine Frage.｜最后还有一个问题。
+leihen,ausleihen,borgen	partly	jemandem etwas leihen / borgen 是“借给别人”，sich etwas leihen / borgen 是“向别人借来”；ausleihen 多指从图书馆等处借出、借来。borgen 比 leihen 口语。	Kannst du mir dein Fahrrad leihen?｜你能把自行车借给我吗？	Ich leihe mir ein Buch aus der Bibliothek aus.｜我从图书馆借一本书。
+treffen,kennenlernen,begegnen	no	treffen / sich treffen 是“见面、碰到”（约好或偶然）；kennenlernen 是“初次认识”；begegnen 是“偶遇”，人用第三格，完成时用 sein。	Ich treffe heute meine Freunde.｜我今天和朋友见面。	Wir haben uns im Urlaub kennengelernt.｜我们是在度假时认识的。	Ich bin ihm im Supermarkt begegnet.｜我在超市碰见了他。
+zahlen,bezahlen	partly	两个都是“付钱”；结账时说 Zahlen, bitte!；付某样东西或账单多用 bezahlen（die Rechnung bezahlen），zahlen 后面常接金额或方式（bar zahlen, 20 Euro zahlen）。	Wir möchten zahlen, bitte.｜我们想结账。	Ich bezahle die Miete am Monatsanfang.｜我月初交房租。	Kann ich mit Karte zahlen?｜可以刷卡吗？
+denken,glauben,meinen,finden	partly	表达看法时：finden 是根据自己的体验评价（Ich finde den Film gut）；glauben 是猜测、相信（不太确定）；denken 是“认为、想”；meinen 是“认为”，也表示“意思是”（Was meinst du damit?）。glauben、denken、meinen 在“我认为……”里常可互换，finden 只用于评价。	Ich finde das Buch spannend.｜我觉得这本书很精彩。	Ich glaube, er kommt heute nicht.｜我想他今天不会来。	Was meinst du damit?｜你这话是什么意思？
+können,dürfen,müssen,sollen	no	können 是“能、会”；dürfen 是“被允许”；müssen 是“必须”（自身需要或情况所迫）；sollen 是“应该”（别人要求或建议）。注意 nicht müssen 是“不必”，nicht dürfen 才是“不许”。	Hier darf man nicht rauchen.｜这里不许抽烟。	Du musst morgen nicht kommen.｜你明天不必来。	Der Arzt sagt, ich soll mehr schlafen.｜医生说我应该多睡。
+Leute,Mensch,Person	partly	Leute 是口语的“人们”，只有复数，不能和数字连用；Mensch 是“人、人类”；Person 是正式的“人、人数”，计人数用它。	Im Park sind viele Leute.｜公园里人很多。	Ein Tisch für vier Personen, bitte.｜请给我们一张四个人的桌子。	Alle Menschen sind gleich.｜人人平等。
+seit,vor	no	seit 表示从过去某时“一直到现在”，动词用现在时；vor 表示“……以前”，事情已经过去。	Ich wohne seit drei Jahren hier.｜我在这里住了三年（现在还住）。	Ich bin vor drei Jahren hierher gezogen.｜我三年前搬到这里。
+nach,zu,in	no	去某地：nach 用于城市、没有冠词的国家和 nach Hause；zu 用于人、机构、商店和具体地点（zum Arzt, zur Post）；in 用于带冠词的国家和进入某个空间（in die Schweiz, ins Kino）。	Ich fahre nach Berlin.｜我去柏林。	Ich gehe zum Arzt.｜我去看医生。	Wir gehen heute ins Kino.｜我们今天去看电影。
+reisen,fahren	partly	reisen 是“旅行、出远门”；fahren 是“乘车去、开车”，也可以说去某地旅行（in den Urlaub fahren）。日常坐车上班只用 fahren。	Ich reise gern.｜我喜欢旅行。	Ich fahre jeden Tag mit der U-Bahn.｜我每天坐地铁。
+Platz,Ort,Stelle	partly	Platz 是“座位、空间、广场”；Ort 是“地点、小地方、村镇”；Stelle 是“具体的位置、部位”，也指“职位”。	Ist der Platz noch frei?｜这个座位还空着吗？	Das ist ein schöner Ort für ein Picknick.｜这是野餐的好地方。	Ich suche eine neue Stelle.｜我在找新工作。
+Zimmer,Raum	partly	Zimmer 是住宅或酒店里的“房间”；Raum 更广，指任何“房间、空间、场所”（Unterrichtsraum），也指“空间”。说酒店房间、卧室用 Zimmer。	Ich möchte ein Zimmer reservieren.｜我想预订一个房间。	Der Kurs ist in Raum 12.｜课在 12 号教室。
+probieren,kosten,schmecken	partly	probieren 是“尝一尝、试一试”；kosten 一是“价钱是多少”，二是“尝”（较少用）；schmecken 是“味道……、好吃”，食物作主语。	Darf ich mal probieren?｜我可以尝一下吗？	Was kostet das?｜这个多少钱？	Die Suppe schmeckt sehr gut.｜汤很好喝。
+vergessen,verlieren	no	vergessen 是“忘记”（也指忘带）；verlieren 是“丢失、输掉”。	Ich habe seinen Namen vergessen.｜我忘了他的名字。	Ich habe meinen Schlüssel verloren.｜我把钥匙弄丢了。
+heißen,nennen	no	heißen 是“名字叫……”，主语是被叫的人或物；nennen 是“称呼、叫某人为……”，有宾语。	Ich heiße Li Ming.｜我叫李明。	Alle nennen ihn Max.｜大家都叫他 Max。
+wieder,zurück	no	wieder 是“再、又”（再一次）；zurück 是“回、返回”（回到原处）。	Kommst du morgen wieder?｜你明天还来吗？	Wann kommst du zurück?｜你什么时候回来？
+dann,danach,denn	no	dann 是“然后、那么”；danach 是“在那之后”；denn 是“因为”（连接两个主句），在疑问句里是语气词。	Zuerst esse ich, dann gehe ich.｜我先吃饭，然后走。	Ich bleibe zu Hause, denn ich bin krank.｜我待在家，因为我病了。	Was ist denn los?｜怎么啦？
+weil,denn,da	partly	三个都表示原因：weil 和 da 引导从句，动词放句末，da 较正式、常放句首；denn 连接两个主句，动词在第二位。回答 Warum? 用 weil。	Ich komme nicht, weil ich krank bin.｜我不来，因为我病了。	Ich komme nicht, denn ich bin krank.｜我不来，因为我病了。	Da es regnet, bleiben wir zu Hause.｜既然下雨，我们就待在家。
+obwohl,trotzdem	no	obwohl 引导从句（“虽然”），动词在句末；trotzdem 是副词（“尽管如此、还是”），放在主句里。意思接近，句子结构完全不同。	Obwohl es regnet, gehen wir spazieren.｜虽然下雨，我们还是去散步。	Es regnet. Trotzdem gehen wir spazieren.｜下雨了，我们还是去散步。
+damit	partly	表示目的“为了”：前后主语相同时用 um … zu + 不定式；主语不同时只能用 damit。主语相同时用 damit 也对，但不如 um … zu 常见。	Ich lerne Deutsch, um in Deutschland zu studieren.｜我学德语是为了去德国上大学。	Ich spreche langsam, damit du mich verstehst.｜我说慢点，好让你听懂。
+Zug,Bahn	partly	Zug 是一列“火车”；Bahn 指铁路系统，也用于 S-Bahn、U-Bahn、Straßenbahn。说“坐火车”时 mit dem Zug 和 mit der Bahn 都可以。	Der Zug hat zehn Minuten Verspätung.｜火车晚点十分钟。	Ich fahre mit der Bahn zur Arbeit.｜我坐火车上班。
+Kasse,Rechnung,Quittung	no	Kasse 是“收银台”；Rechnung 是“账单、发票”（要付的钱）；Quittung 是“收据”（已付款的证明）。	Bitte zahlen Sie an der Kasse.｜请到收银台付款。	Die Rechnung, bitte!｜请结账！	Kann ich eine Quittung haben?｜可以给我一张收据吗？
+billig,günstig	partly	都可以表示“便宜”；billig 有时带“廉价、质量差”的意味，günstig 是“价格划算、合适”，也指时机有利。	Das T-Shirt war sehr billig.｜这件 T 恤很便宜。	Das Angebot ist günstig.｜这个优惠很划算。
+groß,hoch,lang	no	groß 是“大、个子高”；hoch 是“高”（楼、山、价格、温度）；lang 是“长”（距离、时间）。人个子高用 groß，楼高用 hoch。	Mein Bruder ist sehr groß.｜我哥哥个子很高。	Der Berg ist 3000 Meter hoch.｜这座山高 3000 米。	Der Weg ist lang.｜路很长。
+klein,kurz,niedrig	no	klein 是“小、个子矮”；kurz 是“短”（长度、时间）；niedrig 是“低”（高度、价格、温度）。	Die Wohnung ist klein.｜房子很小。	Die Pause ist nur kurz.｜休息时间很短。	Die Preise sind niedrig.｜价格很低。
+leise,ruhig	partly	leise 是“小声、声音轻”；ruhig 是“安静、平静”，也指人性格沉稳。说环境安静两个都可以，说人说话小声用 leise。	Sprich bitte leise, das Baby schläft.｜请小声说话，宝宝在睡觉。	Die Wohnung liegt sehr ruhig.｜这套房子很安静。
+fertig,bereit	partly	fertig 是“完成了、准备好了”（Ich bin fertig）；bereit 是“准备好、愿意”（zu etwas bereit sein）。“做完了”只能用 fertig。	Das Essen ist fertig.｜饭做好了。	Ich bin bereit, dir zu helfen.｜我愿意帮你。
+Ausweis,Pass	partly	Ausweis 是各种“证件”，常指身份证（Personalausweis）；Pass 是“护照”（Reisepass）。	Darf ich Ihren Ausweis sehen?｜可以看一下您的证件吗？	Für die Reise nach China brauche ich einen Pass.｜去中国旅行我需要护照。
+Termin,Verabredung	partly	Termin 是正式的“约定时间、预约”（看医生、办事）；Verabredung 是和朋友的“约会、约见”。	Ich habe morgen einen Termin beim Arzt.｜我明天约了医生。	Ich habe heute Abend eine Verabredung.｜我今晚有约。
+Essen,Gericht,Speise	partly	Essen 是“饭菜、食物”，也是“吃饭”这件事；Gericht 是“一道菜”；Speise 较正式，多见于 Speisekarte。	Das Essen ist fertig.｜饭好了。	Was ist dein Lieblingsgericht?｜你最喜欢的菜是什么？
+schicken,senden	yes	都是“寄、发送”；schicken 更日常，senden 较正式，也指广播、电视播送。	Ich schicke dir eine Nachricht.｜我给你发条消息。	Wir senden Ihnen die Unterlagen per Post.｜我们会把资料邮寄给您。
+benutzen,verwenden,gebrauchen	yes	都是“使用”，大多可以互换；verwenden 稍正式；gebrauchen 常用在 etwas gut gebrauchen können（用得上）。	Darf ich dein Handy benutzen?｜我能用一下你的手机吗？	Das kann ich gut gebrauchen.｜这个我用得上。
+ziehen,umziehen,einziehen,ausziehen	partly	umziehen 是“搬家”（也指换衣服 sich umziehen）；einziehen 是“搬进”；ausziehen 是“搬出”（也指脱衣服）；ziehen 是“拉”，也表示“搬到某地”（nach Berlin ziehen）。	Wir ziehen nächsten Monat um.｜我们下个月搬家。	Er zieht nach Hamburg.｜他搬到汉堡去。	Ich ziehe die Jacke aus.｜我把外套脱掉。
+erinnern,vergessen	no	sich an etwas erinnern 是“记得、想起”；jemanden an etwas erinnern 是“提醒某人”；vergessen 是“忘记”。	Ich erinnere mich an unseren Urlaub.｜我记得我们的假期。	Erinnere mich bitte an den Termin!｜请提醒我这个约会！
+spät,später	partly	spät 是“晚”（Es ist spät）；später 是“晚些时候、以后”。“回头见”是 Bis später。	Es ist schon spät.｜已经很晚了。	Ich rufe dich später an.｜我晚点给你打电话。
+alle,ganz	partly	alle 是“所有的（人或东西）”，接复数；ganz 是“整个的”，接单数（der ganze Tag）。“全天”说 den ganzen Tag，不说 alle Tag。	Alle Kinder spielen draußen.｜所有孩子都在外面玩。	Ich habe den ganzen Tag gearbeitet.｜我工作了一整天。

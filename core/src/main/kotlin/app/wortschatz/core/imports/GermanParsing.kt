@@ -11,6 +11,8 @@ data class Headword(
     val plural: String? = null,
     val verbForms: VerbForms? = null,
     val separablePrefix: String? = null,
+    /** Marked as used only in the plural: "Eltern (Pl.)", "die Leute, nur Pl.". */
+    val pluralOnly: Boolean = false,
 )
 
 /**
@@ -41,6 +43,11 @@ object GermanParsing {
 
         var gender: Gender? = null
         var plural: String? = null
+
+        // Plural-only marker at the end: "Eltern (Pl.)", "Leute, nur Pl.", "Ferien (Plural)"
+        val pluralOnlyMarker = Regex("(?i)(?:\\s*[(,]\\s*|\\s+)(?:nur\\s+)?(?:pl\\.?|plural)\\s*\\)?$")
+        val pluralOnly = text.contains(' ') && pluralOnlyMarker.containsMatchIn(text)
+        if (pluralOnly) text = text.replace(pluralOnlyMarker, "").trim()
 
         // Leading article: "der Tisch", "r Tisch"
         val first = text.substringBefore(' ')
@@ -83,6 +90,7 @@ object GermanParsing {
 
         val prefix = if (text.contains('|')) text.substringBefore('|') else null
         val lemma = text.replace("|", "")
+        if (pluralOnly) return Headword(lemma, Gender.DIE, separablePrefix = prefix, pluralOnly = true)
         return Headword(lemma, gender, plural?.takeIf { it.isNotEmpty() }, separablePrefix = prefix)
     }
 
