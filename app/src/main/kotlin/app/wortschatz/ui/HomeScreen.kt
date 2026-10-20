@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.CircularProgressIndicator
@@ -46,8 +49,13 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel, onRestore: () -> Unit) {
                 OutlinedButton(onClick = vm::openSettings) { Text("⚙ 设置") }
             }
             Spacer(Modifier.height(8.dp))
-            Row(Modifier.fillMaxWidth()) {
-                OutlinedButton(onClick = vm::openBooks) { Text("📚 ${home.wordBookTitle}") }
+            // Finding things and changing what is studied: quiet outlined buttons at the top.
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = vm::openBooks, modifier = Modifier.weight(1f), contentPadding = PaddingValues(horizontal = 12.dp)) {
+                    Text("📚 ${home.wordBookTitle}", maxLines = 1, overflow = TextOverflow.Ellipsis)
+                }
+                OutlinedButton(onClick = vm::openWords, contentPadding = PaddingValues(horizontal = 12.dp)) { Text("词表") }
+                OutlinedButton(onClick = vm::openStats, contentPadding = PaddingValues(horizontal = 12.dp)) { Text("统计") }
             }
             if (home.offerRestore) {
                 Spacer(Modifier.height(16.dp))
@@ -104,15 +112,27 @@ fun HomeScreen(home: HomeState?, vm: StudyViewModel, onRestore: () -> Unit) {
 
             Spacer(Modifier.weight(1.3f))
 
+            // Extra practice next to the daily plan: tonal buttons that say what each game trains.
+            Text(
+                "加练 · 不影响复习计划",
+                Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                FilledTonalButton(onClick = vm::startDrill, modifier = Modifier.weight(1f).height(52.dp)) { Text("冠词快练") }
-                FilledTonalButton(onClick = vm::openNumbers, modifier = Modifier.weight(1f).height(52.dp)) { Text("听数字") }
+                PracticeButton("冠词快练", "der · die · das", vm::startDrill, Modifier.weight(1f))
+                PracticeButton("听数字", "听音写数字", vm::openNumbers, Modifier.weight(1f))
             }
-            Spacer(Modifier.height(12.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                FilledTonalButton(onClick = vm::openWords, modifier = Modifier.weight(1f).height(52.dp)) { Text("词表") }
-                FilledTonalButton(onClick = vm::openStats, modifier = Modifier.weight(1f).height(52.dp)) { Text("统计") }
-            }
+        }
+    }
+}
+
+@Composable
+private fun PracticeButton(title: String, subtitle: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    FilledTonalButton(onClick = onClick, modifier = modifier.height(64.dp), shape = RoundedCornerShape(16.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(title, fontWeight = FontWeight.SemiBold)
+            Text(subtitle, style = MaterialTheme.typography.labelSmall)
         }
     }
 }
