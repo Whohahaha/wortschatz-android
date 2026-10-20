@@ -36,6 +36,19 @@ class MainActivity : ComponentActivity() {
         uri?.let(viewModel::beginImport)
     }
 
+    private val exportBackup = registerForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+        uri?.let(viewModel::exportBackup)
+    }
+
+    private val restoreBackup = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let(viewModel::restoreBackup)
+    }
+
+    private fun pickBackup() = restoreBackup.launch(arrayOf("application/zip", "application/octet-stream", "*/*"))
+
+    private fun exportBackupFile() =
+        exportBackup.launch("wortschatz-backup-" + java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.ROOT).format(java.util.Date()) + ".zip")
+
     // The reminder is only switched on once the notification permission is granted.
     private val askNotifications = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         viewModel.setReminderEnabled(granted)
@@ -66,8 +79,11 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 when (state.screen) {
-                    Screen.HOME -> HomeScreen(state.home, viewModel)
-                    Screen.SETTINGS -> SettingsScreen(state.home, state.scheme, viewModel, onReminderToggle = ::toggleReminder)
+                    Screen.HOME -> HomeScreen(state.home, viewModel, onRestore = ::pickBackup)
+                    Screen.SETTINGS -> SettingsScreen(
+                        state.home, state.scheme, viewModel,
+                        onReminderToggle = ::toggleReminder, onExport = ::exportBackupFile, onRestore = ::pickBackup,
+                    )
                     Screen.STUDY -> StudyScreen(state, viewModel)
                     Screen.DONE -> DoneScreen(state, viewModel)
                     Screen.GESTURES -> GestureSettingsScreen(state.scheme, state.swipeSensitivity, viewModel)

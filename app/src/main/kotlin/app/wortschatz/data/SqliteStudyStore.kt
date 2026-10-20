@@ -17,8 +17,28 @@ import app.wortschatz.core.fsrs.Rating
  * Cards hold the current memory state; review_log is append-only and is the source of
  * truth that a future sync will exchange between devices.
  */
-class SqliteStudyStore(context: Context) :
-    SQLiteOpenHelper(context, "wortschatz.db", null, 2), StudyStore {
+class SqliteStudyStore(private val context: Context) :
+    SQLiteOpenHelper(context, NAME, null, 2), StudyStore {
+
+    /**
+     * The database file with everything written so far, for a backup.
+     * Schema changes go through [onUpgrade] only (never drop or recreate tables), so a backup
+     * from any older version restores into a newer app.
+     */
+    @Synchronized
+    fun snapshot(): java.io.File {
+        writableDatabase.rawQuery("PRAGMA wal_checkpoint(FULL)", null).use { it.moveToFirst() }
+        return context.getDatabasePath(NAME)
+    }
+
+    /** Swaps in a database file from a backup; the next access opens and, if older, upgrades it. */
+    @Synchronized
+    fun replaceWith(file: java.io.File) {
+        close()
+        val target = context.getDatabasePath(NAME)
+        listOf("-wal", "-shm", "-journal").forEach { java.io.File(target.path + it).delete() }
+        file.copyTo(target, overwrite = true)
+    }
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
@@ -38,6 +58,10 @@ class SqliteStudyStore(context: Context) :
         )
         db.execSQL("CREATE INDEX review_log_ts ON review_log(ts)")
         createKnownEntries(db)
+    }
+
+    companion object {
+        const val NAME = "wortschatz.db"
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

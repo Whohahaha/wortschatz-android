@@ -43,7 +43,14 @@ import kotlin.math.roundToInt
 
 /** Everything that is set once and then left alone, so the home screen only has to show today. */
 @Composable
-fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, onReminderToggle: (Boolean) -> Unit) {
+fun SettingsScreen(
+    home: HomeState?,
+    scheme: GestureScheme,
+    vm: StudyViewModel,
+    onReminderToggle: (Boolean) -> Unit,
+    onExport: () -> Unit,
+    onRestore: () -> Unit,
+) {
     Scaffold { padding ->
         if (home == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
@@ -98,6 +105,23 @@ fun SettingsScreen(home: HomeState?, scheme: GestureScheme, vm: StudyViewModel, 
                         Text("%02d:00".format(home.reminderHour), Modifier.padding(horizontal = 12.dp), fontWeight = FontWeight.Bold)
                         OutlinedButton(onClick = { vm.changeReminderHour(1) }) { Text("+") }
                     }
+                }
+            }
+
+            Section("备份与恢复")
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("进度、设置和导入的词书每天自动备份到「下载/Wortschatz」，卸载 App 也不会删掉。")
+                    Text(
+                        if (home.lastBackup == 0L) "还没有自动备份过" else "上次自动备份：" + java.text.SimpleDateFormat("M月d日 HH:mm", java.util.Locale.CHINA).format(java.util.Date(home.lastBackup)),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(onClick = vm::backupNow) { Text("立即备份") }
+                        OutlinedButton(onClick = onExport) { Text("导出到…") }
+                    }
+                    OutlinedButton(onClick = onRestore) { Text("从备份恢复（替换当前进度）") }
                 }
             }
 

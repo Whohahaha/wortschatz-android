@@ -62,6 +62,10 @@ data class HomeState(
     val newWordsPerDay: Int,
     val newWordOrder: NewWordOrder = NewWordOrder.BOOK,
     val disabledCardTypes: Set<CardType> = emptySet(),
+    /** When the daily copy in Download/Wortschatz was last written; 0 = never. */
+    val lastBackup: Long = 0,
+    /** A fresh install with no progress yet: offer to restore a backup. */
+    val offerRestore: Boolean = false,
     val streak: Int = 0,
     val knownWords: Int = 0,
     /** Reviews due beyond today's limit, held back so a missed week is not one huge session. */
@@ -179,6 +183,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     init {
         _state.update { it.copy(scheme = loadScheme(), swipeSensitivity = loadSensitivity()) }
         onSession { s -> _state.update { it.copy(home = homeState(s)) } }
+        autoBackup()
     }
 
     fun startStudy() = onSession { s -> showNext(s) }
@@ -537,6 +542,55 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         return n.copy(target = target, input = "", right = null)
     }
 
+    // ---- Backup ----
+
+    // Nothing to keep yet on a fresh install, and an empty copy would only confuse a later restore.
+    private fun autoBackup() = onSession { s ->
+        if (s.learnedWords() > 0 && app.backup.autoBackup()) _state.update { it.copy(home = homeState(s)) }
+    }
+
+    fun backupNow() {
+        viewModelScope.launch {
+            val ok = withContext(sessionThread) { app.backup.autoBackup(maxAgeMs = 0) }
+            toast(if (ok) "已备份到 下载/Wortschatz" else "备份失败")
+            refreshHome()
+        }
+    }
+
+    fun exportBackup(uri: Uri) {
+        viewModelScope.launch {
+            val ok = withContext(sessionThread) {
+                runCatching { app.contentResolver.openOutputStream(uri, "wt")!!.use(app.backup::export) }.isSuccess
+            }
+            toast(if (ok) "备份已导出" else "导出失败")
+        }
+    }
+
+    /** Restores a backup, then restarts the app so everything is read again from the restored data. */
+    fun restoreBackup(uri: Uri) {
+        viewModelScope.launch {
+            val error = withContext(sessionThread) {
+                runCatching { app.contentResolver.openInputStream(uri)!!.use(app.backup::restore) }.exceptionOrNull()
+            }
+            if (error != null) {
+                toast(error.message?.takeIf { it.any { c -> c.code > 0x2e80 } } ?: "恢复失败：不是有效的备份文件")
+                return@launch
+            }
+            toast("已恢复，正在重新打开")
+            delay(600)
+            app.packageManager.getLaunchIntentForPackage(app.packageName)?.let {
+                it.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                app.startActivity(it)
+            }
+            Runtime.getRuntime().exit(0)
+        }
+    }
+
+    fun dismissRestore() {
+        prefs.edit().putBoolean(KEY_RESTORE_DISMISSED, true).apply()
+        refreshHome()
+    }
+
     // ---- Card types ----
 
     fun setCardTypeEnabled(type: CardType, enabled: Boolean) {
@@ -640,6 +694,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
             _state.update {
                 it.copy(screen = Screen.DONE, current = null, canUndo = s.canUndo, counts = s.counts(), home = homeState(s))
             }
+            autoBackup()
         } else {
             show(s, card)
         }
@@ -685,6 +740,8 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         newWordsPerDay = prefs.getInt(KEY_NEW_PER_DAY, WortschatzApp.DEFAULT_NEW_PER_DAY),
         newWordOrder = app.studySettings.newWordOrder,
         disabledCardTypes = app.studySettings.disabledCardTypes,
+        lastBackup = app.backup.lastAutoBackup,
+        offerRestore = s.learnedWords() == 0 && s.reviewsToday() == 0 && !prefs.getBoolean(KEY_RESTORE_DISMISSED, false),
         streak = s.streak(),
         knownWords = s.knownWords(),
         backlog = s.backlog(),
@@ -701,5 +758,6 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         const val KEY_SENSITIVITY = "swipe_sensitivity"
         const val DRILL_SIZE = 20
         const val KEY_NUMBER_RANGE = "number_range"
+        const val KEY_RESTORE_DISMISSED = "restore_dismissed"
     }
 }

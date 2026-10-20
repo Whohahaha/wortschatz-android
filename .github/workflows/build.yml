@@ -69,6 +69,15 @@ jobs:
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug
 
+      # A different signature would force users to uninstall, and lose their progress, to update.
+      - name: Check signing key
+        run: |
+          expected=$(grep '^certSha256=' signing/keystore.properties | cut -d= -f2)
+          apksigner=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          actual=$("$apksigner" verify --print-certs app/build/outputs/apk/debug/app-debug.apk | grep -m1 'SHA-256 digest' | awk '{print $NF}')
+          echo "expected $expected, got $actual"
+          test "$actual" = "$expected"
+
       - uses: actions/upload-artifact@v4
         with:
           name: wortschatz-arm64-v8a-debug-apk
