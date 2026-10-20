@@ -88,6 +88,23 @@ class SqliteStudyStore(private val context: Context) :
         }
     }
 
+    override fun reset(entryIds: Set<String>?): Unit = transaction {
+        if (entryIds == null) {
+            delete("review_log", null, null)
+            delete("card", null, null)
+            delete("known_entry", null, null)
+        } else {
+            // Stay well under SQLite's limit on bound parameters.
+            entryIds.chunked(500).forEach { ids ->
+                val marks = ids.joinToString(",") { "?" }
+                val args = ids.toTypedArray()
+                delete("review_log", "card_id IN (SELECT id FROM card WHERE entry_id IN ($marks))", args)
+                delete("card", "entry_id IN ($marks)", args)
+                delete("known_entry", "entry_id IN ($marks)", args)
+            }
+        }
+    }
+
     override fun reviewTimesSince(timestamp: Long): List<Long> =
         readableDatabase.rawQuery("SELECT ts FROM review_log WHERE ts >= ?", arrayOf(timestamp.toString())).use { c ->
             buildList { while (c.moveToNext()) add(c.getLong(0)) }

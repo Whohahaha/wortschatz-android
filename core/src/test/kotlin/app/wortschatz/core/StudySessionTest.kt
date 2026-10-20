@@ -114,6 +114,52 @@ class StudySessionTest {
     }
 
     @Test
+    fun reopeningMidSessionCarriesOnWithTheSameQueue() {
+        val store = InMemoryStudyStore()
+        val s1 = session(store)
+        val failed = s1.nextCard()!!
+        s1.answer(failed, Rating.AGAIN, 1000)
+        val passed = s1.nextCard()!!
+        s1.answer(passed, Rating.EASY, 1000)
+        val before = s1.counts()
+
+        // The app is killed and opened again a moment later.
+        now += 2 * MINUTE
+        val s2 = session(store)
+        assertEquals(before, s2.counts())
+        assertEquals(2, s2.reviewsToday())
+        // Both of today's new words are used up; the failed one comes back, the passed one does not.
+        val rest = generateSequence { s2.nextCard()?.also { s2.answer(it, Rating.GOOD, 1000) } }.take(20).toList()
+        assertEquals(failed.id, rest.first().id)
+        assertTrue(rest.none { it.id == passed.id })
+        assertTrue(rest.all { it.entryId == failed.entryId })
+    }
+
+    @Test
+    fun resetForgetsOnlyTheGivenWords() {
+        val store = InMemoryStudyStore()
+        val s1 = session(store)
+        val tisch = s1.nextCard()!!
+        s1.answer(tisch, Rating.EASY, 1000)
+        s1.markKnown(s1.nextCard()!!)
+        assertEquals(2, s1.learnedWords())
+
+        store.reset(setOf(tisch.entryId))
+        val s2 = session(store)
+        assertEquals(1, s2.learnedWords())
+        assertEquals(1, s2.knownWords())
+        assertEquals(0, s2.reviewsToday())
+        assertEquals(11, store.loadCards().size)
+        assertTrue(store.loadCards().filter { it.entryId == tisch.entryId }.all { it.memory.reps == 0 })
+
+        store.reset(null)
+        val s3 = session(store)
+        assertEquals(0, s3.learnedWords())
+        assertEquals(0, s3.knownWords())
+        assertEquals(11, store.loadCards().size)
+    }
+
+    @Test
     fun upcomingEntriesCoverDueCardsAndTomorrowsNewWords() {
         val s = session()
         assertEquals(listOf("tisch", "lampe"), s.upcomingEntries(days = 0).map { it.id })

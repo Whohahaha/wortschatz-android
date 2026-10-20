@@ -15,8 +15,8 @@ android {
         applicationId = "app.wortschatz"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "0.11.0"
+        versionCode = 14
+        versionName = "0.12.0"
 
         // Only 64-bit ARM phones are targeted; native libraries added later ship for arm64 alone.
         ndk {

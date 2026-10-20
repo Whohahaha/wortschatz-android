@@ -553,9 +553,23 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         _state.update { it.copy(articleChoice = gender) }
         speaker.speak(current.entry.spoken)
         val correct = gender == current.entry.gender
-        viewModelScope.launch {
-            delay(if (correct) 700 else 1600)
-            if (_state.value.current?.card?.id == current.card.id) rate(if (correct) Rating.GOOD else Rating.AGAIN)
+        saveGraded(current, if (correct) Rating.GOOD else Rating.AGAIN, pauseMs = if (correct) 700 else 1600)
+    }
+
+    @Volatile private var answerToken = 0
+
+    /**
+     * Saves an answer the app graded (article, multiple choice, typing) right away, so closing the
+     * app while the result is still on screen loses nothing. Moves on after [pauseMs] unless the
+     * answer was undone meanwhile; null waits for [continueTyped].
+     */
+    private fun saveGraded(current: StudyCard, rating: Rating, pauseMs: Long?) {
+        val duration = System.currentTimeMillis() - shownAt
+        val token = ++answerToken
+        onSession { s -> s.answer(current.card, rating, duration) }
+        if (pauseMs != null) viewModelScope.launch {
+            delay(pauseMs)
+            onSession { s -> if (answerToken == token) showNext(s) }
         }
     }
 
@@ -574,11 +588,11 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
         _state.update { it.copy(typed = typed) }
         speaker.speak(if (current.card.type == CardType.SPELLING) entry.spoken else entry.example)
-        if (typed.verdict == Verdict.CORRECT) {
-            viewModelScope.launch {
-                delay(900)
-                if (_state.value.current?.card?.id == current.card.id) rate(Rating.GOOD)
-            }
+        // Close (case, umlaut spelling, one letter off) counts as Hard; wrong as Again.
+        when (typed.verdict) {
+            Verdict.CORRECT -> saveGraded(current, Rating.GOOD, pauseMs = 900)
+            Verdict.CLOSE -> saveGraded(current, Rating.HARD, pauseMs = null)
+            Verdict.WRONG -> saveGraded(current, Rating.AGAIN, pauseMs = null)
         }
     }
 
@@ -589,12 +603,14 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         val expected = if (current.card.type == CardType.SPELLING) current.entry.lemma else Cloze.of(current.entry)?.answer.orEmpty()
         _state.update { it.copy(typed = TypedAnswer("", Verdict.WRONG, expected)) }
         speaker.speak(if (current.card.type == CardType.SPELLING) current.entry.spoken else current.entry.example)
+        saveGraded(current, Rating.AGAIN, pauseMs = null)
     }
 
-    /** Close (case, umlaut spelling, one letter off) counts as Hard; wrong as Again. */
+    /** Leaves a typed answer that was not right; it was already saved when it was checked. */
     fun continueTyped() {
-        val typed = _state.value.typed ?: return
-        rate(if (typed.verdict == Verdict.CLOSE) Rating.HARD else Rating.AGAIN)
+        if (_state.value.typed == null) return
+        val token = answerToken
+        onSession { s -> if (answerToken == token && _state.value.typed != null) showNext(s) }
     }
 
     // ---- Looking up words in example sentences ----
@@ -722,6 +738,30 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * Forgets what was learned in the active book, or in every book, after saving a separate
+     * backup to go back to. Word books, recordings and settings stay as they are.
+     */
+    fun resetProgress(allBooks: Boolean) {
+        viewModelScope.launch {
+            val name = "wortschatz-重置前-" + java.text.SimpleDateFormat("yyyyMMdd-HHmm", java.util.Locale.ROOT).format(java.util.Date()) + ".zip"
+            val done = withContext(sessionThread) {
+                if (!app.backup.saveCopy(name)) return@withContext false
+                app.store.reset(if (allBooks) null else app.entries.map { it.id }.toSet())
+                session = createSession()
+                true
+            }
+            if (!done) {
+                toast("没能先做备份，进度没有动。可以先用「导出到…」手动备份。")
+                return@launch
+            }
+            // The "restore a backup?" card is for new installs, not for someone who just started over.
+            prefs.edit().putBoolean(KEY_RESTORE_DISMISSED, true).apply()
+            refreshHome()
+            toast("已重置。原来的进度另存在 下载/Wortschatz/$name")
+        }
+    }
+
     fun dismissRestore() {
         prefs.edit().putBoolean(KEY_RESTORE_DISMISSED, true).apply()
         refreshHome()
@@ -800,10 +840,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         _state.update { it.copy(picked = index) }
         speaker.speak(current.entry.spoken)
         val correct = current.options.getOrNull(index)?.id == current.entry.id
-        viewModelScope.launch {
-            delay(if (correct) 800 else 2000)
-            if (_state.value.current?.card?.id == current.card.id && _state.value.picked != null) rate(if (correct) Rating.GOOD else Rating.AGAIN)
-        }
+        saveGraded(current, if (correct) Rating.GOOD else Rating.AGAIN, pauseMs = if (correct) 800 else 2000)
     }
 
     /** "斩": the current word is already known and never comes up again. */
@@ -911,6 +948,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun show(s: StudySession, card: Card) {
+        answerToken++
         stopShadowing()
         val entry = s.entry(card)
         val intervals = s.preview(card).mapValues { formatInterval(it.value) }

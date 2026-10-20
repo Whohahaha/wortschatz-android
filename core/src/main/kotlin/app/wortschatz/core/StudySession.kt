@@ -20,6 +20,11 @@ interface StudyStore {
     /** Words the user marked as already known ("斩"); they never come up again. */
     fun knownEntries(): Set<String>
     fun setKnown(entryId: String, known: Boolean)
+    /**
+     * Forgets everything learned about [entryIds] (cards, review history, "known" marks), or
+     * about every word when it is null. Fresh cards are made again by the next [StudySession].
+     */
+    fun reset(entryIds: Set<String>?)
 }
 
 data class StudySettings(
@@ -393,5 +398,11 @@ class InMemoryStudyStore : StudyStore {
     override fun knownEntries(): Set<String> = known.toSet()
     override fun setKnown(entryId: String, known: Boolean) {
         if (known) this.known += entryId else this.known -= entryId
+    }
+    override fun reset(entryIds: Set<String>?) {
+        val gone = cards.values.filter { entryIds == null || it.entryId in entryIds }.map { it.id }.toSet()
+        gone.forEach(cards::remove)
+        logs.removeAll { it.cardId in gone }
+        if (entryIds == null) known.clear() else known -= entryIds
     }
 }
