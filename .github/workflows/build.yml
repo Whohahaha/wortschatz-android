@@ -67,13 +67,38 @@ jobs:
           ./gradlew :core:audioManifest
           python tools/gen_audio.py build/audio-manifest.tsv .voices/de_DE-thorsten-high.onnx .audio-cache app/src/main/assets/audio
 
+      # The signing key lives only in GitHub Secrets. Pull requests from forks get no secrets and
+      # build with the throwaway debug key; those APKs are never published.
+      - name: Restore signing key
+        id: signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "No signing key available; building with the debug key."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/wortschatz.jks"
+          echo "WORTSCHATZ_KEYSTORE=$RUNNER_TEMP/wortschatz.jks" >> "$GITHUB_ENV"
+          echo "available=true" >> "$GITHUB_OUTPUT"
+
       - name: Build debug APK
+        env:
+          WORTSCHATZ_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          WORTSCHATZ_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: ./gradlew :app:assembleDebug
 
+      - name: Remove signing key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/wortschatz.jks"
+
       # A different signature would force users to uninstall, and lose their progress, to update.
+      # Pushes and manual runs must be signed with the real key; only fork PRs may skip this.
       - name: Check signing key
+        if: steps.signing.outputs.available == 'true' || github.event_name != 'pull_request'
         run: |
-          expected=$(grep '^certSha256=' signing/keystore.properties | cut -d= -f2)
+          expected=$(tr -d '[:space:]' < signing/cert-sha256.txt)
           apksigner=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
           actual=$("$apksigner" verify --print-certs app/build/outputs/apk/debug/app-debug.apk | grep -m1 'SHA-256 digest' | awk '{print $NF}')
           echo "expected $expected, got $actual"

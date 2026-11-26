@@ -59,7 +59,7 @@
 ## 0.8.0：更新不再丢进度
 
 - 0.7.0 及以前每次 CI 构建都用临时生成的调试密钥签名，签名每版不同，手机只能卸载重装，进度随之丢失。
-- 现在所有构建都用 `signing/wortschatz.jks` 这把固定密钥签名，CI 会核对证书指纹（见 `signing/keystore.properties`），对不上就不发布。**这把密钥不能丢、不能换。**
+- 现在所有构建都用同一把固定密钥签名，CI 会核对证书指纹（见 `signing/cert-sha256.txt`），对不上就不发布。**这把密钥不能丢、不能换。**（后来换过一次密钥，现在密钥不在仓库里，见下方「签名密钥」。）
 - 每天自动备份进度、设置和导入的词书到「下载/Wortschatz/wortschatz-backup.zip」，卸载也不会删。设置页可立即备份、导出、恢复；新装后没有进度时首页提示从备份恢复。
 - 数据规则：数据库只通过 `onUpgrade` 加表加列，不删不重建；设置项改名时保留旧键的读取；新卡片类型由程序自动补建。这样旧版本的数据和备份都能在新版本里打开。
 - 首页的词书、设置、冠词快练、听数字入口都改成按钮。
@@ -133,3 +133,11 @@ app/    安卓应用
 ## 下一步（第二阶段）
 
 动词搭配卡（warten auf + Akk.）、每日提醒通知、账号和多设备同步、入门分级测试、冠词快练模式。
+
+## 签名密钥
+
+- 从这一版起换了新签名密钥：旧密钥曾随仓库公开，已作废。从旧版升级要先在设置里导出备份，卸载旧版，装新版，再从备份恢复。
+- 密钥不在仓库里。CI 从 GitHub Secrets 取：`SIGNING_KEYSTORE_BASE64`（jks 的 base64）、`SIGNING_STORE_PASSWORD`、`SIGNING_KEY_PASSWORD`。
+- 本地构建默认读 `~/.android-signing/wortschatz/keystore.properties`（也可用环境变量 `WORTSCHATZ_SIGNING_PROPERTIES` 指定别的路径，或直接设 `WORTSCHATZ_KEYSTORE` / `WORTSCHATZ_STORE_PASSWORD` / `WORTSCHATZ_KEY_PASSWORD`）。找不到密钥时用临时调试密钥，这样的 APK 不要发布。
+- 证书指纹是公开的，放在 `signing/cert-sha256.txt`。
+

@@ -10,3 +10,8 @@ app/src/main/assets/audio/
 .audio-cache/
 .voices/
 app/src/main/assets/lexicon/
+
+# Signing key and passwords live outside the repo (GitHub Secrets / ~/.android-signing)
+signing/*.jks
+signing/*.keystore
+signing/keystore.properties

@@ -25,24 +25,39 @@ android {
     }
 
     // Every build is signed with the same key so new versions install over old ones and keep the
-    // learner's data. See signing/keystore.properties.
-    val signing = Properties().apply { rootProject.file("signing/keystore.properties").reader().use { load(it) } }
-    signingConfigs {
-        create("fixed") {
-            storeFile = rootProject.file("signing/" + signing.getProperty("storeFile"))
-            storePassword = signing.getProperty("storePassword")
-            keyAlias = signing.getProperty("keyAlias")
-            keyPassword = signing.getProperty("keyPassword")
+    // learner's data. The key is never in the repo: CI gets it from GitHub Secrets through the
+    // WORTSCHATZ_* environment variables; locally they can come from a keystore.properties file
+    // (WORTSCHATZ_SIGNING_PROPERTIES, default ~/.android-signing/wortschatz/keystore.properties).
+    // Without a key, builds fall back to the throwaway debug key and must not be published.
+    // The expected certificate fingerprint is public: signing/cert-sha256.txt.
+    val localSigning = Properties().apply {
+        val path = System.getenv("WORTSCHATZ_SIGNING_PROPERTIES")
+            ?: "${System.getProperty("user.home")}/.android-signing/wortschatz/keystore.properties"
+        val file = File(path)
+        if (file.isFile) file.reader().use { load(it) }
+    }
+    fun signingValue(env: String, key: String): String? =
+        System.getenv(env)?.takeIf { it.isNotEmpty() } ?: localSigning.getProperty(key)
+    val keystorePath = signingValue("WORTSCHATZ_KEYSTORE", "storeFile")
+    val fixedSigning = keystorePath?.let { path ->
+        signingConfigs.create("fixed") {
+            storeFile = file(path)
+            storePassword = signingValue("WORTSCHATZ_STORE_PASSWORD", "storePassword")
+            keyAlias = signingValue("WORTSCHATZ_KEY_ALIAS", "keyAlias") ?: "wortschatz"
+            keyPassword = signingValue("WORTSCHATZ_KEY_PASSWORD", "keyPassword")
         }
+    }
+    if (fixedSigning == null) {
+        logger.warn("Wortschatz: no signing key found, using the debug key. Do not publish this APK.")
     }
 
     buildTypes {
         debug {
-            signingConfig = signingConfigs.getByName("fixed")
+            if (fixedSigning != null) signingConfig = fixedSigning
         }
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("fixed")
+            if (fixedSigning != null) signingConfig = fixedSigning
         }
     }
     compileOptions {
