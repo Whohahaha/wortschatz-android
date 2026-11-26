@@ -30,25 +30,29 @@ android {
     // (WORTSCHATZ_SIGNING_PROPERTIES, default ~/.android-signing/wortschatz/keystore.properties).
     // Without a key, builds fall back to the throwaway debug key and must not be published.
     // The expected certificate fingerprint is public: signing/cert-sha256.txt.
-    val localSigning = Properties().apply {
-        val path = System.getenv("WORTSCHATZ_SIGNING_PROPERTIES")
+    val localSigningFile = File(
+        System.getenv("WORTSCHATZ_SIGNING_PROPERTIES")
             ?: "${System.getProperty("user.home")}/.android-signing/wortschatz/keystore.properties"
-        val file = File(path)
-        if (file.isFile) file.reader().use { load(it) }
+    )
+    val localSigning = Properties().apply {
+        if (localSigningFile.isFile) localSigningFile.reader().use { load(it) }
     }
     fun signingValue(env: String, key: String): String? =
         System.getenv(env)?.takeIf { it.isNotEmpty() } ?: localSigning.getProperty(key)
-    val keystorePath = signingValue("WORTSCHATZ_KEYSTORE", "storeFile")
-    val fixedSigning = keystorePath?.let { path ->
+    // A relative storeFile in the properties file is resolved next to that file.
+    val keystoreFile = System.getenv("WORTSCHATZ_KEYSTORE")?.takeIf { it.isNotEmpty() }?.let { File(it) }
+        ?: localSigning.getProperty("storeFile")?.let { File(it) }
+            ?.let { if (it.isAbsolute) it else File(localSigningFile.parentFile, it.path) }
+    val fixedSigning = keystoreFile?.let { keystore ->
         signingConfigs.create("fixed") {
-            storeFile = file(path)
+            storeFile = keystore
             storePassword = signingValue("WORTSCHATZ_STORE_PASSWORD", "storePassword")
             keyAlias = signingValue("WORTSCHATZ_KEY_ALIAS", "keyAlias") ?: "wortschatz"
             keyPassword = signingValue("WORTSCHATZ_KEY_PASSWORD", "keyPassword")
         }
     }
     if (fixedSigning == null) {
-        logger.warn("Wortschatz: no signing key found, using the debug key. Do not publish this APK.")
+        logger.warn("Wortschatz: no signing key found; debug builds use the throwaway debug key (do not publish them).")
     }
 
     buildTypes {
@@ -92,4 +96,16 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.10.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.1")
+}
+
+// A release APK without the fixed key would be unsigned and could not be installed.
+tasks.matching { it.name == "packageRelease" }.configureEach {
+    doFirst {
+        if (android.signingConfigs.findByName("fixed") == null) {
+            throw GradleException(
+                "No Wortschatz signing key: set WORTSCHATZ_KEYSTORE/_STORE_PASSWORD/_KEY_PASSWORD " +
+                    "or create ~/.android-signing/wortschatz/keystore.properties."
+            )
+        }
+    }
 }
